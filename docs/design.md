@@ -32,6 +32,10 @@ Small on purpose, so it can be evaluated and defended: `search_course`, `run_pyt
 `non vérifiable`. Python checks test a result rather than recompute it the same way, for example by
 differentiating an antiderivative.
 
+The built-in checker only decides about 2% of the books' equalities, and its verdicts need care: `vérifié` assumes
+lower-case letters are numbers, and `réfuté` can come from notation. So it is one piece of evidence for the agent,
+never the verdict shown to a student on its own, and first-wrong-step detection can't rely on it.
+
 ## Evaluation rules
 
 These exist because the easy version of each number would be meaningless.

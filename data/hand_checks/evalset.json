@@ -1,0 +1,247 @@
+{
+ "method": "Judged by Claude on random samples, not yet by a person. Usable means readable and answerable alone. Really wrong means the edit makes a false statement, not just a weaker or garbled one.",
+ "kept": [
+  {
+   "exercise": "v1:00902",
+   "usable": false
+  },
+  {
+   "exercise": "v1:01708",
+   "usable": true
+  },
+  {
+   "exercise": "v1:02430",
+   "usable": true
+  },
+  {
+   "exercise": "v2:00323",
+   "usable": true
+  },
+  {
+   "exercise": "v1:00051",
+   "usable": true
+  },
+  {
+   "exercise": "v2:01999",
+   "usable": true
+  },
+  {
+   "exercise": "v2:03295",
+   "usable": true
+  },
+  {
+   "exercise": "v2:01162",
+   "usable": true
+  },
+  {
+   "exercise": "v1:00223",
+   "usable": true
+  },
+  {
+   "exercise": "v1:00504",
+   "usable": true
+  },
+  {
+   "exercise": "v1:02190",
+   "usable": true
+  },
+  {
+   "exercise": "v2:00048",
+   "usable": true
+  },
+  {
+   "exercise": "v2:01125",
+   "usable": false
+  },
+  {
+   "exercise": "v1:02599",
+   "usable": true
+  },
+  {
+   "exercise": "v1:03123",
+   "usable": true
+  },
+  {
+   "exercise": "v2:01662",
+   "usable": true
+  },
+  {
+   "exercise": "v2:02311",
+   "usable": true
+  },
+  {
+   "exercise": "v1:00013",
+   "usable": true
+  },
+  {
+   "exercise": "v2:00378",
+   "usable": true
+  },
+  {
+   "exercise": "v3:01769",
+   "usable": true
+  },
+  {
+   "exercise": "v1:00025",
+   "usable": true
+  },
+  {
+   "exercise": "v1:01498",
+   "usable": false
+  },
+  {
+   "exercise": "v3:01654",
+   "usable": true
+  },
+  {
+   "exercise": "v3:01301",
+   "usable": true
+  },
+  {
+   "exercise": "v3:02201",
+   "usable": true
+  },
+  {
+   "exercise": "v2:00306",
+   "usable": true
+  },
+  {
+   "exercise": "v1:03528",
+   "usable": true
+  },
+  {
+   "exercise": "v1:01298",
+   "usable": false
+  },
+  {
+   "exercise": "v2:02822",
+   "usable": false
+  },
+  {
+   "exercise": "v2:03398",
+   "usable": false
+  }
+ ],
+ "corrupted": [
+  {
+   "attempt_index": 591,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 465,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 788,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 91,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 176,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 843,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 839,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 446,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 103,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 613,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 306,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 821,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 192,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 752,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 420,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 469,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 229,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 488,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 252,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 343,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 817,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 67,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 231,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 40,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 486,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 758,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 599,
+   "really_wrong": false
+  },
+  {
+   "attempt_index": 670,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 65,
+   "really_wrong": true
+  },
+  {
+   "attempt_index": 714,
+   "really_wrong": true
+  }
+ ]
+}

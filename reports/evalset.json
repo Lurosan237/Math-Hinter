@@ -1,0 +1,38 @@
+{
+  "exercises": 755,
+  "outcome": {
+    "kept": 531,
+    "broken_formula": 77,
+    "needs_earlier_context": 58,
+    "stray_formula_fragment": 54,
+    "too_short": 13,
+    "unbalanced_formula": 9,
+    "unreadable_characters": 8,
+    "solution_too_short": 5
+  },
+  "kept_by_split": {
+    "test": 324,
+    "dev": 207
+  },
+  "kept_by_type": {
+    "computation": 134,
+    "proof_or_other": 397
+  },
+  "attempts_by_kind": {
+    "none": 531,
+    "number": 166,
+    "sign": 124,
+    "exponent": 63,
+    "inequality": 39,
+    "word": 38,
+    "inverted_fraction": 36,
+    "wrong_function": 16,
+    "quantifier": 4
+  },
+  "hand_check": {
+    "kept_sampled": 30,
+    "kept_usable": 24,
+    "corrupted_sampled": 30,
+    "corrupted_really_wrong": 24
+  }
+}

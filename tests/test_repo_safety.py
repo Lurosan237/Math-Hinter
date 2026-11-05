@@ -58,6 +58,22 @@ def test_retrieval_reports_have_no_book_text():
     assert set(links[0]) == {"method", "source", "target", "uses_the_concept"}
 
 
+def test_readme_checker_numbers_come_from_the_report():
+    report = json.loads((ROOT / "reports" / "checker.json").read_text())
+    judged = json.loads((ROOT / "data" / "hand_checks" / "checker.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"| vérifié | {report['book_equalities']['vérifié']} |" in readme
+    assert f"| réfuté | {report['book_equalities']['réfuté']} |" in readme
+    assert f"{judged['sound']} of {judged['verified']} were sound" in readme
+
+
+def test_evalset_report_has_no_book_text():
+    report = (ROOT / "reports" / "evalset.json").read_text()
+    assert "$" not in report and "Solution" not in report
+    assert "$" not in (ROOT / "data" / "hand_checks" / "evalset.json").read_text()
+    assert "\\\\" not in (ROOT / "reports" / "checker.json").read_text()
+
+
 def test_readme_numbers_come_from_the_report():
     test = json.loads((ROOT / "reports" / "extraction.json").read_text())["test"]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

@@ -1,0 +1,41 @@
+{
+  "split": "test",
+  "equalities": 3000,
+  "book_equalities": {
+    "vérifié": 70,
+    "réfuté": 10,
+    "non vérifiable": 2920
+  },
+  "why_unverifiable": {
+    "unparseable": 1747,
+    "not an identity": 1170,
+    "identity": 51,
+    "same number": 19,
+    "different numbers": 10,
+    "agrees numerically but couldn't be proved": 3
+  },
+  "corrupted_copies_of_verified": {
+    "tested": 38,
+    "still_verified": 3,
+    "refuted": 16,
+    "unverifiable": 19,
+    "by_kind": {
+      "exponent": {
+        "vérifié": 2,
+        "non vérifiable": 2
+      },
+      "inverted_fraction": {
+        "réfuté": 2
+      },
+      "number": {
+        "réfuté": 12,
+        "non vérifiable": 1
+      },
+      "sign": {
+        "non vérifiable": 16,
+        "réfuté": 2,
+        "vérifié": 1
+      }
+    }
+  }
+}

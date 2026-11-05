@@ -2,7 +2,8 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 3 of 6. The books are parsed and searchable, and each step is measured. The agent is not built yet. See the [design](docs/design.md).
+> **Status:** between stages 3 and 4. The books are parsed and searchable, and the test set and maths checker exist.
+> The agent itself is not built yet. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -74,6 +75,30 @@ to an earlier definition. In a blind hand check, the statement really used the l
 and 18 of 40 search links. Those intervals overlap, so this doesn't show the index is better. A correct link also isn't
 necessarily what a student is missing, so the tracer shouldn't present these as a diagnosis.
 
+## Preparing to test the agent
+
+These parts need no LLM, so they are measured on their own ([full report](reports/evalset.md)).
+
+**Test set.** 531 of 755 worked exercises pass a filter for garbled or context-dependent statements, each with a wrong
+attempt holding one known error and an unchanged control. In a hand check, 24 of 30 kept exercises were usable and 24 of 30
+errors made a false statement. So about a fifth of this set is noise. Later lines also stay correct after the error, unlike
+a real student's work, which is why real attempts will be a separate test.
+
+**Maths checker.** It parses LaTeX directly into SymPy, with no `eval`, and answers `vérifié`, `réfuté` or `non vérifiable`.
+On 3000 equalities from the books' proofs and solutions:
+
+| Verdict | Count |
+|---|---|
+| vérifié | 70 |
+| réfuté | 10 |
+| non vérifiable | 2920 |
+
+- **It can check very little of this maths: about 2%.** Most equalities depend on earlier lines or use notation it won't guess at.
+  The result: Python checks can't carry the first-wrong-step task on these books, as the design had hoped.
+- **`vérifié` isn't proof.** By hand, 61 of 70 were sound. The others treat things like group elements as commuting numbers.
+- **`réfuté` isn't either.** All 10 were false alarms on correct equalities, mostly from notation such as Legendre symbols.
+- **When it can check, it catches slips.** Of 38 corrupted copies of verified equalities, 3 stayed verified, all harmless ones.
+
 ## The books aren't in this repository
 
 They are published works. Everything derived from them stays in `data/private`, which git ignores, and a test checks
@@ -95,6 +120,10 @@ PYTHONPATH=src python scripts/eval_crosslinks.py
 # word vectors need requirements-eval.txt
 PYTHONPATH=src python scripts/eval_retrieval.py --split test --k1 2.2 --b 0.9
 python scripts/report_retrieval.py
+
+PYTHONPATH=src python scripts/build_evalset.py
+PYTHONPATH=src python scripts/eval_checker.py --split test --limit 3000
+python scripts/report_evalset.py
 
 # the formula report also needs the private hand transcriptions
 PYTHONPATH=src python scripts/eval_extraction.py --books vol1.pdf vol2.pdf vol3.pdf \

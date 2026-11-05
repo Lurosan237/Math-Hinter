@@ -5,3 +5,4 @@ rapidfuzz>=3.9,<4
 numpy>=1.26,<3
 scipy>=1.11,<2
 snowballstemmer>=2.2,<4
+sympy>=1.13,<2
