@@ -1,0 +1,126 @@
+{
+  "tuning": {
+    "gold_sha256": "8a9ad2ebdd34631488ec4ebca4202bc9a3fdce7cfc3b8e5b7b2a4c04152d3d47",
+    "formulas_sampled": 60,
+    "scored": 52,
+    "excluded_detection_errors": 8,
+    "per_tool": {
+      "poppler": {
+        "structure_similarity": 0.698,
+        "structure_ci95": [
+          0.639,
+          0.755
+        ],
+        "symbol_similarity": 0.773,
+        "symbol_ci95": [
+          0.711,
+          0.83
+        ],
+        "exact_share": 0.096,
+        "by_volume_structure": {
+          "1": 0.746,
+          "2": 0.663,
+          "3": 0.681
+        }
+      },
+      "font_aware": {
+        "structure_similarity": 0.951,
+        "structure_ci95": [
+          0.916,
+          0.981
+        ],
+        "symbol_similarity": 0.955,
+        "symbol_ci95": [
+          0.92,
+          0.984
+        ],
+        "exact_share": 0.731,
+        "by_volume_structure": {
+          "1": 0.994,
+          "2": 0.936,
+          "3": 0.922
+        }
+      },
+      "font_symbols_no_layout": {
+        "structure_similarity": 0.703,
+        "structure_ci95": [
+          0.646,
+          0.756
+        ],
+        "symbol_similarity": 0.778,
+        "symbol_ci95": [
+          0.72,
+          0.833
+        ],
+        "exact_share": 0.058,
+        "by_volume_structure": {
+          "1": 0.748,
+          "2": 0.632,
+          "3": 0.716
+        }
+      }
+    }
+  },
+  "test": {
+    "gold_sha256": "0565de8532ca01f345f306a7729d4fce567c7ced82597268ee3ca6811bbababe",
+    "formulas_sampled": 60,
+    "scored": 44,
+    "excluded_detection_errors": 16,
+    "per_tool": {
+      "poppler": {
+        "structure_similarity": 0.648,
+        "structure_ci95": [
+          0.591,
+          0.703
+        ],
+        "symbol_similarity": 0.736,
+        "symbol_ci95": [
+          0.676,
+          0.795
+        ],
+        "exact_share": 0.023,
+        "by_volume_structure": {
+          "1": 0.749,
+          "2": 0.611,
+          "3": 0.594
+        }
+      },
+      "font_aware": {
+        "structure_similarity": 0.941,
+        "structure_ci95": [
+          0.905,
+          0.972
+        ],
+        "symbol_similarity": 0.948,
+        "symbol_ci95": [
+          0.913,
+          0.977
+        ],
+        "exact_share": 0.568,
+        "by_volume_structure": {
+          "1": 0.951,
+          "2": 0.872,
+          "3": 0.975
+        }
+      },
+      "font_symbols_no_layout": {
+        "structure_similarity": 0.649,
+        "structure_ci95": [
+          0.601,
+          0.701
+        ],
+        "symbol_similarity": 0.737,
+        "symbol_ci95": [
+          0.685,
+          0.789
+        ],
+        "exact_share": 0.068,
+        "by_volume_structure": {
+          "1": 0.713,
+          "2": 0.6,
+          "3": 0.631
+        }
+      }
+    }
+  }
+}

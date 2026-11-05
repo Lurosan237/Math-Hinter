@@ -1,0 +1,15 @@
+# Licensed books and anything derived from them: never committed
+data/private/*
+!data/private/.gitkeep
+*.pdf
+!tests/fixtures/*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.env
