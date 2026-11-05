@@ -116,7 +116,7 @@ def _rules(layout: LTPage) -> tuple[Rule, ...]:
         for obj in items:
             if isinstance(obj, LTFigure):
                 walk(obj)
-            elif isinstance(obj, (LTRect, LTLine, LTCurve, LTImage)) and obj.height < 1.5 and obj.width > 2:
+            elif isinstance(obj, LTRect | LTLine | LTCurve | LTImage) and obj.height < 1.5 and obj.width > 2:
                 out.append(Rule(obj.x0, obj.x1, layout.height - (obj.y0 + obj.y1) / 2))
 
     walk(layout)
