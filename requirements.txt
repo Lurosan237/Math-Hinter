@@ -1,4 +1,4 @@
 pdfminer-six==20260107
 pypdfium2==5.14.0
 pillow>=11,<14
-rapidfuzz==3.14.6
+rapidfuzz>=3.9,<4
