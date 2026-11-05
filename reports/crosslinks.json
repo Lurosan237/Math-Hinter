@@ -1,0 +1,32 @@
+{
+  "volumes": {
+    "2": {
+      "terms": 262,
+      "statements": 300,
+      "statements_with_a_link": 172
+    },
+    "3": {
+      "terms": 443,
+      "statements": 158,
+      "statements_with_a_link": 106
+    }
+  },
+  "hand_check": {
+    "index": {
+      "sampled": 40,
+      "uses_the_concept": 26,
+      "ci95": [
+        0.495,
+        0.779
+      ]
+    },
+    "search": {
+      "sampled": 40,
+      "uses_the_concept": 18,
+      "ci95": [
+        0.307,
+        0.602
+      ]
+    }
+  }
+}

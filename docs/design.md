@@ -53,9 +53,17 @@ Headline metrics: first-wrong-step accuracy, how often hints leak the answer, ho
 ## Prerequisite tracing
 
 The books' explicit references link results within a volume, but none crosses volumes and most proofs have none.
-Tracing across volumes needs a second signal. Candidates to test: each volume's index of terms, definitions shared
-between volumes, and retrieval over definitions. Whichever is used gets its own hand-labelled score, and the tracer
-reports which kind of link it followed, since a book's own reference is stronger evidence than a similar term.
+Earlier volumes' indexes do reach across, but a blind check found about a third of those links wrong, and many correct
+ones point at basics. So the tracer offers them as "this may be worth revisiting", states which kind of link it
+followed, and treats a book's own citation as stronger evidence. Whether it finds what a student is really missing is
+still untested and needs real attempts.
+
+## Retrieval
+
+Search uses BM25 over stemmed French words and maths symbols, with section titles, restricted to definitions and
+results, and hides the exercise's own solution. For exercises from the book it also uses position in the book.
+Dense embeddings remain to be tested on a machine that can download them. Recall is modest, so the agent must be able
+to say it found nothing useful rather than build on a weak passage.
 
 ## Running on no budget
 
@@ -68,7 +76,7 @@ the browser and an optional live mode using the visitor's own key.
 
 1. Formula extraction (done, see `reports/extraction.md`).
 2. Corpus: structure, exercise pairs, prerequisite graph (done, see `reports/corpus.md`).
-3. Retrieval, with the leak protection.
+3. Retrieval, with the leak protection (done, see `reports/retrieval.md`).
 4. Agent loop.
 5. Full evaluation.
 6. Public demo.

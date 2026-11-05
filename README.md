@@ -2,8 +2,7 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 2 of 6. The books are parsed into formulas, exercises and links between results, and each step is
-> measured. The agent is not built yet. See the [design](docs/design.md).
+> **Status:** stage 3 of 6. The books are parsed and searchable, and each step is measured. The agent is not built yet. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -47,6 +46,34 @@ The most useful finding is a limit. **0 of those links cross from one volume to 
 solutions contain a link at all. So the books' references can't by themselves trace a Licence 3 difficulty back to
 Licence 1. That part needs another signal, which is the next thing to test.
 
+## Stage 3: finding the right passage
+
+Search is scored on labels the books supply: when a proof or solution cites a numbered result, the statement is the
+query and the cited result is the right answer. That gives 306 test questions that nobody hand-picked. Settings were chosen on
+one half of the modules and run once on the other ([full report](reports/retrieval.md)).
+
+| | Recall@5 | Recall@10 | MRR |
+|---|---|---|---|
+| Nearest earlier units (baseline) | 0.050 | 0.146 | 0.055 |
+| Word vectors | 0.081 | 0.093 | 0.070 |
+| BM25 over definitions and results | 0.238 | 0.327 | 0.187 |
+| Plus section titles and position in the book | 0.344 | 0.494 | 0.215 |
+
+- **Search misses most of what a proof needs.** Even the best setup finds about half of the cited results in the top 10.
+  A proof often cites a result that shares few words with the statement. Other useful passages count as misses, so
+  these are lower bounds.
+- **Across modules it barely works:** recall@10 is 0.150. Position in the book also helps only with exercises from the
+  book, not a student's own question.
+- **Word vectors did worst.** That's a weak test of dense retrieval: modern French embedding models couldn't be
+  downloaded in this environment, so they are still untested.
+- **Hiding the solution matters, but less than expected.** Unhidden, search would hand over an exercise's own solution
+  first 15% of the time and in the top 5 31% of the time.
+
+**Cross-volume links.** Using earlier volumes' indexes, 172 of 300 Licence 2 exercises and 106 of 158 Licence 3 exercises get a link
+to an earlier definition. In a blind hand check, the statement really used the linked concept in 26 of 40 index links
+and 18 of 40 search links. Those intervals overlap, so this doesn't show the index is better. A correct link also isn't
+necessarily what a student is missing, so the tracer shouldn't present these as a diagnosis.
+
 ## The books aren't in this repository
 
 They are published works. Everything derived from them stays in `data/private`, which git ignores, and a test checks
@@ -62,6 +89,12 @@ pytest -q
 # with your own copies of the books
 PYTHONPATH=src python scripts/extract_pages.py --book vol1.pdf --volume 1   # and 2, 3
 PYTHONPATH=src python scripts/build_corpus.py
+PYTHONPATH=src python scripts/parse_indexes.py --books vol1.pdf vol2.pdf vol3.pdf
+PYTHONPATH=src python scripts/eval_crosslinks.py
+
+# word vectors need requirements-eval.txt
+PYTHONPATH=src python scripts/eval_retrieval.py --split test --k1 2.2 --b 0.9
+python scripts/report_retrieval.py
 
 # the formula report also needs the private hand transcriptions
 PYTHONPATH=src python scripts/eval_extraction.py --books vol1.pdf vol2.pdf vol3.pdf \

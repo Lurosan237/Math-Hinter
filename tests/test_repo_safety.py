@@ -44,6 +44,20 @@ def test_readme_corpus_numbers_come_from_the_report():
     assert f"{report['references']['across_volumes']} of those links cross" in readme
 
 
+def test_readme_retrieval_numbers_come_from_the_report():
+    report = json.loads((ROOT / "reports" / "retrieval.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"{report['questions']} test questions" in readme
+    best = report["all"]["bm25_titles_plus_nearby"]
+    assert f"{best['recall_5']:.3f} | {best['recall_10']:.3f} | {best['mrr']:.3f}" in readme
+
+
+def test_retrieval_reports_have_no_book_text():
+    assert "$" not in (ROOT / "reports" / "retrieval.json").read_text()
+    links = json.loads((ROOT / "data" / "hand_checks" / "crosslinks.json").read_text())["links"]
+    assert set(links[0]) == {"method", "source", "target", "uses_the_concept"}
+
+
 def test_readme_numbers_come_from_the_report():
     test = json.loads((ROOT / "reports" / "extraction.json").read_text())["test"]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

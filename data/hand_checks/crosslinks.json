@@ -1,0 +1,485 @@
+{
+ "method": "Judged by Claude from a shuffled sample with the method hidden, not yet checked by a person. Yes means the statement really uses the concept the linked definition defines, which says nothing about whether it is what a student is missing.",
+ "links": [
+  {
+   "method": "index",
+   "source": "v3:00670",
+   "target": "v1:03541",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:03121",
+   "target": "v1:03247",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:01305",
+   "target": "v1:02122",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:00403",
+   "target": "v1:00873",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00068",
+   "target": "v1:00500",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:00584",
+   "target": "v1:02572",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:02611",
+   "target": "v1:00295",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:00741",
+   "target": "v1:00873",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:01255",
+   "target": "v2:02960",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:01378",
+   "target": "v1:01578",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:00068",
+   "target": "v1:00547",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:03153",
+   "target": "v1:03268",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:00124",
+   "target": "v1:00295",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:01793",
+   "target": "v1:03325",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02713",
+   "target": "v1:03429",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02587",
+   "target": "v1:02968",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02413",
+   "target": "v1:02173",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02071",
+   "target": "v1:03265",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:01018",
+   "target": "v1:01488",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:02677",
+   "target": "v1:01912",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:01741",
+   "target": "v2:03020",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:03067",
+   "target": "v1:02572",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02837",
+   "target": "v1:03461",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:00847",
+   "target": "v2:02384",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02962",
+   "target": "v1:03213",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:00765",
+   "target": "v2:02877",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:02380",
+   "target": "v1:02561",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:01654",
+   "target": "v1:02173",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02868",
+   "target": "v1:01063",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02059",
+   "target": "v1:02968",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:03266",
+   "target": "v1:02390",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02917",
+   "target": "v1:01197",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02394",
+   "target": "v1:01100",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02962",
+   "target": "v1:02639",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v3:01444",
+   "target": "v1:00295",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:02313",
+   "target": "v1:03008",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00464",
+   "target": "v1:00723",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:02685",
+   "target": "v1:02840",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v3:00934",
+   "target": "v2:02168",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:00634",
+   "target": "v1:01897",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00378",
+   "target": "v1:00345",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v3:00779",
+   "target": "v1:03337",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:03364",
+   "target": "v1:03185",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:00341",
+   "target": "v1:01766",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:02670",
+   "target": "v1:00040",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:03191",
+   "target": "v1:02011",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00048",
+   "target": "v1:00345",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02169",
+   "target": "v1:03234",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v3:00192",
+   "target": "v2:01667",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v3:00338",
+   "target": "v2:01482",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:02068",
+   "target": "v1:02135",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:01662",
+   "target": "v1:02572",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:00816",
+   "target": "v2:02384",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00753",
+   "target": "v1:00633",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:01303",
+   "target": "v1:02193",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:00516",
+   "target": "v1:01917",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:00990",
+   "target": "v1:00873",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:01208",
+   "target": "v1:01097",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:00711",
+   "target": "v1:01488",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:02058",
+   "target": "v1:03723",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00709",
+   "target": "v1:01488",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:00711",
+   "target": "v1:00831",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:03161",
+   "target": "v1:03254",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00152",
+   "target": "v1:02902",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v3:00403",
+   "target": "v2:00531",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v3:00801",
+   "target": "v2:02158",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:02493",
+   "target": "v1:02572",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00548",
+   "target": "v1:00723",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v2:02313",
+   "target": "v1:02811",
+   "uses_the_concept": false
+  },
+  {
+   "method": "search",
+   "source": "v3:01833",
+   "target": "v2:00553",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:00484",
+   "target": "v1:00633",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02713",
+   "target": "v1:03584",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:03029",
+   "target": "v1:03325",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:01997",
+   "target": "v1:03441",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v2:02209",
+   "target": "v1:03008",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:02677",
+   "target": "v1:01912",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:03316",
+   "target": "v1:02173",
+   "uses_the_concept": true
+  },
+  {
+   "method": "index",
+   "source": "v2:01115",
+   "target": "v1:00040",
+   "uses_the_concept": false
+  },
+  {
+   "method": "index",
+   "source": "v3:00428",
+   "target": "v1:00921",
+   "uses_the_concept": true
+  },
+  {
+   "method": "search",
+   "source": "v2:03260",
+   "target": "v1:00348",
+   "uses_the_concept": false
+  }
+ ]
+}

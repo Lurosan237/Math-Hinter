@@ -1,0 +1,593 @@
+{
+  "split": "test",
+  "questions": 306,
+  "gold_links": 378,
+  "parameters": {
+    "k1": 2.2,
+    "b": 0.9
+  },
+  "by_source": {
+    "exercise": {
+      "questions": 44,
+      "rankers": {
+        "bm25_words": {
+          "recall_5": 0.136,
+          "recall_5_ci95": [
+            0.045,
+            0.239
+          ],
+          "recall_10": 0.182,
+          "recall_50": 0.295,
+          "mrr": 0.097,
+          "mrr_ci95": [
+            0.039,
+            0.171
+          ]
+        },
+        "bm25_words_math": {
+          "recall_5": 0.17,
+          "recall_5_ci95": [
+            0.068,
+            0.284
+          ],
+          "recall_10": 0.205,
+          "recall_50": 0.295,
+          "mrr": 0.092,
+          "mrr_ci95": [
+            0.042,
+            0.155
+          ]
+        },
+        "word_vectors": {
+          "recall_5": 0.023,
+          "recall_5_ci95": [
+            0.0,
+            0.068
+          ],
+          "recall_10": 0.023,
+          "recall_50": 0.045,
+          "mrr": 0.011,
+          "mrr_ci95": [
+            0.001,
+            0.029
+          ]
+        },
+        "hybrid": {
+          "recall_5": 0.023,
+          "recall_5_ci95": [
+            0.0,
+            0.068
+          ],
+          "recall_10": 0.102,
+          "recall_50": 0.273,
+          "mrr": 0.035,
+          "mrr_ci95": [
+            0.016,
+            0.064
+          ]
+        },
+        "bm25_results_only": {
+          "recall_5": 0.216,
+          "recall_5_ci95": [
+            0.102,
+            0.341
+          ],
+          "recall_10": 0.273,
+          "recall_50": 0.489,
+          "mrr": 0.162,
+          "mrr_ci95": [
+            0.085,
+            0.256
+          ]
+        },
+        "bm25_section_titles": {
+          "recall_5": 0.25,
+          "recall_5_ci95": [
+            0.125,
+            0.375
+          ],
+          "recall_10": 0.318,
+          "recall_50": 0.489,
+          "mrr": 0.152,
+          "mrr_ci95": [
+            0.082,
+            0.237
+          ]
+        },
+        "bm25_titles_plus_nearby": {
+          "recall_5": 0.318,
+          "recall_5_ci95": [
+            0.193,
+            0.455
+          ],
+          "recall_10": 0.466,
+          "recall_50": 0.705,
+          "mrr": 0.205,
+          "mrr_ci95": [
+            0.131,
+            0.291
+          ]
+        },
+        "hybrid_results_only": {
+          "recall_5": 0.17,
+          "recall_5_ci95": [
+            0.068,
+            0.284
+          ],
+          "recall_10": 0.227,
+          "recall_50": 0.386,
+          "mrr": 0.08,
+          "mrr_ci95": [
+            0.045,
+            0.121
+          ]
+        },
+        "nearby_units": {
+          "recall_5": 0.102,
+          "recall_5_ci95": [
+            0.023,
+            0.193
+          ],
+          "recall_10": 0.17,
+          "recall_50": 0.568,
+          "mrr": 0.068,
+          "mrr_ci95": [
+            0.041,
+            0.101
+          ]
+        },
+        "hybrid_plus_nearby": {
+          "recall_5": 0.33,
+          "recall_5_ci95": [
+            0.205,
+            0.466
+          ],
+          "recall_10": 0.455,
+          "recall_50": 0.682,
+          "mrr": 0.199,
+          "mrr_ci95": [
+            0.124,
+            0.287
+          ]
+        }
+      }
+    },
+    "result": {
+      "questions": 262,
+      "rankers": {
+        "bm25_words": {
+          "recall_5": 0.176,
+          "recall_5_ci95": [
+            0.13,
+            0.223
+          ],
+          "recall_10": 0.223,
+          "recall_50": 0.391,
+          "mrr": 0.139,
+          "mrr_ci95": [
+            0.105,
+            0.174
+          ]
+        },
+        "bm25_words_math": {
+          "recall_5": 0.191,
+          "recall_5_ci95": [
+            0.146,
+            0.236
+          ],
+          "recall_10": 0.264,
+          "recall_50": 0.441,
+          "mrr": 0.161,
+          "mrr_ci95": [
+            0.125,
+            0.199
+          ]
+        },
+        "word_vectors": {
+          "recall_5": 0.091,
+          "recall_5_ci95": [
+            0.057,
+            0.127
+          ],
+          "recall_10": 0.104,
+          "recall_50": 0.163,
+          "mrr": 0.08,
+          "mrr_ci95": [
+            0.052,
+            0.111
+          ]
+        },
+        "hybrid": {
+          "recall_5": 0.135,
+          "recall_5_ci95": [
+            0.095,
+            0.177
+          ],
+          "recall_10": 0.192,
+          "recall_50": 0.385,
+          "mrr": 0.127,
+          "mrr_ci95": [
+            0.093,
+            0.163
+          ]
+        },
+        "bm25_results_only": {
+          "recall_5": 0.241,
+          "recall_5_ci95": [
+            0.193,
+            0.292
+          ],
+          "recall_10": 0.336,
+          "recall_50": 0.539,
+          "mrr": 0.191,
+          "mrr_ci95": [
+            0.155,
+            0.232
+          ]
+        },
+        "bm25_section_titles": {
+          "recall_5": 0.23,
+          "recall_5_ci95": [
+            0.184,
+            0.279
+          ],
+          "recall_10": 0.334,
+          "recall_50": 0.566,
+          "mrr": 0.186,
+          "mrr_ci95": [
+            0.152,
+            0.223
+          ]
+        },
+        "bm25_titles_plus_nearby": {
+          "recall_5": 0.348,
+          "recall_5_ci95": [
+            0.296,
+            0.403
+          ],
+          "recall_10": 0.499,
+          "recall_50": 0.69,
+          "mrr": 0.216,
+          "mrr_ci95": [
+            0.183,
+            0.254
+          ]
+        },
+        "hybrid_results_only": {
+          "recall_5": 0.175,
+          "recall_5_ci95": [
+            0.132,
+            0.22
+          ],
+          "recall_10": 0.25,
+          "recall_50": 0.492,
+          "mrr": 0.159,
+          "mrr_ci95": [
+            0.123,
+            0.196
+          ]
+        },
+        "nearby_units": {
+          "recall_5": 0.042,
+          "recall_5_ci95": [
+            0.02,
+            0.067
+          ],
+          "recall_10": 0.142,
+          "recall_50": 0.549,
+          "mrr": 0.053,
+          "mrr_ci95": [
+            0.044,
+            0.064
+          ]
+        },
+        "hybrid_plus_nearby": {
+          "recall_5": 0.355,
+          "recall_5_ci95": [
+            0.301,
+            0.414
+          ],
+          "recall_10": 0.482,
+          "recall_50": 0.667,
+          "mrr": 0.221,
+          "mrr_ci95": [
+            0.187,
+            0.258
+          ]
+        }
+      }
+    }
+  },
+  "all": {
+    "bm25_words": {
+      "recall_5": 0.17,
+      "recall_5_ci95": [
+        0.131,
+        0.214
+      ],
+      "recall_10": 0.217,
+      "recall_50": 0.377,
+      "mrr": 0.133,
+      "mrr_ci95": [
+        0.103,
+        0.165
+      ]
+    },
+    "bm25_words_math": {
+      "recall_5": 0.188,
+      "recall_5_ci95": [
+        0.147,
+        0.232
+      ],
+      "recall_10": 0.256,
+      "recall_50": 0.42,
+      "mrr": 0.151,
+      "mrr_ci95": [
+        0.121,
+        0.184
+      ]
+    },
+    "word_vectors": {
+      "recall_5": 0.081,
+      "recall_5_ci95": [
+        0.053,
+        0.112
+      ],
+      "recall_10": 0.093,
+      "recall_50": 0.146,
+      "mrr": 0.07,
+      "mrr_ci95": [
+        0.047,
+        0.097
+      ]
+    },
+    "hybrid": {
+      "recall_5": 0.119,
+      "recall_5_ci95": [
+        0.084,
+        0.155
+      ],
+      "recall_10": 0.179,
+      "recall_50": 0.369,
+      "mrr": 0.114,
+      "mrr_ci95": [
+        0.086,
+        0.145
+      ]
+    },
+    "bm25_results_only": {
+      "recall_5": 0.238,
+      "recall_5_ci95": [
+        0.193,
+        0.287
+      ],
+      "recall_10": 0.327,
+      "recall_50": 0.532,
+      "mrr": 0.187,
+      "mrr_ci95": [
+        0.154,
+        0.223
+      ]
+    },
+    "bm25_section_titles": {
+      "recall_5": 0.233,
+      "recall_5_ci95": [
+        0.187,
+        0.279
+      ],
+      "recall_10": 0.331,
+      "recall_50": 0.555,
+      "mrr": 0.181,
+      "mrr_ci95": [
+        0.149,
+        0.215
+      ]
+    },
+    "bm25_titles_plus_nearby": {
+      "recall_5": 0.344,
+      "recall_5_ci95": [
+        0.294,
+        0.398
+      ],
+      "recall_10": 0.494,
+      "recall_50": 0.692,
+      "mrr": 0.215,
+      "mrr_ci95": [
+        0.186,
+        0.247
+      ]
+    },
+    "hybrid_results_only": {
+      "recall_5": 0.174,
+      "recall_5_ci95": [
+        0.133,
+        0.217
+      ],
+      "recall_10": 0.247,
+      "recall_50": 0.477,
+      "mrr": 0.147,
+      "mrr_ci95": [
+        0.118,
+        0.179
+      ]
+    },
+    "nearby_units": {
+      "recall_5": 0.05,
+      "recall_5_ci95": [
+        0.028,
+        0.075
+      ],
+      "recall_10": 0.146,
+      "recall_50": 0.552,
+      "mrr": 0.055,
+      "mrr_ci95": [
+        0.046,
+        0.066
+      ]
+    },
+    "hybrid_plus_nearby": {
+      "recall_5": 0.351,
+      "recall_5_ci95": [
+        0.298,
+        0.403
+      ],
+      "recall_10": 0.478,
+      "recall_50": 0.669,
+      "mrr": 0.218,
+      "mrr_ci95": [
+        0.187,
+        0.251
+      ]
+    }
+  },
+  "other_module": {
+    "questions": 72,
+    "rankers": {
+      "bm25_words": {
+        "recall_5": 0.083,
+        "recall_5_ci95": [
+          0.028,
+          0.153
+        ],
+        "recall_10": 0.104,
+        "recall_50": 0.178,
+        "mrr": 0.053,
+        "mrr_ci95": [
+          0.022,
+          0.093
+        ]
+      },
+      "bm25_words_math": {
+        "recall_5": 0.104,
+        "recall_5_ci95": [
+          0.042,
+          0.174
+        ],
+        "recall_10": 0.132,
+        "recall_50": 0.211,
+        "mrr": 0.056,
+        "mrr_ci95": [
+          0.025,
+          0.096
+        ]
+      },
+      "word_vectors": {
+        "recall_5": 0.069,
+        "recall_5_ci95": [
+          0.014,
+          0.125
+        ],
+        "recall_10": 0.069,
+        "recall_50": 0.083,
+        "mrr": 0.044,
+        "mrr_ci95": [
+          0.009,
+          0.089
+        ]
+      },
+      "hybrid": {
+        "recall_5": 0.069,
+        "recall_5_ci95": [
+          0.014,
+          0.125
+        ],
+        "recall_10": 0.083,
+        "recall_50": 0.192,
+        "mrr": 0.058,
+        "mrr_ci95": [
+          0.021,
+          0.105
+        ]
+      },
+      "bm25_results_only": {
+        "recall_5": 0.132,
+        "recall_5_ci95": [
+          0.062,
+          0.208
+        ],
+        "recall_10": 0.15,
+        "recall_50": 0.319,
+        "mrr": 0.079,
+        "mrr_ci95": [
+          0.04,
+          0.127
+        ]
+      },
+      "bm25_section_titles": {
+        "recall_5": 0.118,
+        "recall_5_ci95": [
+          0.049,
+          0.194
+        ],
+        "recall_10": 0.15,
+        "recall_50": 0.326,
+        "mrr": 0.073,
+        "mrr_ci95": [
+          0.037,
+          0.12
+        ]
+      },
+      "bm25_titles_plus_nearby": {
+        "recall_5": 0.021,
+        "recall_5_ci95": [
+          0.0,
+          0.056
+        ],
+        "recall_10": 0.062,
+        "recall_50": 0.271,
+        "mrr": 0.027,
+        "mrr_ci95": [
+          0.017,
+          0.039
+        ]
+      },
+      "hybrid_results_only": {
+        "recall_5": 0.09,
+        "recall_5_ci95": [
+          0.035,
+          0.16
+        ],
+        "recall_10": 0.132,
+        "recall_50": 0.271,
+        "mrr": 0.074,
+        "mrr_ci95": [
+          0.035,
+          0.121
+        ]
+      },
+      "nearby_units": {
+        "recall_5": 0.0,
+        "recall_5_ci95": [
+          0.0,
+          0.0
+        ],
+        "recall_10": 0.0,
+        "recall_50": 0.028,
+        "mrr": 0.003,
+        "mrr_ci95": [
+          0.002,
+          0.004
+        ]
+      },
+      "hybrid_plus_nearby": {
+        "recall_5": 0.021,
+        "recall_5_ci95": [
+          0.0,
+          0.056
+        ],
+        "recall_10": 0.076,
+        "recall_50": 0.271,
+        "mrr": 0.027,
+        "mrr_ci95": [
+          0.016,
+          0.04
+        ]
+      }
+    }
+  },
+  "own_solution_if_not_hidden": {
+    "exercises": 458,
+    "top_1": 0.151,
+    "top_5": 0.314
+  }
+}
