@@ -43,7 +43,8 @@ def main() -> None:
             blocked = [i for i, u in enumerate(earlier) if u["volume"] >= later]
             top = rank(index.scores(tokens(statement["text"])), blocked)[:3]
             for i in top:
-                proposals.append({"method": "search", "source": statement["id"], "target": earlier[i]["id"], "term": ""})
+                target = earlier[i]["id"]
+                proposals.append({"method": "search", "source": statement["id"], "target": target, "term": ""})
         links_by_volume[later] = {"terms": len(targets), "statements": len(chosen)}
         covered[later] = have
     report: dict = {"volumes": {str(v): {**links_by_volume[v], "statements_with_a_link": covered[v]} for v in (2, 3)}}

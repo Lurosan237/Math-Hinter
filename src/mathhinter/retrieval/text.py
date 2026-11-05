@@ -20,7 +20,9 @@ BOOK_REFERENCE = re.compile(
     r"[\w.]*\d[\w.]*(?:\s+(?:de|à|en)\s+la\s+page\s+\d+)?|\b(?:de|à)\s+la\s+page\s+\d+|\[[A-Z][\w, .]*\]",
     re.I,
 )
-LABEL = re.compile(r"^(?:Exercice|Th[ée]or[èe]me|Proposition|Lemme|Corollaire|D[ée]finition)\s+\d+\s*\.?|^Solution\s*\.")
+LABEL = re.compile(
+    r"^(?:Exercice|Th[ée]or[èe]me|Proposition|Lemme|Corollaire|D[ée]finition)\s+\d+\s*\.?|^Solution\s*\."
+)
 _MATH = re.compile(r"\$\$?(.+?)\$?\$", re.S)
 _COMMAND = re.compile(r"\\(mathbb|mathcal|mathfrak|mathscr)\{(\w)\}|\\([A-Za-z]+)")
 # Symbols too common or too structural to tell one result from another.
