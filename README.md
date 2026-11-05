@@ -2,8 +2,8 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 1 of 6. Formula extraction works and is measured; the agent is not built yet.
-> See the [design](docs/design.md).
+> **Status:** stage 2 of 6. The books are parsed into formulas, exercises and links between results, and each step is
+> measured. The agent is not built yet. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -19,18 +19,33 @@ Results on 60 formulas drawn at random from the three volumes after the code was
 
 | | Token similarity | Exact match |
 |---|---|---|
-| Poppler `pdftotext` | 0.648 | 2% |
-| Font-aware extractor | 0.941 | 57% |
+| Poppler `pdftotext` | 0.708 | 11% |
+| Font-aware extractor | 0.966 | 70% |
 
 What these numbers don't show:
 
-- **Only 44 of 60 formulas were scored.** The rest were crops the detector cut off or merged with other content,
-  often matrices and multi-line displays, so those layouts are probably worse than this.
-- **Exact match is the number that matters for checking answers.** One wrong symbol can change the mathematics.
+- **Exact match is the number that matters for checking answers.** One wrong symbol can change the mathematics, and
+  about three formulas in ten still have at least one wrong token.
+- **Only 56 of 60 formulas were scored.** The rest were cut off by the formula detector, and tall displays are
+  the likely weak spot.
 - **It relies on these books' fonts.** It works on TeX-typeset PDFs, not on scans.
 - **The transcriptions used for scoring were made by Claude** from page images and aren't yet fully checked by a person.
-- **It hasn't been compared with OCR models** such as Marker or MinerU yet. Their models couldn't be downloaded in the
+- **It hasn't been compared with OCR models** such as Marker or MinerU. Their models couldn't be downloaded in the
   environment used for this run.
+
+## Stage 2: finding the structure
+
+The parser turns 2937 pages into labelled units using the books' own signals: running headers, numbered labels, and
+the full-width rules that frame each exercise ([full report](reports/corpus.md)).
+
+- **755 exercises paired with their solution,** which become the practice and test material. In a hand check,
+  40 of 40 were paired correctly and 37 of 40 solutions stopped where they should.
+- **1189 links between results,** from references like "théorème 167 de la page 333". 90% of the numbered
+  references resolved, and 30 of 30 sampled links reached the right unit.
+
+The most useful finding is a limit. **0 of those links cross from one volume to another**, and only 522 of 2587 proofs and
+solutions contain a link at all. So the books' references can't by themselves trace a Licence 3 difficulty back to
+Licence 1. That part needs another signal, which is the next thing to test.
 
 ## The books aren't in this repository
 
@@ -44,9 +59,13 @@ the report itself can only be regenerated with a copy of the books.
 pip install -r requirements-dev.txt
 pytest -q
 
-# with your own copies of the books (the sample and hand transcription come first)
+# with your own copies of the books
+PYTHONPATH=src python scripts/extract_pages.py --book vol1.pdf --volume 1   # and 2, 3
+PYTHONPATH=src python scripts/build_corpus.py
+
+# the formula report also needs the private hand transcriptions
 PYTHONPATH=src python scripts/eval_extraction.py --books vol1.pdf vol2.pdf vol3.pdf \
-    --gold data/private/gold_formulas_test.jsonl --name test
+    --gold data/private/gold_formulas_test2.jsonl --name test
 python scripts/report_extraction.py
 ```
 

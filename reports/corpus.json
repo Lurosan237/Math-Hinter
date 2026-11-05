@@ -1,0 +1,94 @@
+{
+  "volumes": {
+    "1": {
+      "pages": 1039,
+      "modules": 22,
+      "units": {
+        "corollary": 89,
+        "definition": 355,
+        "example": 266,
+        "exercise": 302,
+        "exercise_end": 487,
+        "heading": 524,
+        "indication": 42,
+        "lemma": 40,
+        "method": 8,
+        "proof": 702,
+        "proposition": 379,
+        "prose": 165,
+        "solution": 323,
+        "theorem": 269
+      },
+      "exercise_solution_pairs": 301,
+      "exercises_without_solution": 1,
+      "solutions_without_exercise": 22
+    },
+    "2": {
+      "pages": 1022,
+      "modules": 16,
+      "units": {
+        "corollary": 140,
+        "definition": 217,
+        "example": 1,
+        "exercise": 300,
+        "exercise_end": 567,
+        "heading": 436,
+        "indication": 359,
+        "lemma": 38,
+        "proof": 661,
+        "proposition": 381,
+        "prose": 152,
+        "solution": 315,
+        "theorem": 252
+      },
+      "exercise_solution_pairs": 297,
+      "exercises_without_solution": 3,
+      "solutions_without_exercise": 18
+    },
+    "3": {
+      "pages": 876,
+      "modules": 11,
+      "units": {
+        "corollary": 86,
+        "definition": 163,
+        "example": 139,
+        "exercise": 158,
+        "exercise_end": 284,
+        "heading": 373,
+        "indication": 144,
+        "lemma": 55,
+        "method": 15,
+        "proof": 418,
+        "proposition": 313,
+        "prose": 83,
+        "solution": 168,
+        "theorem": 120
+      },
+      "exercise_solution_pairs": 157,
+      "exercises_without_solution": 1,
+      "solutions_without_exercise": 11
+    }
+  },
+  "references": {
+    "found": 1328,
+    "ambiguous": 1,
+    "external": 3,
+    "linked": 1189,
+    "unresolved": 135,
+    "linked_share": 0.895,
+    "across_volumes": 0,
+    "proofs_and_solutions": 2587,
+    "proofs_and_solutions_with_a_link": 522
+  },
+  "hand_check": {
+    "pairs_sampled": 40,
+    "pairs_correct": 40,
+    "solutions_ending_cleanly": 37,
+    "links_sampled": 30,
+    "links_correct": 30
+  },
+  "totals": {
+    "pages": 2937,
+    "exercise_solution_pairs": 755
+  }
+}

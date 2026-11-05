@@ -3,8 +3,8 @@ from pathlib import Path
 import pytest
 
 from mathhinter.extract.latex import glyph_latex, to_latex
-from mathhinter.extract.layout import display_formulas, split_lines
-from mathhinter.extract.pdfchars import Glyph, Rule, read_pages
+from mathhinter.extract.layout import display_formulas, page_blocks
+from mathhinter.extract.pdfchars import Glyph, PageContent, Rule, read_pages
 from mathhinter.extract.score import similarity, tokens
 
 FIXTURE = Path(__file__).parent / "fixtures" / "formulas.pdf"
@@ -59,9 +59,32 @@ def test_two_rows_stay_separate():
     assert to_latex(glyphs) == "abcd"
 
 
-def test_lines_keep_their_scripts():
-    glyphs = (glyph("x", 0), glyph("2", 5, baseline=96.5, size=7, font="CMR7"), glyph("y", 0, baseline=120))
-    assert [len(line.glyphs) for line in split_lines(glyphs)] == [2, 1]
+def word(text, x0=0.0, baseline=100.0):
+    return [glyph(c, x0 + 5 * i, baseline=baseline, font="Times-Roman") for i, c in enumerate(text)]
+
+
+def test_text_line_keeps_inline_fraction():
+    glyphs = (*word("onobtientdonc"), glyph("a", 80, baseline=93), glyph("b", 80, baseline=107))
+    page = PageContent(0, 500, 700, glyphs, (Rule(79, 86, 98),))
+    blocks = page_blocks(page)
+    assert [b.kind for b in blocks] == ["text"]
+    assert blocks[0].markdown() == r"onobtientdonc $\frac{a}{b}$"
+
+
+def test_limit_goes_to_its_integral_not_the_nearest_text():
+    integral = glyph("?", 100, baseline=112, font="CMEX10", name="integraldisplay")
+    row = [integral, *[glyph(c, 112 + 5 * i, baseline=125.6) for i, c in enumerate("fdtxy")]]
+    glyphs = (*word("unelignedetexteici", baseline=100), glyph("b", 104, baseline=113, size=7), *row)
+    blocks = page_blocks(PageContent(0, 500, 700, glyphs, ()))
+    assert blocks[0].kind == "text" and "$" not in blocks[0].markdown()
+    assert any(g.text == "b" for g in blocks[1].glyphs)
+
+
+def test_display_between_text_lines_is_one_block():
+    rows = [glyph(c, 100 + 5 * i, baseline=130 + 14 * j) for j, c in enumerate("xyz") for i in range(3)]
+    glyphs = (*word("unelignedetexteici"), *rows, *word("unelignedetextefin", baseline=190))
+    blocks = page_blocks(PageContent(0, 500, 700, glyphs, ()))
+    assert [b.kind for b in blocks] == ["text", "math", "text"]
 
 
 def test_score_treats_spellings_alike():

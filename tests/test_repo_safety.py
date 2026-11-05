@@ -25,6 +25,25 @@ def test_report_holds_numbers_not_formulas():
     assert "latex" not in json.loads(report)["test"]
 
 
+def test_corpus_report_has_no_book_text():
+    report = json.loads((ROOT / "reports" / "corpus.json").read_text())
+    assert set(report) == {"volumes", "references", "hand_check", "totals"}
+
+
+def test_hand_checks_hold_ids_not_text():
+    checks = json.loads((ROOT / "data" / "hand_checks" / "structure.json").read_text())
+    assert set(checks["links"][0]) == {"source", "target", "correct"}
+    assert set(checks["exercise_solution_pairs"][0]) == {"exercise", "paired_correctly", "solution_ends_cleanly"}
+
+
+def test_readme_corpus_numbers_come_from_the_report():
+    report = json.loads((ROOT / "reports" / "corpus.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"{report['totals']['exercise_solution_pairs']} exercises paired" in readme
+    assert f"{report['references']['linked']} links between results" in readme
+    assert f"{report['references']['across_volumes']} of those links cross" in readme
+
+
 def test_readme_numbers_come_from_the_report():
     test = json.loads((ROOT / "reports" / "extraction.json").read_text())["test"]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

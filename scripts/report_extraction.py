@@ -27,8 +27,8 @@ def main() -> None:
             "Similarity is 1 minus the normalised token edit distance to a transcription made from the page image.",
             "Exact means every token matches after canonicalisation, which ignores braces and spacing.", ""]
     text += section("Held-out test set", report["test"])
-    text += section("Tuning set (the extractor was developed against this)", report["tuning"])
     text += ["## How to read this", "",
+             "- This sample was drawn after the code was frozen. Earlier samples were used for development.",
              "- The transcriptions were made by Claude from page images, before seeing outputs for the test set. "
              "They have not yet been fully checked by a person.",
              "- Scored formulas exclude crops the detector got wrong, which are often matrices and multi-line "

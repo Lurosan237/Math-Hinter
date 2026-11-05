@@ -1,0 +1,357 @@
+{
+ "method": "Read by Claude from a random sample of the final build; ids only, verdicts not yet checked by a person",
+ "exercise_solution_pairs": [
+  {
+   "exercise": "v1:03426",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00363",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:02242",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:03793",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:00908",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:02195",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:01182",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:01549",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:00765",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02237",
+   "paired_correctly": true,
+   "solution_ends_cleanly": false
+  },
+  {
+   "exercise": "v2:02677",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02288",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:03332",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00446",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:03293",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:00017",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:03266",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:01708",
+   "paired_correctly": true,
+   "solution_ends_cleanly": false
+  },
+  {
+   "exercise": "v3:00124",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:01492",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:03165",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00709",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:00007",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00548",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:03340",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00064",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:03335",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:00428",
+   "paired_correctly": true,
+   "solution_ends_cleanly": false
+  },
+  {
+   "exercise": "v2:01349",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:00090",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:00231",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:03335",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:02130",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v3:00761",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02209",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02068",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02035",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v2:02408",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:00704",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  },
+  {
+   "exercise": "v1:03755",
+   "paired_correctly": true,
+   "solution_ends_cleanly": true
+  }
+ ],
+ "links": [
+  {
+   "source": "v2:02714",
+   "target": "v2:02653",
+   "correct": true
+  },
+  {
+   "source": "v1:02972",
+   "target": "v1:02333",
+   "correct": true
+  },
+  {
+   "source": "v2:01187",
+   "target": "v2:01156",
+   "correct": true
+  },
+  {
+   "source": "v2:01742",
+   "target": "v2:01708",
+   "correct": true
+  },
+  {
+   "source": "v2:02095",
+   "target": "v2:01014",
+   "correct": true
+  },
+  {
+   "source": "v1:00962",
+   "target": "v1:01602",
+   "correct": true
+  },
+  {
+   "source": "v1:02697",
+   "target": "v1:02661",
+   "correct": true
+  },
+  {
+   "source": "v2:01014",
+   "target": "v2:00990",
+   "correct": true
+  },
+  {
+   "source": "v2:02253",
+   "target": "v2:02226",
+   "correct": true
+  },
+  {
+   "source": "v1:01501",
+   "target": "v1:01471",
+   "correct": true
+  },
+  {
+   "source": "v1:02325",
+   "target": "v1:02261",
+   "correct": true
+  },
+  {
+   "source": "v2:02559",
+   "target": "v2:01957",
+   "correct": true
+  },
+  {
+   "source": "v1:01487",
+   "target": "v1:01458",
+   "correct": true
+  },
+  {
+   "source": "v3:01939",
+   "target": "v3:01916",
+   "correct": true
+  },
+  {
+   "source": "v2:00418",
+   "target": "v2:00374",
+   "correct": true
+  },
+  {
+   "source": "v1:01519",
+   "target": "v1:01514",
+   "correct": true
+  },
+  {
+   "source": "v3:00891",
+   "target": "v3:00855",
+   "correct": true
+  },
+  {
+   "source": "v3:00409",
+   "target": "v3:00360",
+   "correct": true
+  },
+  {
+   "source": "v3:00851",
+   "target": "v3:01021",
+   "correct": true
+  },
+  {
+   "source": "v1:01227",
+   "target": "v1:01191",
+   "correct": true
+  },
+  {
+   "source": "v1:01433",
+   "target": "v1:00790",
+   "correct": true
+  },
+  {
+   "source": "v2:03110",
+   "target": "v2:03091",
+   "correct": true
+  },
+  {
+   "source": "v1:00610",
+   "target": "v1:00504",
+   "correct": true
+  },
+  {
+   "source": "v2:03184",
+   "target": "v2:03173",
+   "correct": true
+  },
+  {
+   "source": "v2:01806",
+   "target": "v2:01641",
+   "correct": true
+  },
+  {
+   "source": "v3:01678",
+   "target": "v3:01652",
+   "correct": true
+  },
+  {
+   "source": "v3:00804",
+   "target": "v3:00747",
+   "correct": true
+  },
+  {
+   "source": "v3:00952",
+   "target": "v3:01021",
+   "correct": true
+  },
+  {
+   "source": "v2:03808",
+   "target": "v2:03282",
+   "correct": true
+  },
+  {
+   "source": "v3:00884",
+   "target": "v3:00850",
+   "correct": true
+  }
+ ]
+}

@@ -11,14 +11,10 @@ import subprocess
 from hashlib import sha256
 from pathlib import Path
 
-from mathhinter.extract.latex import glyph_latex, to_latex
-from mathhinter.extract.pdfchars import Glyph, read_pages
+from mathhinter.extract.latex import glyph_latex
+from mathhinter.extract.layout import page_blocks
+from mathhinter.extract.pdfchars import read_pages
 from mathhinter.extract.score import similarity, tokens
-
-
-def in_box(g: Glyph, box) -> bool:
-    x = (g.x0 + g.x1) / 2
-    return box[0] - 1 <= x <= box[2] + 1 and box[1] - 1 <= g.baseline <= box[3] + 1
 
 
 def poppler(book: str, page: int, box) -> str:
@@ -52,10 +48,11 @@ def main() -> None:
         book = args.books[r["volume"] - 1]
         page = next(read_pages(book, [r["page"]]))
         box = r["bbox"]
-        glyphs = [g for g in page.glyphs if in_box(g, box)]
-        rules = [q for q in page.rules if box[0] - 3 <= q.x0 and q.x1 <= box[2] + 3 and box[1] - 2 <= q.y <= box[3] + 2]
-        tools["font_aware"][r["id"]] = to_latex(glyphs, rules)
-        tools["font_symbols_no_layout"][r["id"]] = "".join(glyph_latex(g) for g in sorted(glyphs, key=lambda g: g.x0))
+        # The formula as the page parser sees it, found by the box recorded when it was sampled.
+        block = min(page_blocks(page), key=lambda b: abs(b.top - box[1]) + abs(b.x0 - box[0]) + abs(b.bottom - box[3]))
+        tools["font_aware"][r["id"]] = block.latex()
+        ordered = sorted(block.glyphs, key=lambda g: g.x0)
+        tools["font_symbols_no_layout"][r["id"]] = "".join(glyph_latex(g) for g in ordered)
         tools["poppler"][r["id"]] = poppler(book, r["page"], box)
     report: dict = {"gold_sha256": sha256(Path(args.gold).read_bytes()).hexdigest(),
                     "formulas_sampled": len(rows) + len(excluded), "scored": len(rows),

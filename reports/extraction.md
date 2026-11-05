@@ -7,30 +7,19 @@ Exact means every token matches after canonicalisation, which ignores braces and
 
 ## Held-out test set
 
-44 of 60 sampled formulas scored; 16 had crops that were cut off or merged with other content.
+56 of 60 sampled formulas scored; 4 had crops that were cut off or merged with other content.
 
 | Tool | Token similarity (95% CI) | Symbols only | Exact | Vol. 1 | Vol. 2 | Vol. 3 |
 |---|---|---|---|---|---|---|
-| Poppler `pdftotext` | 0.648 (0.591-0.703) | 0.736 | 2% | 0.749 | 0.611 | 0.594 |
-| Our font-aware extractor | 0.941 (0.905-0.972) | 0.948 | 57% | 0.951 | 0.872 | 0.975 |
-| Our glyph names, no layout | 0.649 (0.601-0.701) | 0.737 | 7% | 0.713 | 0.600 | 0.631 |
+| Poppler `pdftotext` | 0.708 (0.643-0.770) | 0.776 | 11% | 0.769 | 0.603 | 0.755 |
+| Our font-aware extractor | 0.966 (0.945-0.984) | 0.966 | 70% | 0.958 | 0.963 | 0.980 |
+| Our glyph names, no layout | 0.724 (0.671-0.776) | 0.792 | 11% | 0.719 | 0.656 | 0.801 |
 
-Gold file SHA-256: `0565de8532ca01f345f306a7729d4fce567c7ced82597268ee3ca6811bbababe`
-
-## Tuning set (the extractor was developed against this)
-
-52 of 60 sampled formulas scored; 8 had crops that were cut off or merged with other content.
-
-| Tool | Token similarity (95% CI) | Symbols only | Exact | Vol. 1 | Vol. 2 | Vol. 3 |
-|---|---|---|---|---|---|---|
-| Poppler `pdftotext` | 0.698 (0.639-0.755) | 0.773 | 10% | 0.746 | 0.663 | 0.681 |
-| Our font-aware extractor | 0.951 (0.916-0.981) | 0.955 | 73% | 0.994 | 0.936 | 0.922 |
-| Our glyph names, no layout | 0.703 (0.646-0.756) | 0.778 | 6% | 0.748 | 0.632 | 0.716 |
-
-Gold file SHA-256: `8a9ad2ebdd34631488ec4ebca4202bc9a3fdce7cfc3b8e5b7b2a4c04152d3d47`
+Gold file SHA-256: `ac2a735f1f26121acd9fc78d96d0290bee16ecb299d8709515277c0edadb3a30`
 
 ## How to read this
 
+- This sample was drawn after the code was frozen. Earlier samples were used for development.
 - The transcriptions were made by Claude from page images, before seeing outputs for the test set. They have not yet been fully checked by a person.
 - Scored formulas exclude crops the detector got wrong, which are often matrices and multi-line displays, so these scores are likely optimistic for those layouts.
 - Book text can't be published, so the gold files stay private. The hash identifies the version used.

@@ -50,6 +50,13 @@ These exist because the easy version of each number would be meaningless.
 Headline metrics: first-wrong-step accuracy, how often hints leak the answer, how often a wrong answer is marked
 `vérifié`, the share of answers that can be checked at all, citation support, and abstention on trick questions.
 
+## Prerequisite tracing
+
+The books' explicit references link results within a volume, but none crosses volumes and most proofs have none.
+Tracing across volumes needs a second signal. Candidates to test: each volume's index of terms, definitions shared
+between volumes, and retrieval over definitions. Whichever is used gets its own hand-labelled score, and the tracer
+reports which kind of link it followed, since a book's own reference is stronger evidence than a similar term.
+
 ## Running on no budget
 
 Free LLM tiers change without notice, so every response is cached and committed where the licence allows, the final
@@ -60,7 +67,7 @@ the browser and an optional live mode using the visitor's own key.
 ## Build order
 
 1. Formula extraction (done, see `reports/extraction.md`).
-2. Corpus: structure, exercise pairs, prerequisite graph.
+2. Corpus: structure, exercise pairs, prerequisite graph (done, see `reports/corpus.md`).
 3. Retrieval, with the leak protection.
 4. Agent loop.
 5. Full evaluation.

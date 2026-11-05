@@ -255,11 +255,15 @@ def _fold_limits(atoms: list[Atom]) -> list[Atom]:
         for group in (below, above):
             if group:
                 level = group[0].baseline
-                for a in sorted(atoms, key=lambda a: a.x0):
-                    if a is op or a in group or a.size >= op.size * 0.95:
-                        continue
-                    if abs(a.baseline - level) < 3.5 and any(a.x0 - b.x1 < 2 and b.x0 - a.x1 < 2 for b in group):
-                        group.append(a)
+                grew = True
+                while grew:
+                    grew = False
+                    for a in atoms:
+                        if a is op or any(a is b for b in group) or a.size >= op.size * 0.95:
+                            continue
+                        if abs(a.baseline - level) < 3.5 and any(a.x0 - b.x1 < 2 and b.x0 - a.x1 < 2 for b in group):
+                            group.append(a)
+                            grew = True
         latex = op.latex
         if below:
             latex += f"_{{{_linear(below)}}}"

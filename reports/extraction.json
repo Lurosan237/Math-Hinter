@@ -1,124 +1,62 @@
 {
-  "tuning": {
-    "gold_sha256": "8a9ad2ebdd34631488ec4ebca4202bc9a3fdce7cfc3b8e5b7b2a4c04152d3d47",
+  "test": {
+    "gold_sha256": "ac2a735f1f26121acd9fc78d96d0290bee16ecb299d8709515277c0edadb3a30",
     "formulas_sampled": 60,
-    "scored": 52,
-    "excluded_detection_errors": 8,
+    "scored": 56,
+    "excluded_detection_errors": 4,
     "per_tool": {
       "poppler": {
-        "structure_similarity": 0.698,
+        "structure_similarity": 0.708,
         "structure_ci95": [
-          0.639,
-          0.755
+          0.643,
+          0.77
         ],
-        "symbol_similarity": 0.773,
+        "symbol_similarity": 0.776,
         "symbol_ci95": [
-          0.711,
-          0.83
+          0.709,
+          0.839
         ],
-        "exact_share": 0.096,
+        "exact_share": 0.107,
         "by_volume_structure": {
-          "1": 0.746,
-          "2": 0.663,
-          "3": 0.681
+          "1": 0.769,
+          "2": 0.603,
+          "3": 0.755
         }
       },
       "font_aware": {
-        "structure_similarity": 0.951,
+        "structure_similarity": 0.966,
         "structure_ci95": [
-          0.916,
-          0.981
-        ],
-        "symbol_similarity": 0.955,
-        "symbol_ci95": [
-          0.92,
+          0.945,
           0.984
         ],
-        "exact_share": 0.731,
+        "symbol_similarity": 0.966,
+        "symbol_ci95": [
+          0.942,
+          0.985
+        ],
+        "exact_share": 0.696,
         "by_volume_structure": {
-          "1": 0.994,
-          "2": 0.936,
-          "3": 0.922
+          "1": 0.958,
+          "2": 0.963,
+          "3": 0.98
         }
       },
       "font_symbols_no_layout": {
-        "structure_similarity": 0.703,
+        "structure_similarity": 0.724,
         "structure_ci95": [
-          0.646,
-          0.756
+          0.671,
+          0.776
         ],
-        "symbol_similarity": 0.778,
+        "symbol_similarity": 0.792,
         "symbol_ci95": [
-          0.72,
-          0.833
+          0.739,
+          0.843
         ],
-        "exact_share": 0.058,
+        "exact_share": 0.107,
         "by_volume_structure": {
-          "1": 0.748,
-          "2": 0.632,
-          "3": 0.716
-        }
-      }
-    }
-  },
-  "test": {
-    "gold_sha256": "0565de8532ca01f345f306a7729d4fce567c7ced82597268ee3ca6811bbababe",
-    "formulas_sampled": 60,
-    "scored": 44,
-    "excluded_detection_errors": 16,
-    "per_tool": {
-      "poppler": {
-        "structure_similarity": 0.648,
-        "structure_ci95": [
-          0.591,
-          0.703
-        ],
-        "symbol_similarity": 0.736,
-        "symbol_ci95": [
-          0.676,
-          0.795
-        ],
-        "exact_share": 0.023,
-        "by_volume_structure": {
-          "1": 0.749,
-          "2": 0.611,
-          "3": 0.594
-        }
-      },
-      "font_aware": {
-        "structure_similarity": 0.941,
-        "structure_ci95": [
-          0.905,
-          0.972
-        ],
-        "symbol_similarity": 0.948,
-        "symbol_ci95": [
-          0.913,
-          0.977
-        ],
-        "exact_share": 0.568,
-        "by_volume_structure": {
-          "1": 0.951,
-          "2": 0.872,
-          "3": 0.975
-        }
-      },
-      "font_symbols_no_layout": {
-        "structure_similarity": 0.649,
-        "structure_ci95": [
-          0.601,
-          0.701
-        ],
-        "symbol_similarity": 0.737,
-        "symbol_ci95": [
-          0.685,
-          0.789
-        ],
-        "exact_share": 0.068,
-        "by_volume_structure": {
-          "1": 0.713,
-          "2": 0.6,
-          "3": 0.631
+          "1": 0.719,
+          "2": 0.656,
+          "3": 0.801
         }
       }
     }
