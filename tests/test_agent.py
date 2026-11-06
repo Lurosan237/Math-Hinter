@@ -4,7 +4,7 @@ import pytest
 
 from mathhinter.agent.course import CourseSearch
 from mathhinter.agent.scoring import chance_exact_line, difference_interval, pair_score, summarise
-from mathhinter.agent.tutor import MAX_TOOL_CALLS, Tutor, number_lines, parse_action
+from mathhinter.agent.tutor import MAX_TOOL_CALLS, Tutor, last_action, number_lines, parse_action
 from mathhinter.llm.client import LLMError, QuotaExhausted
 
 
@@ -110,6 +110,11 @@ def test_api_error_is_recorded_but_quota_stops_the_run(course):
 ])
 def test_parse_survives_latex(text):
     assert "hint" in parse_action(text)
+
+
+def test_action_can_be_recovered_from_reasoning():
+    assert parse_action(last_action('Je cherche. {"x": 1} puis {"action": "search_course", "query": "a"}'))["query"] == "a"
+    assert last_action("rien") is None and last_action(None) is None
 
 
 def test_parse_rejects_non_objects():

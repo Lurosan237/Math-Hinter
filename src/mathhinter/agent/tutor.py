@@ -77,6 +77,13 @@ def parse_action(text: str | None) -> dict | None:
     return None
 
 
+def last_action(reasoning: str | None) -> str | None:
+    if not reasoning:
+        return None
+    start = reasoning.rfind('{"action"')
+    return reasoning[start:] if start >= 0 else None
+
+
 def _double_all_latex(chunk: str) -> str:
     """\\frac starts with a valid JSON escape, \\f, so it needs doubling too."""
     return re.sub(r"(?<!\\)\\(?=[A-Za-z])", r"\\\\", chunk)
@@ -112,7 +119,9 @@ class Tutor:
         response = self.client.chat(self.model, messages, temperature=0.0, max_tokens=MAX_TOKENS)
         review.llm_calls += 1
         review.tokens += (response.get("usage") or {}).get("total_tokens", 0)
-        return response["choices"][0]["message"].get("content")
+        message = response["choices"][0]["message"]
+        # This model sometimes leaves the reply empty and ends its reasoning with the JSON instead.
+        return message.get("content") or last_action(message.get("reasoning"))
 
     @staticmethod
     def _task(statement: str, attempt: str) -> str:
