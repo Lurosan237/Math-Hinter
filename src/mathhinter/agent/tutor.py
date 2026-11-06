@@ -19,19 +19,21 @@ ANSWER_FORMAT = """Reply with one JSON object and nothing else:
  "hint": "<in French, for the student: a question or pointer that helps them find the error themselves.
  Never state the corrected result or how to fix it. Empty if correct>",
  "citations": [<ids of the passages your judgement relies on, or an empty list>]}
-Use backslashes in LaTeX as JSON requires. Only cite ids you were shown."""
+Use backslashes in LaTeX as JSON requires. Citations are passage ids in square brackets like v1:00123, never line
+numbers. Only cite ids you were shown."""
 
 ROLE = """You review a student's attempt at a French university maths exercise. Each line of the attempt is numbered.
 Decide whether the attempt contains a mathematical error. The attempt may be entirely correct, so don't assume there is
-an error. The text comes from PDF extraction, so ignore odd layout and judge the mathematics. If there is an error, find
-the first line where a false statement appears."""
+an error. The text comes from PDF extraction, so symbols can be garbled or lost. A line that looks garbled is not an
+error: flag only a clear mathematical mistake, and answer "correct" if you find none. If there is an error, find the
+first line where a false statement appears."""
 
 TOOLS = f"""You may use a tool first, by replying with exactly one JSON object:
 {{"action": "search_course", "query": "<French keywords>"}} searches the course for definitions and results.
 {{"action": "check_equality", "left": "<LaTeX>", "right": "<LaTeX>"}} checks an equality with a computer algebra system.
 It answers "vérifié" (an identity if letters are ordinary numbers), "réfuté" (numbers differ, though notation can cause
 this), or "non vérifiable". It's evidence, not proof, and most lines of a proof are "non vérifiable".
-You have at most {MAX_TOOL_CALLS} tool calls. When ready, give your answer.
+You have at most {MAX_TOOL_CALLS} tool calls. Search the course at least once before answering.
 """
 
 
@@ -99,7 +101,7 @@ def _fill(review: Review, action: dict, line_count: int) -> None:
     review.explanation = str(action.get("explanation", ""))
     review.hint = str(action.get("hint", ""))
     citations = action.get("citations")
-    review.citations = [str(c) for c in citations] if isinstance(citations, list) else []
+    review.citations = [str(c).strip("[]") for c in citations] if isinstance(citations, list) else []
 
 
 class Tutor:
@@ -164,6 +166,11 @@ class Tutor:
                 review.failure = "unparseable reply"
                 return review
             if action.get("action") == "answer":
+                if not any(call["tool"] == "search_course" for call in review.tool_calls):
+                    messages += [{"role": "assistant", "content": reply},
+                                 {"role": "user", "content": "Search the course first, as instructed."}]
+                    if review.llm_calls < MAX_TOOL_CALLS:
+                        continue
                 review.failure = None
                 _fill(review, action, attempt.count("\n") + 1)
                 return review

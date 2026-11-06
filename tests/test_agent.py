@@ -80,6 +80,12 @@ def test_agent_uses_tools_then_answers(course):
     assert "t" in review.shown and "s" not in review.shown
 
 
+def test_agent_is_sent_back_to_search_once_if_it_skips_the_course(course):
+    script = Script(ANSWER, {"action": "search_course", "query": "matrice"}, ANSWER)
+    review = Tutor(script, "m", course).agent("Exercice", "a\nb", "e", "s")
+    assert review.llm_calls == 3 and review.tool_calls[0]["tool"] == "search_course"
+
+
 def test_agent_stops_at_the_step_limit(course):
     script = Script(*[{"action": "search_course", "query": "x"}] * 20)
     review = Tutor(script, "m", course).agent("Exercice", "a\nb", "e", "s")

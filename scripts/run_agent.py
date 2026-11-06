@@ -18,6 +18,7 @@ PRIVATE = ROOT / "data" / "private"
 MAX_ATTEMPT_CHARS = 2500
 CONFIGS = ("llm_only", "rag", "rag_leak", "agent")
 SAMPLE_SEED = 77
+LEAK_EXERCISES = 10  # the leak check costs quota and needs fewer exercises
 
 
 def sample(attempts: list[dict], split: str, count: int) -> list[str]:
@@ -63,6 +64,8 @@ def main() -> None:
             statement = units[attempt["exercise"]]["text"]
             for config in CONFIGS:
                 if (config, attempt["exercise"], attempt["kind"]) in done:
+                    continue
+                if config == "rag_leak" and attempt["exercise"] not in chosen[:LEAK_EXERCISES]:
                     continue
                 exercise, solution, text = attempt["exercise"], attempt["solution"], attempt["text"]
                 try:
