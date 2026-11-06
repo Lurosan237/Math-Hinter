@@ -18,10 +18,15 @@ GROQ_URL = "https://api.groq.com/openai/v1"
 # Without this, some API front ends refuse Python's default client name.
 USER_AGENT = "math-hinter/0.1"
 RETRYABLE = {429, 500, 502, 503, 504}
+MAX_WAIT_SECONDS = 120
 
 
 class LLMError(RuntimeError):
     """The API refused or failed. The message never contains the key."""
+
+
+class QuotaExhausted(LLMError):
+    """A long wait is needed, such as for a daily limit. A run should stop here and resume later."""
 
 
 def read_env(path: Path) -> dict[str, str]:
@@ -45,7 +50,7 @@ class Client:
     api_key: str = field(repr=False)
     cache_dir: Path | None = None
     base_url: str = GROQ_URL
-    max_retries: int = 5
+    max_retries: int = 8
     opener: object = urllib.request.urlopen
     sleep: object = time.sleep
 
@@ -63,8 +68,10 @@ class Client:
                 detail = error.read().decode(errors="replace")[:300]
                 if error.code not in RETRYABLE or attempt == self.max_retries:
                     raise LLMError(f"HTTP {error.code}: {detail}".replace(self.api_key, "***")) from None
-                wait = error.headers.get("retry-after") if error.headers else None
-                self.sleep(min(float(wait), 120) if wait else 2**attempt)
+                wait = float(error.headers.get("retry-after") or 0) if error.headers else 0
+                if wait > MAX_WAIT_SECONDS:
+                    raise QuotaExhausted(f"limit reached, try again in {wait:.0f}s") from None
+                self.sleep(wait + 1 if wait else 2**attempt)
             except urllib.error.URLError as error:
                 if attempt == self.max_retries:
                     raise LLMError(f"could not connect: {error.reason}") from None
