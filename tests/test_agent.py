@@ -113,7 +113,8 @@ def test_parse_survives_latex(text):
 
 
 def test_action_can_be_recovered_from_reasoning():
-    assert parse_action(last_action('Je cherche. {"x": 1} puis {"action": "search_course", "query": "a"}'))["query"] == "a"
+    reasoning = 'Je cherche. {"x": 1} puis {"action": "search_course", "query": "a"}'
+    assert parse_action(last_action(reasoning))["query"] == "a"
     assert last_action("rien") is None and last_action(None) is None
 
 
