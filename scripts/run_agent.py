@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import pickle
 import random
 import sys
 import time
@@ -32,6 +33,18 @@ def sample(attempts: list[dict], split: str, count: int) -> list[str]:
     return usable[:count]
 
 
+def load_course(units: list[dict]) -> CourseSearch:
+    """Building the search index takes about a minute on a small machine, so it's kept between runs."""
+    path = PRIVATE / "course_index.pkl"
+    if path.exists():
+        with path.open("rb") as handle:
+            return pickle.load(handle)
+    course = CourseSearch(units)
+    with path.open("wb") as handle:
+        pickle.dump(course, handle)
+    return course
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--split", default="dev", choices=["dev", "test"])
@@ -49,7 +62,7 @@ def main() -> None:
     print(f"{len(chosen)} exercises, {len(work)} attempts", flush=True)
     key = read_env(ROOT / ".env")["GROQ_API_KEY"]
     client = Client(key, cache_dir=PRIVATE / "llm_cache")
-    tutor = Tutor(client, args.model, CourseSearch(list(units.values())))
+    tutor = Tutor(client, args.model, load_course(list(units.values())))
     out_dir = PRIVATE / "agent_runs" / args.name
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "manifest.json").write_text(json.dumps({"exercises": chosen, "model": args.model}), encoding="utf-8")
