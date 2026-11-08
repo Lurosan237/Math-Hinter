@@ -1,0 +1,121 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "exercises": 25,
+  "sampled": 25,
+  "configs": {
+    "llm_only": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.76,
+      "false_alarm": 0.2,
+      "exact_line": 0.68,
+      "within_one_line": 0.72,
+      "exact_line_when_flagged": 0.895,
+      "invalid": 0.04,
+      "both_right": 0.52,
+      "both_right_ci95": [
+        0.32,
+        0.72
+      ],
+      "exercises": 25,
+      "tokens_per_review": 1597,
+      "calls_per_review": 1.0,
+      "failures": {
+        "unparseable reply": 2
+      }
+    },
+    "rag": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.84,
+      "false_alarm": 0.16,
+      "exact_line": 0.64,
+      "within_one_line": 0.72,
+      "exact_line_when_flagged": 0.762,
+      "invalid": 0.06,
+      "both_right": 0.52,
+      "both_right_ci95": [
+        0.32,
+        0.72
+      ],
+      "exercises": 25,
+      "tokens_per_review": 2762,
+      "calls_per_review": 1.0,
+      "failures": {
+        "wrong without a valid line": 1,
+        "unparseable reply": 3
+      }
+    },
+    "agent": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.6,
+      "false_alarm": 0.24,
+      "exact_line": 0.52,
+      "within_one_line": 0.56,
+      "exact_line_when_flagged": 0.867,
+      "invalid": 0.1,
+      "both_right": 0.4,
+      "both_right_ci95": [
+        0.2,
+        0.6
+      ],
+      "exercises": 25,
+      "tokens_per_review": 4780,
+      "calls_per_review": 2.8,
+      "failures": {
+        "api": 3,
+        "unparseable reply": 2
+      }
+    },
+    "rag_leak": {
+      "wrong_attempts": 10,
+      "controls": 10,
+      "error_flagged": 0.7,
+      "false_alarm": 0.2,
+      "exact_line": 0.5,
+      "within_one_line": 0.6,
+      "exact_line_when_flagged": 0.714,
+      "invalid": 0.0,
+      "both_right": 0.5,
+      "both_right_ci95": [
+        0.2,
+        0.8
+      ],
+      "exercises": 10,
+      "tokens_per_review": 2568,
+      "calls_per_review": 1.0,
+      "failures": {}
+    }
+  },
+  "chance_exact_line": 0.249,
+  "rag_minus_llm_only": {
+    "exercises": 25,
+    "difference": 0.0,
+    "ci95": [
+      -0.2,
+      0.2
+    ]
+  },
+  "agent_minus_llm_only": {
+    "exercises": 25,
+    "difference": -0.12,
+    "ci95": [
+      -0.36,
+      0.12
+    ]
+  },
+  "agent_usage": {
+    "reviews_with_a_citation": 32,
+    "citations": 37,
+    "citations_to_passages_shown": 37,
+    "searches": 50,
+    "equality_checks": 0,
+    "check_outcomes": {}
+  },
+  "own_solution_shown": {
+    "rag": 0,
+    "agent": 0,
+    "rag_leak": 0
+  }
+}

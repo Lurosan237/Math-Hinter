@@ -74,6 +74,23 @@ def test_evalset_report_has_no_book_text():
     assert "\\\\" not in (ROOT / "reports" / "checker.json").read_text()
 
 
+def test_readme_agent_numbers_come_from_the_report():
+    report = json.loads((ROOT / "reports" / "agent.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    for key, label in (("llm_only", "LLM alone"), ("rag", "RAG"), ("agent", "Agent")):
+        row = report["configs"][key]
+        low, high = row["both_right_ci95"]
+        assert f"| {label} | {row['both_right']:.2f} ({low:.2f}-{high:.2f}) | {row['exact_line']:.2f} |" in readme
+    assert f"same {report['exercises']} held-out exercises" in readme
+
+
+def test_agent_hand_checks_hold_ids_not_text():
+    hand = json.loads((ROOT / "data" / "hand_checks" / "agent.json").read_text())
+    assert set(hand["hints"][0]) == {"config", "exercise", "kind", "points_at_the_error", "nearly_gives_the_answer",
+                                     "states_the_correction"}
+    assert "$" not in (ROOT / "reports" / "agent.json").read_text()
+
+
 def test_readme_numbers_come_from_the_report():
     test = json.loads((ROOT / "reports" / "extraction.json").read_text())["test"]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")

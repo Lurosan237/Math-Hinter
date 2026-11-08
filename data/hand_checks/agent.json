@@ -1,0 +1,215 @@
+{
+ "method": "Read by Claude after the test run, not yet by a person. A hint points at the error if it steers the student towards the line and idea that are wrong. It nearly gives the answer if the question's answer is the correction. A citation supports the judgement if the passage is what the explanation relies on.",
+ "hints": [
+  {
+   "config": "rag",
+   "exercise": "v3:00844",
+   "kind": "number",
+   "points_at_the_error": false,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "llm_only",
+   "exercise": "v2:01980",
+   "kind": "word",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:01980",
+   "kind": "word",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "llm_only",
+   "exercise": "v3:00101",
+   "kind": "inverted_fraction",
+   "points_at_the_error": false,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:01151",
+   "kind": "sign",
+   "points_at_the_error": false,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "llm_only",
+   "exercise": "v3:00941",
+   "kind": "number",
+   "points_at_the_error": false,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v1:02783",
+   "kind": "inequality",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "llm_only",
+   "exercise": "v1:03793",
+   "kind": "number",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": true,
+   "states_the_correction": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v3:00131",
+   "kind": "exponent",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "llm_only",
+   "exercise": "v1:03251",
+   "kind": "sign",
+   "points_at_the_error": false,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:00289",
+   "kind": "number",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": true,
+   "states_the_correction": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v2:01151",
+   "kind": "sign",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v2:01980",
+   "kind": "word",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:01382",
+   "kind": "exponent",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v1:02783",
+   "kind": "inequality",
+   "points_at_the_error": true,
+   "nearly_gives_the_answer": false,
+   "states_the_correction": false
+  }
+ ],
+ "citations": [
+  {
+   "config": "rag",
+   "exercise": "v1:03251",
+   "kind": "sign",
+   "cited": "v1:03212",
+   "supports": true
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:00289",
+   "kind": "none",
+   "cited": "v1:01754",
+   "supports": true
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:02962",
+   "kind": "none",
+   "cited": "v2:02961",
+   "supports": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:01980",
+   "kind": "word",
+   "cited": "v2:01978",
+   "supports": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v2:01360",
+   "kind": "inequality",
+   "cited": "v2:01359",
+   "supports": true
+  },
+  {
+   "config": "agent",
+   "exercise": "v1:03251",
+   "kind": "none",
+   "cited": "v1:03249",
+   "supports": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:01360",
+   "kind": "inequality",
+   "cited": "v1:01242",
+   "supports": false
+  },
+  {
+   "config": "rag",
+   "exercise": "v2:00165",
+   "kind": "none",
+   "cited": "v2:00164",
+   "supports": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v1:03251",
+   "kind": "sign",
+   "cited": "v1:03212",
+   "supports": true
+  },
+  {
+   "config": "agent",
+   "exercise": "v2:00165",
+   "kind": "number",
+   "cited": "v2:00164",
+   "supports": false
+  },
+  {
+   "config": "agent",
+   "exercise": "v1:03755",
+   "kind": "none",
+   "cited": "v1:03733",
+   "supports": true
+  },
+  {
+   "config": "agent",
+   "exercise": "v1:02783",
+   "kind": "inequality",
+   "cited": "v1:02727",
+   "supports": true
+  }
+ ],
+ "false_alarms": {
+  "read": 15,
+  "from_garbled_extraction": 2
+ }
+}

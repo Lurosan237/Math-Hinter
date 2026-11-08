@@ -69,6 +69,13 @@ results, and hides the exercise's own solution. For exercises from the book it a
 Dense embeddings remain to be tested on a machine that can download them. Recall is modest, so the agent must be able
 to say it found nothing useful rather than build on a weak passage.
 
+## What the evaluation changed
+
+On injected errors, retrieval and tools gave no measurable benefit over the model alone, and the agent never chose
+to use the checker. The next version should test whether the course helps where the model alone is weakest: real
+student mistakes, misuse of a specific theorem, and the book's own conventions. Until then, the plainest honest
+design is the model alone with a hint, plus retrieval only to show the student where to read.
+
 ## Running on no budget
 
 Free LLM tiers change without notice, so every response is cached and committed where the licence allows, the final
@@ -81,6 +88,6 @@ the browser and an optional live mode using the visitor's own key.
 1. Formula extraction (done, see `reports/extraction.md`).
 2. Corpus: structure, exercise pairs, prerequisite graph (done, see `reports/corpus.md`).
 3. Retrieval, with the leak protection (done, see `reports/retrieval.md`).
-4. Agent loop.
+4. Agent loop (done, see `reports/agent.md`).
 5. Full evaluation.
 6. Public demo.

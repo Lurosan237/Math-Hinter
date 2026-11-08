@@ -2,8 +2,7 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** between stages 3 and 4. The books are parsed and searchable, and the test set and maths checker exist.
-> The agent itself is not built yet. See the [design](docs/design.md).
+> **Status:** stage 4 of 6. The tutor is built and evaluated. Next: real student attempts and a public demo. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -99,6 +98,33 @@ On 3000 equalities from the books' proofs and solutions:
 - **`réfuté` isn't either.** All 10 were false alarms on correct equalities, mostly from notation such as Legendre symbols.
 - **When it can check, it catches slips.** Of 38 corrupted copies of verified equalities, 3 stayed verified, all harmless ones.
 
+## Stage 4: does the tutor find the mistake?
+
+Three versions review the same 25 held-out exercises with the same free model (`openai/gpt-oss-120b`): the LLM alone, RAG with
+course passages, and an agent that chooses its own searches and maths checks. Each exercise has a wrong attempt and an
+unchanged control, and a review only counts if it finds the exact wrong line **and** leaves the control alone
+([full report](reports/agent.md)).
+
+| | Both right (95% CI) | Exact line | False alarm |
+|---|---|---|---|
+| LLM alone | 0.52 (0.32-0.72) | 0.68 | 0.20 |
+| RAG | 0.52 (0.32-0.72) | 0.64 | 0.16 |
+| Agent | 0.40 (0.20-0.60) | 0.52 | 0.24 |
+
+**The course and the tools didn't help.** RAG tied the LLM alone, and the agent did slightly worse while using three
+times the tokens. With 25 exercises the intervals are wide, so this shows no benefit rather than proof of harm.
+
+- **The agent never used the maths checker.** It searched 50 times and called the checker zero times, which fits stage 3:
+  the checker can decide only about 2% of these lines.
+- **3 agent reviews failed** when Groq rejected a reply in which the model tried to call a tool natively. Even if
+  all had been right, the agent would only tie.
+- **Hints mostly work.** In a hand check, 10 of 15 hints pointed at the error, 2 nearly gave the answer away and none stated the
+  correction outright.
+- **Citations are weaker.** 6 of 12 sampled citations supported the judgement. The rest were on topic but not what the explanation
+  relied on, so a citation here isn't evidence the answer is right.
+- **The leak check measured nothing.** Search never surfaced an exercise's own solution, even when it wasn't hidden.
+- **These are injected errors, not real ones.** Real student attempts are the next test.
+
 ## The books aren't in this repository
 
 They are published works. Everything derived from them stays in `data/private`, which git ignores, and a test checks
@@ -124,6 +150,11 @@ python scripts/report_retrieval.py
 PYTHONPATH=src python scripts/build_evalset.py
 PYTHONPATH=src python scripts/eval_checker.py --split test --limit 3000
 python scripts/report_evalset.py
+
+# the tutor needs a free Groq key, saved by scripts/check_llm.py
+python scripts/run_agent.py --split test --count 25 --name test   # resumes after rate limits
+PYTHONPATH=src python scripts/score_agent.py --name test --write
+python scripts/report_agent.py
 
 # the formula report also needs the private hand transcriptions
 PYTHONPATH=src python scripts/eval_extraction.py --books vol1.pdf vol2.pdf vol3.pdf \
