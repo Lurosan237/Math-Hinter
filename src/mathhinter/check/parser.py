@@ -16,8 +16,6 @@ import sympy as sp
 
 _TOKEN = re.compile(r"\s+|\\[A-Za-z]+|\d+(?:\.\d+)?|[A-Za-z]|[-+*/^_(){}!,']|.", re.S)
 _FUNCTIONS = {"sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "ln": sp.log, "exp": sp.exp, "sh": sp.sinh, "ch": sp.cosh}
-# Letters that name numbers, so x(x+2) is a product. Others, like f(x) or y(0), are functions.
-_VARIABLES = set("abcklmnpqrstxz")
 _NAMED_WORDS = sorted(_FUNCTIONS, key=len, reverse=True)
 _GREEK = {"alpha", "beta", "gamma", "delta", "varepsilon", "epsilon", "zeta", "eta", "theta", "kappa", "lambda", "mu",
           "nu", "xi", "rho", "sigma", "tau", "varphi", "phi", "chi", "psi", "omega"}
@@ -194,7 +192,7 @@ class _Parser:
             full += "'"
         if name == "e" and full == "e" and self.peek() == "^":
             return sp.E
-        if self.peek() == "(" and full not in _VARIABLES:
+        if self.peek() == "(":
             return self.applied(full)
         return sp.Symbol(full, commutative=not name[0].isupper())
 
