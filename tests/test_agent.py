@@ -152,3 +152,16 @@ def test_difference_keeps_exercises_paired():
     good = [row("a", "sign", "wrong", 2, 2), row("a", "none", "correct")]
     bad = [row("a", "sign", "correct", None, 2), row("a", "none", "correct")]
     assert difference_interval(good, bad)["difference"] == 1
+
+
+def test_an_exercise_from_outside_the_course_still_gets_passages(course):
+    found = course.search("matrice inversible déterminant", "demo:01", hidden=set())
+    assert found and found[0]["id"] == "t"
+
+
+def test_passages_name_their_source_by_label_when_there_is_one():
+    from mathhinter.agent.tutor import format_passages
+    labelled = CourseSearch([dict(unit("t", "theorem", "Théorème. Rolle."), label="Exo7, derivee, 2")])
+    shown = format_passages(labelled.search("Rolle", "x", hidden=set()))
+    assert "(theorem, Exo7, derivee, 2)" in shown
+    assert "tome 1, p. 3" in format_passages([CourseSearch(UNITS).passage(1)])

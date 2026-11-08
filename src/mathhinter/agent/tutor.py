@@ -90,7 +90,11 @@ def _double_all_latex(chunk: str) -> str:
 
 
 def format_passages(passages: list[dict]) -> str:
-    return "\n\n".join(f"[{p['id']}] ({p['kind']}, tome {p['volume']}, p. {p['page']})\n{p['text']}" for p in passages)
+    return "\n\n".join(f"[{p['id']}] ({p['kind']}, {_where(p)})\n{p['text']}" for p in passages)
+
+
+def _where(passage: dict) -> str:
+    return passage.get("label") or f"tome {passage['volume']}, p. {passage['page']}"
 
 
 def _fill(review: Review, action: dict, line_count: int) -> None:
@@ -194,11 +198,14 @@ class Tutor:
         name = action.get("action")
         review.tool_calls.append({"tool": name})
         if name == "search_course":
-            passages = self.course.search(str(action.get("query") or statement), exercise, hidden=hidden, k=3)
+            query = str(action.get("query") or statement)
+            passages = self.course.search(query, exercise, hidden=hidden, k=3)
             review.shown += [p["id"] for p in passages if p["id"] not in review.shown]
+            review.tool_calls[-1].update(query=query[:300], found=[p["id"] for p in passages])
             return f"Course passages:\n{format_passages(passages)}" if passages else "Nothing found."
         if name == "check_equality":
             verdict = check_equality(str(action.get("left", "")), str(action.get("right", "")))
-            review.tool_calls[-1]["status"] = verdict.status
+            review.tool_calls[-1].update(status=verdict.status, left=str(action.get("left", ""))[:300],
+                                         right=str(action.get("right", ""))[:300])
             return f"{verdict.status}: {verdict.reason}"
         return f"Unknown action. {ANSWER_FORMAT}"

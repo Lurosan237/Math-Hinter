@@ -37,6 +37,9 @@ class CourseSearch:
         ranking = rank(scores, blocked)
         if results_only:
             ranking = ranking[self.results_only[ranking]]
+        if exercise not in self.position:
+            # An exercise from outside the course (the public demo) has no place in it to look near.
+            return [self.passage(int(i)) for i in ranking[:k]]
         nearby = self._nearby(exercise)
         nearby = nearby[self.results_only[nearby]] if results_only else nearby
         nearby = np.array([i for i in nearby if i not in blocked], dtype=int)
@@ -47,4 +50,4 @@ class CourseSearch:
     def passage(self, at: int) -> dict:
         unit = self.units[at]
         return {"id": unit["id"], "kind": unit["kind"], "volume": unit["volume"], "page": unit["printed_page"],
-                "text": unit["text"][:PASSAGE_CHARS]}
+                "text": unit["text"][:PASSAGE_CHARS], **({"label": unit["label"]} if unit.get("label") else {})}

@@ -1,0 +1,165 @@
+{
+ "notice": "Exercices et copies originaux, écrits pour cette démonstration. Les copies fautives contiennent une erreur placée à la main; les copies témoins sont correctes.",
+ "exercises": [
+  {
+   "id": "demo:01",
+   "title": "Dérivée d'un produit",
+   "statement": "Calculer la dérivée de $f(x)=x^2e^x$ sur $\\mathbb{R}$.",
+   "solution": "Avec $u=x^2$ et $v=e^x$, $f'=u'v+uv'=2xe^x+x^2e^x=x(x+2)e^x$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "On pose $u(x)=x^2$ et $v(x)=e^x$, donc $f=uv$.\nOn a $u'(x)=2x$.\nOn a $v'(x)=xe^{x-1}$.\nDonc $f'(x)=2xe^x+x^3e^{x-1}$.",
+     "wrong_line": 2,
+     "note": "La dérivée de $e^x$ est $e^x$ : la règle des puissances a été appliquée à tort."
+    },
+    {
+     "kind": "control",
+     "text": "On pose $u(x)=x^2$ et $v(x)=e^x$, donc $f=uv$.\nOn a $u'(x)=2x$.\nOn a $v'(x)=e^x$.\nDonc $f'(x)=2xe^x+x^2e^x=x(x+2)e^x$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:02",
+   "title": "Limite par développement limité",
+   "statement": "Calculer $\\lim_{x\\to0}\\dfrac{e^x-1-x}{x^2}$.",
+   "solution": "$e^x=1+x+\\frac{x^2}{2}+o(x^2)$, donc le quotient vaut $\\frac12+o(1)$ et la limite est $\\frac12$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "Au voisinage de $0$, $e^x=1+x+x^2+o(x^2)$.\nDonc $e^x-1-x=x^2+o(x^2)$.\nAinsi $\\frac{e^x-1-x}{x^2}=1+o(1)$.\nLa limite vaut $1$.",
+     "wrong_line": 0,
+     "note": "Le coefficient de $x^2$ dans le développement de $e^x$ est $\\frac{1}{2!}$, pas $1$."
+    },
+    {
+     "kind": "control",
+     "text": "Au voisinage de $0$, $e^x=1+x+\\frac{x^2}{2}+o(x^2)$.\nDonc $e^x-1-x=\\frac{x^2}{2}+o(x^2)$.\nAinsi $\\frac{e^x-1-x}{x^2}=\\frac12+o(1)$.\nLa limite vaut $\\frac12$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:03",
+   "title": "Intégration par parties",
+   "statement": "Calculer $\\int_0^1 xe^x\\,dx$.",
+   "solution": "Par parties avec $u=x$, $v'=e^x$ : $[xe^x]_0^1-\\int_0^1e^x\\,dx=e-(e-1)=1$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "On intègre par parties avec $u(x)=x$ et $v'(x)=e^x$, donc $u'(x)=1$ et $v(x)=e^x$.\n$\\int_0^1 xe^x\\,dx=[xe^x]_0^1+\\int_0^1 e^x\\,dx$.\n$=e+(e-1)$.\n$=2e-1$.",
+     "wrong_line": 1,
+     "note": "La formule d'intégration par parties comporte un signe moins devant l'intégrale restante."
+    },
+    {
+     "kind": "control",
+     "text": "On intègre par parties avec $u(x)=x$ et $v'(x)=e^x$, donc $u'(x)=1$ et $v(x)=e^x$.\n$\\int_0^1 xe^x\\,dx=[xe^x]_0^1-\\int_0^1 e^x\\,dx$.\n$=e-(e-1)$.\n$=1$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:04",
+   "title": "Somme géométrique",
+   "statement": "Pour $n\\in\\mathbb{N}$, calculer $S_n=\\sum_{k=0}^{n}2^k$.",
+   "solution": "Somme de $n+1$ termes d'une suite géométrique de raison $2$ : $S_n=\\frac{1-2^{n+1}}{1-2}=2^{n+1}-1$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "$S_n$ est la somme des termes d'une suite géométrique de raison $2$.\nDonc $S_n=\\frac{1-2^{n}}{1-2}$.\nAinsi $S_n=2^n-1$.",
+     "wrong_line": 1,
+     "note": "La somme compte $n+1$ termes (de $k=0$ à $k=n$), d'où l'exposant $n+1$."
+    },
+    {
+     "kind": "control",
+     "text": "$S_n$ est la somme des termes d'une suite géométrique de raison $2$.\nDonc $S_n=\\frac{1-2^{n+1}}{1-2}$.\nAinsi $S_n=2^{n+1}-1$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:05",
+   "title": "Extremums locaux",
+   "statement": "Déterminer les extremums locaux de $f(x)=x^3-3x$ sur $\\mathbb{R}$.",
+   "solution": "$f'(x)=3(x-1)(x+1)$ change de signe de $+$ à $-$ en $-1$ (maximum local $f(-1)=2$) et de $-$ à $+$ en $1$ (minimum local $f(1)=-2$).",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "$f$ est dérivable sur $\\mathbb{R}$ et $f'(x)=3x^2-3=3(x-1)(x+1)$.\n$f'$ est positive sur $]-\\infty,-1]$, négative sur $[-1,1]$ et positive sur $[1,+\\infty[$.\nDonc $f$ admet un minimum local en $-1$, qui vaut $f(-1)=2$.\nEt $f$ admet un maximum local en $1$, qui vaut $f(1)=-2$.",
+     "wrong_line": 2,
+     "note": "$f$ croît puis décroît autour de $-1$ : c'est un maximum local, et inversement en $1$."
+    },
+    {
+     "kind": "control",
+     "text": "$f$ est dérivable sur $\\mathbb{R}$ et $f'(x)=3x^2-3=3(x-1)(x+1)$.\n$f'$ est positive sur $]-\\infty,-1]$, négative sur $[-1,1]$ et positive sur $[1,+\\infty[$.\nDonc $f$ admet un maximum local en $-1$, qui vaut $f(-1)=2$.\nEt $f$ admet un minimum local en $1$, qui vaut $f(1)=-2$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:06",
+   "title": "Accroissements finis",
+   "statement": "Montrer que pour tous réels $a$ et $b$, $|\\sin a-\\sin b|\\le|a-b|$.",
+   "solution": "Pour $a<b$, le théorème des accroissements finis donne $c\\in]a,b[$ avec $\\sin b-\\sin a=(b-a)\\cos c$, et $|\\cos c|\\le1$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "Si $a=b$ c'est évident. Supposons $a<b$, sinon on échange les rôles.\nLa fonction $\\sin$ est continue sur $[a,b]$ et dérivable sur $]a,b[$.\nPar le théorème des accroissements finis, il existe $c\\in]a,b[$ tel que $\\sin b-\\sin a=\\cos c$.\nComme $|\\cos c|\\le1$, on obtient $|\\sin b-\\sin a|\\le|b-a|$.",
+     "wrong_line": 2,
+     "note": "Le théorème des accroissements finis donne $f(b)-f(a)=(b-a)f'(c)$ : le facteur $b-a$ a disparu."
+    },
+    {
+     "kind": "control",
+     "text": "Si $a=b$ c'est évident. Supposons $a<b$, sinon on échange les rôles.\nLa fonction $\\sin$ est continue sur $[a,b]$ et dérivable sur $]a,b[$.\nPar le théorème des accroissements finis, il existe $c\\in]a,b[$ tel que $\\sin b-\\sin a=(b-a)\\cos c$.\nComme $|\\cos c|\\le1$, on obtient $|\\sin b-\\sin a|=|b-a|\\,|\\cos c|\\le|b-a|$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:07",
+   "title": "Équation différentielle linéaire",
+   "statement": "Résoudre $y'+2y=0$ avec $y(0)=3$.",
+   "solution": "Les solutions de $y'=-2y$ sont $x\\mapsto Ce^{-2x}$ ; la condition initiale donne $C=3$, donc $y(x)=3e^{-2x}$.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "Les solutions de $y'=ay$ sont les fonctions $x\\mapsto Ce^{ax}$ avec $C\\in\\mathbb{R}$.\nIci l'équation s'écrit $y'=-2y$.\nDonc $y(x)=Ce^{2x}$.\nAvec $y(0)=3$ on trouve $C=3$, donc $y(x)=3e^{2x}$.",
+     "wrong_line": 2,
+     "note": "Ici $a=-2$ : le signe a été perdu."
+    },
+    {
+     "kind": "control",
+     "text": "Les solutions de $y'=ay$ sont les fonctions $x\\mapsto Ce^{ax}$ avec $C\\in\\mathbb{R}$.\nIci l'équation s'écrit $y'=-2y$.\nDonc $y(x)=Ce^{-2x}$.\nAvec $y(0)=3$ on trouve $C=3$, donc $y(x)=3e^{-2x}$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  },
+  {
+   "id": "demo:08",
+   "title": "Existence d'une racine",
+   "statement": "Montrer que l'équation $x^3+x-1=0$ admet une solution dans $[0,1]$.",
+   "solution": "$f(x)=x^3+x-1$ est continue sur $[0,1]$ avec $f(0)=-1<0<1=f(1)$ ; le théorème des valeurs intermédiaires conclut.",
+   "attempts": [
+    {
+     "kind": "wrong",
+     "text": "Soit $f(x)=x^3+x-1$. La fonction $f$ est continue sur $[0,1]$.\nOn a $f(0)=-1$ et $f(1)=1$.\nPar le théorème de Rolle, il existe $c\\in]0,1[$ tel que $f(c)=0$.",
+     "wrong_line": 2,
+     "note": "Le théorème de Rolle demande $f(0)=f(1)$ et donne un zéro de $f'$, pas de $f$ : c'est le théorème des valeurs intermédiaires qu'il faut."
+    },
+    {
+     "kind": "control",
+     "text": "Soit $f(x)=x^3+x-1$. La fonction $f$ est continue sur $[0,1]$.\nOn a $f(0)=-1$ et $f(1)=1$.\nComme $f(0)<0<f(1)$, le théorème des valeurs intermédiaires donne $c\\in[0,1]$ tel que $f(c)=0$.",
+     "wrong_line": null,
+     "note": "Démarche correcte."
+    }
+   ]
+  }
+ ]
+}

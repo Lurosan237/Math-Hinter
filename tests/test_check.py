@@ -51,3 +51,8 @@ def test_text_cannot_run_as_code(tmp_path):
 
 def test_subscripts_keep_variables_apart():
     assert parse("x_{1}") != parse("x_{2}")
+
+
+def test_a_number_letter_before_brackets_multiplies():
+    assert check_equality("2xe^x+x^2e^x", "x(x+2)e^x").status == VERIFIED
+    assert check_equality("f(x)", "f(x)").status == VERIFIED
