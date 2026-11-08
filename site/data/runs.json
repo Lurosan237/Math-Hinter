@@ -1,0 +1,309 @@
+{
+ "model": "openai/gpt-oss-120b",
+ "reviews": [
+  {
+   "exercise": "demo:01",
+   "attempt": "wrong",
+   "config": "llm_only",
+   "verdict": "wrong",
+   "first_wrong_line": 2,
+   "explanation": "La dérivée de $v(x)=e^x$ est $v'(x)=e^x$, pas $xe^{x-1}$ ; la règle de dérivation de l'exponentielle a été mal appliquée.",
+   "hint": "Quelle est la dérivée de la fonction exponentielle $e^x$ ?",
+   "citations": [],
+   "shown": [],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 844,
+   "failure": null
+  },
+  {
+   "exercise": "demo:01",
+   "attempt": "wrong",
+   "config": "rag",
+   "verdict": "wrong",
+   "first_wrong_line": 2,
+   "explanation": "La dérivée de $v(x)=e^x$ est $v'(x)=e^x$, et non $x e^{x-1}$. Cette erreur conduit à un résultat incorrect pour $f'(x)$.",
+   "hint": "Quelle est la dérivée de la fonction exponentielle $e^x$ ?",
+   "citations": [
+    "exo7:0259"
+   ],
+   "shown": [
+    "exo7:0255",
+    "exo7:0455",
+    "exo7:0253",
+    "exo7:0453",
+    "exo7:0259"
+   ],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 1970,
+   "failure": null
+  },
+  {
+   "exercise": "demo:01",
+   "attempt": "wrong",
+   "config": "agent",
+   "verdict": "wrong",
+   "first_wrong_line": 2,
+   "explanation": "La dérivée de $e^x$ est $e^x$, pas $x e^{x-1}$ ; la règle de dérivation de la fonction exponentielle a été mal appliquée.",
+   "hint": "Quelle est la dérivée de la fonction exponentielle $e^x$ ?",
+   "citations": [],
+   "shown": [
+    "exo7:0263",
+    "exo7:0248",
+    "exo7:0255"
+   ],
+   "tool_calls": [
+    {
+     "tool": "search_course",
+     "query": "dérivée de e^x",
+     "found": [
+      "exo7:0263",
+      "exo7:0248",
+      "exo7:0255"
+     ]
+    }
+   ],
+   "llm_calls": 2,
+   "tokens": 2054,
+   "failure": null
+  },
+  {
+   "exercise": "demo:01",
+   "attempt": "control",
+   "config": "llm_only",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "La dérivation est correcte : on applique la règle du produit et on obtient bien $f'(x)=e^x(2x+x^2)=x(x+2)e^x$.",
+   "hint": "",
+   "citations": [],
+   "shown": [],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 665,
+   "failure": null
+  },
+  {
+   "exercise": "demo:01",
+   "attempt": "control",
+   "config": "rag",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "Toutes les étapes sont correctes : le produit est bien dérivé avec la règle du produit, donnant $f'(x)=2xe^x+x^2e^x=x(x+2)e^x$.",
+   "hint": "",
+   "citations": [
+    "exo7:0259"
+   ],
+   "shown": [
+    "exo7:0255",
+    "exo7:0455",
+    "exo7:0253",
+    "exo7:0453",
+    "exo7:0259"
+   ],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 1824,
+   "failure": null
+  },
+  {
+   "exercise": "demo:01",
+   "attempt": "control",
+   "config": "agent",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "Toutes les étapes sont correctes : le produit est bien différencié et le résultat $f'(x)=x(x+2)e^x$ est exact.",
+   "hint": "",
+   "citations": [],
+   "shown": [
+    "exo7:0285",
+    "exo7:0295",
+    "exo7:0291"
+   ],
+   "tool_calls": [
+    {
+     "tool": "search_course",
+     "query": "règle du produit dérivée x^2 e^x",
+     "found": [
+      "exo7:0285",
+      "exo7:0295",
+      "exo7:0291"
+     ]
+    }
+   ],
+   "llm_calls": 3,
+   "tokens": 3040,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "wrong",
+   "config": "llm_only",
+   "verdict": "wrong",
+   "first_wrong_line": 0,
+   "explanation": "L'expansion de $e^x$ près de 0 est $e^x=1+x+\frac{x^2}{2}+o(x^2)$, pas $1+x+x^2+o(x^2)$. La mauvaise approximation conduit à une limite erronée.",
+   "hint": "Quel est le coefficient du terme $x^2$ dans le développement de Taylor de $e^x$ à l'ordre 2 ?",
+   "citations": [],
+   "shown": [],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 776,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "wrong",
+   "config": "rag",
+   "verdict": "wrong",
+   "first_wrong_line": 0,
+   "explanation": "En développant $e^x$ à l'ordre 2, on a $e^x=1+x+\\frac{x^2}{2}+o(x^2)$, pas $1+x+x^2+o(x^2)$. Cette erreur entraîne un résultat de limite erroné.",
+   "hint": "Quel est le coefficient du terme $x^2$ dans le développement de Taylor de $e^x$ près de $0$ ?",
+   "citations": [],
+   "shown": [
+    "exo7:0172",
+    "exo7:0174",
+    "exo7:0176",
+    "exo7:0070",
+    "exo7:0444"
+   ],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 1625,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "wrong",
+   "config": "agent",
+   "verdict": "wrong",
+   "first_wrong_line": 0,
+   "explanation": "En développant $e^x$ au voisinage de $0$, le terme d'ordre $2$ est $\frac{x^2}{2}$, donc $e^x=1+x+\frac{x^2}{2}+o(x^2)$. L'égalité $e^x=1+x+x^2+o(x^2)$ est donc fausse.",
+   "hint": "Quel est le coefficient du terme $x^2$ dans le développement limité de $e^x$ à l'ordre $2$ ?",
+   "citations": [],
+   "shown": [
+    "exo7:0388",
+    "exo7:0027",
+    "exo7:0418"
+   ],
+   "tool_calls": [
+    {
+     "tool": "search_course",
+     "query": "développement limité e^x au voisinage de 0",
+     "found": [
+      "exo7:0388",
+      "exo7:0027",
+      "exo7:0418"
+     ]
+    }
+   ],
+   "llm_calls": 2,
+   "tokens": 2377,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "control",
+   "config": "llm_only",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "Le raisonnement est correct : le développement limité de $e^x$ donne $e^x-1-x=\frac{x^2}{2}+o(x^2)$, donc le quotient tend vers $\frac12$.",
+   "hint": "",
+   "citations": [],
+   "shown": [],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 714,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "control",
+   "config": "rag",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "Toutes les étapes sont justes : le développement limité de $e^x$ à l'ordre 2 est correct, la simplification donne bien $\frac12+o(1)$ et la limite vaut $\frac12$.",
+   "hint": "",
+   "citations": [],
+   "shown": [
+    "exo7:0172",
+    "exo7:0174",
+    "exo7:0176",
+    "exo7:0070",
+    "exo7:0444"
+   ],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 1577,
+   "failure": null
+  },
+  {
+   "exercise": "demo:02",
+   "attempt": "control",
+   "config": "agent",
+   "verdict": "correct",
+   "first_wrong_line": null,
+   "explanation": "Les étapes sont correctes : le développement limité de $e^x$ à l'ordre 2 près de $0$ donne $e^x=1+x+\\frac{x^2}{2}+o(x^2)$, d’où $e^x-1-x=\\frac{x^2}{2}+o(x^2)$, puis $\nfrac{e^x-1-x}{x^2}=\\frac12+o(1)$ et la limite vaut $\\frac12$.",
+   "hint": "",
+   "citations": [
+    "exo7:0418"
+   ],
+   "shown": [
+    "exo7:0418",
+    "exo7:0422",
+    "exo7:0067"
+   ],
+   "tool_calls": [
+    {
+     "tool": "search_course",
+     "query": "développement limité e^x",
+     "found": [
+      "exo7:0418",
+      "exo7:0422",
+      "exo7:0067"
+     ]
+    }
+   ],
+   "llm_calls": 3,
+   "tokens": 3134,
+   "failure": null
+  },
+  {
+   "exercise": "demo:03",
+   "attempt": "wrong",
+   "config": "llm_only",
+   "verdict": "wrong",
+   "first_wrong_line": 1,
+   "explanation": "En appliquant l'intégration par parties, on a $\\int u\\,v' = uv -\\int u'v$, donc le terme intégral doit être soustrait, pas ajouté.",
+   "hint": "Vérifiez le signe qui apparaît après l'évaluation du produit $uv$ dans la formule d'intégration par parties.",
+   "citations": [],
+   "shown": [],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 939,
+   "failure": null
+  },
+  {
+   "exercise": "demo:03",
+   "attempt": "wrong",
+   "config": "rag",
+   "verdict": "wrong",
+   "first_wrong_line": 1,
+   "explanation": "Dans la formule d'intégration par parties, il faut soustraire l'intégrale de v·du ; l'étudiant a ajouté l'intégrale, d'où le signe erroné.",
+   "hint": "Quel est le signe devant l'intégrale Σ v(x)u'(x) dans la formule d'intégration par parties ?",
+   "citations": [
+    "exo7:0348"
+   ],
+   "shown": [
+    "exo7:0321",
+    "exo7:0325",
+    "exo7:0348",
+    "exo7:0304",
+    "exo7:0378"
+   ],
+   "tool_calls": [],
+   "llm_calls": 1,
+   "tokens": 1669,
+   "failure": null
+  }
+ ]
+}

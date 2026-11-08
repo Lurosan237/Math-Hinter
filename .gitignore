@@ -13,3 +13,6 @@ venv/
 .ruff_cache/
 *.egg-info/
 .env
+
+# Built demo site
+_site/

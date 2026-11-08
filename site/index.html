@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math-Hinter</title>
+<meta name="description" content="Un outil d'étude qui trouve la première erreur d'une copie de maths, donne un indice sans la réponse et cite le cours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Math-Hinter</h1>
+  <p class="lede">Il lit une copie de maths, trouve la première ligne fausse et donne un indice sans donner la réponse. Il s'appuie sur le cours et peut vérifier un calcul avec SymPy.</p>
+  <p class="links"><a href="https://github.com/Lurosan237/Math-Hinter">Code source</a> <a href="https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md">Rapport d'évaluation</a></p>
+</header>
+
+<main>
+<section class="demo" aria-labelledby="demo-title">
+  <h2 id="demo-title" class="visually-hidden">Démonstration</h2>
+  <nav class="exercises" id="exercises" aria-label="Exercices"></nav>
+  <div class="copy-switch" role="radiogroup" aria-label="Copie">
+    <button role="radio" data-attempt="wrong" aria-checked="true">Copie avec une erreur</button>
+    <button role="radio" data-attempt="control" aria-checked="false">Copie juste</button>
+  </div>
+
+  <div class="desk">
+    <article class="sheet" id="sheet" aria-live="polite"></article>
+    <aside class="reviews" id="reviews" aria-live="polite"></aside>
+  </div>
+  <p class="recorded" id="recorded"></p>
+</section>
+
+<section class="checker" aria-labelledby="checker-title">
+  <h2 id="checker-title">Vérifier une égalité</h2>
+  <p>Le même vérificateur que l'agent, exécuté dans votre navigateur. Il répond « vérifié » seulement si les deux membres sont égaux pour toutes les valeurs des lettres, et « réfuté » seulement pour deux nombres différents. Sinon il dit « non vérifiable » plutôt que de deviner.</p>
+  <form id="check-form" class="check-form">
+    <label>Membre de gauche <input id="left" value="\frac{1-2^{n+1}}{1-2}" spellcheck="false" autocomplete="off"></label>
+    <span class="eq" aria-hidden="true">=</span>
+    <label>Membre de droite <input id="right" value="2^{n+1}-1" spellcheck="false" autocomplete="off"></label>
+    <button type="submit" id="check-button">Vérifier</button>
+  </form>
+  <p class="examples">Exemples :
+    <button type="button" data-l="\frac{1}{2}+\frac{1}{3}" data-r="\frac{5}{6}">fractions</button>
+    <button type="button" data-l="\sin^{2}(t)+\cos^{2}(t)" data-r="1">trigonométrie</button>
+    <button type="button" data-l="e-(e-1)" data-r="2e-1">une erreur de signe</button>
+    <button type="button" data-l="2^{10}" data-r="1000">deux nombres</button>
+  </p>
+  <output id="check-result" class="check-result" aria-live="polite"></output>
+  <p class="note">Une lettre devant une parenthèse se lit comme une fonction : écrivez <code>x\cdot(x+2)</code> pour un produit. Le premier calcul charge Python (environ 15&nbsp;Mo).</p>
+</section>
+
+<section class="evaluation" aria-labelledby="eval-title">
+  <h2 id="eval-title">Ce que montre l'évaluation</h2>
+  <div id="evaluation"></div>
+</section>
+</main>
+
+<footer>
+  <p>Cours : extraits d'<a href="https://exo7.emath.fr">Exo7</a>, « Analyse 1 » (A. Bodin, L. Blanc-Centi, N. Borne, B. Boutin, L. Desideri, P. Romon), sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/fr/">CC BY-NC-SA 3.0 FR</a>, convertis depuis les sources LaTeX. Exercices et copies écrits pour cette démonstration, sous la même licence. Code sous licence MIT.</p>
+  <p>L'évaluation a été faite sur des manuels sous licence qui ne sont pas publiés ici : seuls les chiffres le sont.</p>
+</footer>
+<script src="app.js" defer></script>
+</body>
+</html>

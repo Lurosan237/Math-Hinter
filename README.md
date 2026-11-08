@@ -2,7 +2,8 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 4 of 6. The tutor is built and evaluated. Next: real student attempts and a public demo. See the [design](docs/design.md).
+> **Status:** stage 5 of 6. The tutor is evaluated and has a [public demo](https://lurosan237.github.io/Math-Hinter/). Next: real student
+> attempts. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -131,6 +132,21 @@ They are published works. Everything derived from them stays in `data/private`, 
 that nothing from it gets committed. Reports contain numbers only, and CI runs on a small PDF written for the tests, so
 the report itself can only be regenerated with a copy of the books.
 
+## The public demo
+
+The [demo](https://lurosan237.github.io/Math-Hinter/) runs the same tutor on openly licensed material: the
+[Exo7](https://exo7.emath.fr) course *Analyse 1* (CC BY-NC-SA 3.0 FR), converted from its
+[LaTeX sources](https://github.com/exo7math/cours-exo7), and eight exercises written for the demo. Each has a copy with
+one planted error and a correct copy. The answers were recorded once with the evaluated model, so the page makes no live
+calls. The equality checker runs in the browser through Pyodide, using the code in `src/mathhinter/check`. The demo
+exercises are too few to compare versions; the numbers above come from the held-out evaluation.
+
+```bash
+python scripts/build_demo_corpus.py --source path/to/cours-exo7
+PYTHONPATH=src python scripts/run_demo.py      # resumes after rate limits
+python scripts/build_site.py                   # writes _site/
+```
+
 ## Run it
 
 ```bash
@@ -164,4 +180,4 @@ python scripts/report_extraction.py
 
 ## Licence
 
-Code: [MIT](LICENSE).
+Code: [MIT](LICENSE). Demo course text and exercises in `site/data` and `data/demo`: CC BY-NC-SA 3.0 FR, after Exo7.
