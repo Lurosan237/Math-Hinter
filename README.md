@@ -2,8 +2,7 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 5 of 6. The tutor is evaluated and has a live site, being deployed on Vercel. Next: real student
-> attempts. See the [design](docs/design.md).
+> **Status:** stage 5 of 6. The tutor is evaluated and [live](https://math-hinter.vercel.app). Next: real student attempts. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
 
@@ -134,7 +133,7 @@ the report itself can only be regenerated with a copy of the books.
 
 ## Try it
 
-The live site runs the evaluated tutor on your own work: type an exercise and your
+The [live site](https://math-hinter.vercel.app) runs the evaluated tutor on your own work: type an exercise and your
 attempt, one step per line, and it names the first wrong line with a hint. It's the same model, prompts, search and
 checker as in the evaluation, but it searches Exo7's openly licensed courses instead of the books: *Analyse 1*,
 *Algèbre 1* and the improper integrals chapter, 1480 passages converted from their
