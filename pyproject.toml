@@ -3,6 +3,14 @@ name = "mathhinter"
 version = "0.1.0"
 description = "A French maths study assistant that finds your first wrong step, evaluated honestly."
 requires-python = ">=3.10"
+# What the tutor needs at run time, which is what the live site installs. Extracting the books needs
+# requirements.txt as well.
+dependencies = [
+    "numpy>=1.26,<3",
+    "scipy>=1.11,<2",
+    "snowballstemmer>=2.2,<4",
+    "sympy>=1.13,<2",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
