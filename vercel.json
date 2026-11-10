@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "python3 scripts/build_site.py",
+  "outputDirectory": "_site",
+  "functions": {
+    "api/review.py": {
+      "maxDuration": 120,
+      "includeFiles": "{src/mathhinter/**,site/data/corpus.json}",
+      "excludeFiles": "{tests/**,docs/**,reports/**,data/**,_site/**,scripts/**}"
+    }
+  }
+}

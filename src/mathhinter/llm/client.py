@@ -51,6 +51,7 @@ class Client:
     cache_dir: Path | None = None
     base_url: str = GROQ_URL
     max_retries: int = 8
+    max_wait: float = MAX_WAIT_SECONDS  # longer waits raise QuotaExhausted; a web request can't wait two minutes
     opener: object = urllib.request.urlopen
     sleep: object = time.sleep
 
@@ -69,7 +70,7 @@ class Client:
                 if error.code not in RETRYABLE or attempt == self.max_retries:
                     raise LLMError(f"HTTP {error.code}: {detail}".replace(self.api_key, "***")) from None
                 wait = float(error.headers.get("retry-after") or 0) if error.headers else 0
-                if wait > MAX_WAIT_SECONDS:
+                if wait > self.max_wait:
                     raise QuotaExhausted(f"limit reached, try again in {wait:.0f}s") from None
                 self.sleep(wait + 1 if wait else 2**attempt)
             except urllib.error.URLError as error:

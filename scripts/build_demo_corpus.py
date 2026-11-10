@@ -8,10 +8,11 @@ from pathlib import Path
 
 from mathhinter.demo.exo7 import read_course
 
-NOTICE = ("Extraits du cours Exo7 « Analyse 1 » (A. Bodin, L. Blanc-Centi, N. Borne, B. Boutin, L. Desideri, "
-          "P. Romon), https://exo7.emath.fr, diffusé sous la licence Creative Commons BY-NC-SA 3.0 FR, "
+NOTICE = ("Extraits des cours Exo7 (livres « Analyse 1 » et « Algèbre 1 », chapitre « Intégrales impropres ») de "
+          "l'équipe Exo7 : Arnaud Bodin, Léa Blanc-Centi, Niels Borne, Benjamin Boutin, Laura Desideri et Pascal "
+          "Romon. https://exo7.emath.fr. Diffusés sous la licence Creative Commons BY-NC-SA 3.0 FR, "
           "https://creativecommons.org/licenses/by-nc-sa/3.0/fr/. Texte converti automatiquement depuis les sources "
-          "LaTeX, sans autre modification.")
+          "LaTeX : macros développées, figures et mise en page retirées.")
 
 
 def main() -> None:

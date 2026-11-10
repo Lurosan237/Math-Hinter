@@ -1,12 +1,13 @@
 "use strict";
 
-const CONFIGS = [
-  { key: "llm_only", name: "LLM seul", what: "Le modèle lit la copie, sans le cours." },
-  { key: "rag", name: "LLM avec le cours", what: "On lui joint cinq passages du cours trouvés par recherche." },
-  { key: "agent", name: "Agent", what: "Il cherche lui-même dans le cours et peut vérifier une égalité." },
-];
-const state = { exercise: 0, attempt: "wrong" };
-let data = null;
+const NAMES = { llm_only: "Sans le cours", rag: "Avec le cours", agent: "Agent" };
+const KINDS = { theorem: "Théorème", proposition: "Proposition", definition: "Définition", corollary: "Corollaire",
+  lemma: "Lemme", example: "Exemple", proof: "Démonstration", heading: "Section" };
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { /* private mode */ } },
+};
 
 const el = (tag, attrs = {}, ...children) => {
   const node = document.createElement(tag);
@@ -20,164 +21,170 @@ const el = (tag, attrs = {}, ...children) => {
 function math(node) {
   if (window.renderMathInElement) {
     renderMathInElement(node, {
-      delimiters: [{ left: "\\[", right: "\\]", display: true }, { left: "$", right: "$", display: false }],
+      delimiters: [{ left: "\\[", right: "\\]", display: true }, { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }],
       throwOnError: false,
     });
   }
   return node;
 }
 
-async function load() {
-  const get = (name) => fetch(`data/${name}`).then((r) => { if (!r.ok) throw new Error(name); return r.json(); });
-  const [exercises, runs, corpus, evaluation] = await Promise.all(
-    ["exercises.json", "runs.json", "corpus.json", "agent.json"].map(get));
-  const units = new Map(corpus.units.map((u) => [u.id, u]));
-  data = { exercises: exercises.exercises, runs, units, evaluation };
+const lines = () => $("attempt").value.split("\n").map((l) => l.trimEnd()).filter((l) => l.trim());
+
+/* The preview is the student's copy as it will be read: one numbered line per step. */
+let flagged = null;
+function preview() {
+  $("preview-statement").textContent = $("statement").value.trim();
+  const list = $("preview");
+  list.replaceChildren(...lines().map((line, i) => {
+    const li = el("li", { "data-n": i + 1, text: line });
+    if (flagged && flagged.line === i) {
+      li.classList.add("flagged");
+      li.append(el("span", { class: "mark", "aria-label": "première ligne fausse", text: "✗" }));
+    }
+    return li;
+  }));
+  math($("preview-statement"));
+  math(list);
+}
+let timer = null;
+function previewSoon() { clearTimeout(timer); timer = setTimeout(preview, 250); }
+
+function clearResult() {
+  flagged = null;
+  $("result").replaceChildren();
+  $("status").textContent = "";
 }
 
-function judge(attempt, review) {
-  if (review.failure) return { good: false, text: "réponse invalide" };
-  if (attempt.kind === "control") {
-    return review.verdict === "correct" ? { good: true, text: "juste, rien à signaler" }
-      : { good: false, text: "fausse alerte" };
+function passage(id, data) {
+  return el("div", { class: "passage" },
+    el("span", { class: "source", text: `${KINDS[data.kind] || ""} · ${data.label}` }), el("div", { text: data.text }));
+}
+
+function showResult(out, config) {
+  const review = out.review;
+  const box = $("result");
+  const parts = [];
+  if (review.failure) {
+    parts.push(el("p", { class: "verdict", text: "Pas de réponse exploitable" }),
+      el("p", { text: "Le modèle a répondu dans un format illisible. Relancez la relecture ; cela arrive à environ une "
+        + "réponse sur vingt." }));
+  } else if (review.verdict === "correct") {
+    parts.push(el("p", { class: "verdict good", text: "Aucune erreur trouvée" }),
+      el("p", { class: "aside", text: "Cela ne prouve pas que tout est juste : relisez aussi vous-même." }));
+  } else {
+    flagged = { line: review.first_wrong_line };
+    parts.push(el("p", { class: "verdict bad", text: `Première erreur : ligne ${review.first_wrong_line + 1}` }));
+    if (review.hint) parts.push(el("p", { class: "hint", text: review.hint }));
   }
-  if (review.verdict !== "wrong") return { good: false, text: "erreur manquée" };
-  return review.first_wrong_line === attempt.wrong_line
-    ? { good: true, text: `ligne ${review.first_wrong_line}, bien vu` }
-    : { good: false, text: `ligne ${review.first_wrong_line} au lieu de ${attempt.wrong_line}` };
-}
-
-function passage(id) {
-  const unit = data.units.get(id);
-  if (!unit) return el("p", { class: "passage", text: `${id} (passage introuvable)` });
-  return el("div", { class: "passage" }, el("span", { class: "source", text: unit.label || id }),
-    el("div", { text: unit.text.slice(0, 900) }));
-}
-
-function reviewCard(exercise, attempt, config) {
-  const review = data.runs.reviews.find((r) => r.exercise === exercise.id && r.attempt === attempt.kind
-    && r.config === config.key);
-  const card = el("section", { class: "review" });
-  const head = el("header", {}, el("h4", { text: config.name }));
-  card.append(head, el("p", { class: "what", text: config.what }));
-  if (!review) {
-    card.append(el("p", { text: "Pas encore enregistrée." }));
-    return card;
-  }
-  const verdict = judge(attempt, review);
-  head.append(el("span", { class: `verdict ${verdict.good ? "good" : "bad"}`, text: verdict.text }));
-  if (review.verdict === "wrong" && review.hint) card.append(el("p", { class: "hint", text: review.hint }));
   if (review.explanation) {
-    card.append(el("details", {}, el("summary", { text: "Explication" }), el("p", { text: review.explanation })));
+    parts.push(el("details", {}, el("summary", { text: "Voir l'explication (elle peut donner la réponse)" }),
+      el("p", { text: review.explanation })));
   }
-  if (config.key === "agent" && review.tool_calls.length) {
+  const cited = (review.citations || []).filter((id) => out.passages[id]);
+  if (cited.length) {
+    const d = el("details", { open: "" }, el("summary", { text: `Dans le cours (${cited.length})` }));
+    cited.forEach((id) => d.append(passage(id, out.passages[id])));
+    parts.push(d);
+  }
+  if (config === "agent" && review.tool_calls.length) {
     const steps = el("ol", { class: "trace" });
     for (const call of review.tool_calls) {
-      if (call.tool === "search_course") steps.append(el("li", { text: `Recherche dans le cours : « ${call.query} »` }));
-      else if (call.tool === "check_equality") {
-        steps.append(el("li", { text: `Vérifie $${call.left} = ${call.right}$ : ${call.status}` }));
-      } else steps.append(el("li", { text: call.tool }));
+      if (call.tool === "search_course") steps.append(el("li", { text: `A cherché « ${call.query} » dans le cours` }));
+      else if (call.tool === "check_equality") steps.append(el("li", { text: `A vérifié $${call.left} = ${call.right}$ : ${call.status}` }));
     }
-    card.append(el("details", {}, el("summary", { text: `Étapes (${review.tool_calls.length})` }), steps));
+    parts.push(el("details", {}, el("summary", { text: `Ce que l'agent a fait (${review.tool_calls.length})` }), steps));
   }
-  const cited = (review.citations || []).filter((id) => data.units.has(id));
-  if (cited.length) {
-    const box = el("details", {}, el("summary", { text: `Cours cité (${cited.length})` }));
-    cited.forEach((id) => box.append(passage(id)));
-    card.append(box);
+  const left = out.remaining == null ? "" : ` · ${out.remaining} relecture${out.remaining > 1 ? "s" : ""} restante${out.remaining > 1 ? "s" : ""} aujourd'hui`;
+  parts.push(el("p", { class: "meta", text: `${NAMES[config]} · ${out.model} · ${out.seconds} s${left}` }));
+  box.replaceChildren(...parts);
+  math(box);
+  preview();
+  if (window.matchMedia("(max-width: 860px)").matches) {
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("result").scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
   }
-  return card;
 }
 
-function render() {
-  const exercise = data.exercises[state.exercise];
-  const attempt = exercise.attempts.find((a) => a.kind === state.attempt);
-  document.querySelectorAll("#exercises button").forEach((b, i) => b.setAttribute("aria-current", i === state.exercise));
-  document.querySelectorAll(".copy-switch button").forEach((b) =>
-    b.setAttribute("aria-checked", b.dataset.attempt === state.attempt));
-
-  const sheet = document.getElementById("sheet");
-  const lines = el("ol", { class: "attempt", start: "0" });
-  attempt.text.split("\n").forEach((line, i) => lines.append(el("li", { "data-n": i, text: line })));
-  const planted = attempt.kind === "wrong"
-    ? el("details", { class: "planted" }, el("summary", { text: "Voir l'erreur placée dans la copie" }),
-      el("p", { text: `Ligne ${attempt.wrong_line}. ${attempt.note}` }))
-    : el("p", { class: "planted", text: "Cette copie ne contient pas d'erreur : une bonne relecture ne signale rien." });
-  sheet.replaceChildren(el("h3", { text: exercise.title }), el("p", { class: "statement", text: exercise.statement }),
-    lines, planted);
-  planted.addEventListener?.("toggle", () => {
-    const li = lines.children[attempt.wrong_line];
-    if (!li) return;
-    li.classList.toggle("flagged", planted.open);
-    if (planted.open) li.append(el("span", { class: "mark", text: "✗" }));
-    else li.querySelector(".mark")?.remove();
-  });
-
-  const reviews = document.getElementById("reviews");
-  reviews.replaceChildren(...CONFIGS.map((c) => reviewCard(exercise, attempt, c)));
-  math(sheet);
-  math(reviews);
+async function submit(event) {
+  event.preventDefault();
+  clearResult();
+  preview();
+  const statement = $("statement").value.trim();
+  const attempt = lines().join("\n");
+  if (!statement) { $("status").textContent = "Écrivez d'abord l'énoncé."; $("statement").focus(); return; }
+  if (!attempt) { $("status").textContent = "Écrivez votre rédaction, une étape par ligne."; $("attempt").focus(); return; }
+  const config = document.querySelector("input[name=config]:checked").value;
+  const key = $("key").value.trim();
+  $("go").disabled = true;
+  $("status").textContent = config === "agent" ? "L'agent relit et cherche dans le cours… (jusqu'à une minute)"
+    : "Relecture en cours… (10 à 30 secondes)";
+  try {
+    const response = await fetch("/api/review", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ statement, attempt, config, key }),
+    });
+    const out = await response.json().catch(() => ({ error: `Le serveur a répondu ${response.status}.` }));
+    if (!response.ok) {
+      $("status").textContent = out.error || "La relecture a échoué.";
+      if (["visitor", "site", "nokey"].includes(out.code)) $("own-key").open = true;
+      return;
+    }
+    $("status").textContent = "";
+    showResult(out, config);
+  } catch {
+    $("status").textContent = "Le serveur est injoignable. Vérifiez votre connexion et réessayez.";
+  } finally {
+    $("go").disabled = false;
+  }
 }
 
-function setUp() {
-  const nav = document.getElementById("exercises");
-  data.exercises.forEach((exercise, i) => {
-    const button = el("button", { type: "button", text: exercise.title });
-    button.addEventListener("click", () => { state.exercise = i; render(); });
-    nav.append(button);
-  });
-  document.querySelectorAll(".copy-switch button").forEach((b) => b.addEventListener("click", () => {
-    state.attempt = b.dataset.attempt; render();
-  }));
-  const reviews = data.runs.reviews;
-  const right = reviews.filter((r) => {
-    const exercise = data.exercises.find((e) => e.id === r.exercise);
-    return judge(exercise.attempts.find((a) => a.kind === r.attempt), r).good;
-  }).length;
-  document.getElementById("recorded").textContent = `Réponses enregistrées une fois avec le modèle ${data.runs.model} `
-    + `(via Groq, température 0), sans appel en direct depuis cette page. Sur ces ${data.exercises.length} exercices `
-    + `écrits pour la démonstration, ${right} réponses sur ${reviews.length} sont justes : c'est trop peu pour `
-    + "comparer les versions. Les chiffres de l'évaluation sont plus bas.";
-  renderEvaluation();
-  render();
+async function setUpExamples() {
+  try {
+    const data = await fetch("data/examples.json").then((r) => r.json());
+    const box = $("examples");
+    data.exercises.forEach((exercise) => {
+      const button = el("button", { type: "button", text: exercise.title });
+      button.addEventListener("click", () => {
+        $("statement").value = exercise.statement;
+        $("attempt").value = exercise.attempts.find((a) => a.kind === "wrong").text;
+        clearResult();
+        preview();
+        $("go").focus();
+      });
+      box.append(button);
+    });
+  } catch { /* examples are optional */ }
 }
 
 const pct = (x) => `${Math.round(x * 100)} %`;
-
-function renderEvaluation() {
-  const e = data.evaluation;
-  const names = { llm_only: "LLM seul", rag: "LLM avec le cours", agent: "Agent" };
-  const rows = Object.entries(names).map(([key, name]) => {
+async function setUpEvaluation() {
+  let e;
+  try { e = await fetch("data/agent.json").then((r) => r.json()); } catch { return; }
+  const rows = ["llm_only", "rag", "agent"].map((key) => {
     const c = e.configs[key];
-    return el("tr", {}, el("th", { scope: "row", text: name }),
-      el("td", { text: `${pct(c.both_right)} (${pct(c.both_right_ci95[0])} à ${pct(c.both_right_ci95[1])})` }),
-      el("td", { text: pct(c.exact_line) }), el("td", { text: pct(c.false_alarm) }),
-      el("td", { text: String(c.tokens_per_review) }));
+    return el("tr", {}, el("th", { scope: "row", text: NAMES[key] }),
+      el("td", { text: `${pct(c.both_right)}` }), el("td", { text: `${pct(c.both_right_ci95[0])} à ${pct(c.both_right_ci95[1])}` }),
+      el("td", { text: pct(c.false_alarm) }));
   });
-  const table = el("table", {},
-    el("thead", {}, el("tr", {}, el("th", { text: "Version" }), el("th", { text: "Les deux copies bien jugées (IC 95 %)" }),
-      el("th", { text: "Bonne ligne" }), el("th", { text: "Fausse alerte" }), el("th", { text: "Jetons par copie" }))),
-    el("tbody", {}, ...rows));
-  const d = e.agent_minus_llm_only;
-  document.getElementById("evaluation").replaceChildren(
-    el("p", { class: "finding", text: `Sur ${e.exercises} exercices tenus à l'écart, le cours et l'agent ne font pas mieux `
-      + "que le modèle seul." }),
-    el("p", { text: "Chaque exercice a une copie avec une erreur connue et une copie juste. Une version réussit un "
-      + "exercice si elle trouve la ligne fausse exacte et laisse la copie juste tranquille. Les exercices viennent "
-      + "des manuels de Licence, pas de cette page." }),
-    el("div", { class: "table-wrap" }, table),
-    el("p", { text: `Écart agent moins LLM seul : ${Math.round(d.difference * 100)} points (IC 95 % de `
-      + `${Math.round(d.ci95[0] * 100)} à ${Math.round(d.ci95[1] * 100)}). Choisir une ligne au hasard donnerait la `
-      + `bonne ${pct(e.chance_exact_line)} du temps. L'agent a cherché ${e.agent_usage.searches} fois dans le cours `
-      + `et n'a jamais utilisé le vérificateur ; toutes ses ${e.agent_usage.citations} citations renvoient à des `
-      + "passages qu'il avait vraiment lus." }),
-    el("p", {}, "Détails, limites et vérifications à la main : ",
-      el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md", text: "le rapport" }), "."));
+  $("evaluation").replaceChildren(
+    el("p", { text: `Testé sur ${e.exercises} exercices de Licence mis de côté, chacun avec une copie contenant une `
+      + "erreur connue et une copie juste. Une version réussit un exercice si elle trouve la ligne fausse exacte et ne "
+      + "signale rien sur la copie juste." }),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, el("th", { text: "Version" }), el("th", { text: "Exercices réussis" }),
+        el("th", { text: "Intervalle à 95 %" }), el("th", { text: "Fausses alertes" }))),
+      el("tbody", {}, ...rows))),
+    el("p", { text: "Autrement dit, il se trompe souvent : servez-vous de l'indice pour relire, pas comme d'un "
+      + "verdict. Avec si peu d'exercices, les trois versions ne se distinguent pas. Cette évaluation a été faite sur "
+      + "des manuels de Licence ; ce site cherche dans le cours Exo7, ce qui n'a pas été évalué." }),
+    el("p", {}, el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md",
+      text: "Lire le rapport complet" })));
 }
 
 /* In-browser checker: the repository's own parser and checker, run by Pyodide. */
 let python = null;
-async function startPython() {
+function startPython() {
   if (python) return python;
   python = (async () => {
     const script = el("script", { src: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" });
@@ -186,33 +193,23 @@ async function startPython() {
     await py.loadPackage("sympy");
     py.FS.mkdirTree("/home/pyodide/mathhinter/check");
     for (const name of ["__init__.py", "check/__init__.py", "check/parser.py", "check/equality.py"]) {
-      const text = await fetch(`py/mathhinter/${name}`).then((r) => r.text());
-      py.FS.writeFile(`/home/pyodide/mathhinter/${name}`, text);
+      py.FS.writeFile(`/home/pyodide/mathhinter/${name}`, await fetch(`py/mathhinter/${name}`).then((r) => r.text()));
     }
     py.runPython("import sys; sys.path.insert(0, '/home/pyodide')\nfrom mathhinter.check.equality import check_equality");
     return py;
   })();
   return python;
 }
-
 const REASONS = {
   identity: "les deux membres sont la même expression",
   "same number": "les deux membres valent le même nombre",
   "different numbers": "les deux membres sont deux nombres différents",
 };
-
 function setUpChecker() {
-  const form = document.getElementById("check-form");
-  const out = document.getElementById("check-result");
-  const button = document.getElementById("check-button");
-  document.querySelectorAll(".examples button").forEach((b) => b.addEventListener("click", () => {
-    document.getElementById("left").value = b.dataset.l;
-    document.getElementById("right").value = b.dataset.r;
-    form.requestSubmit();
-  }));
+  const form = $("check-form"), out = $("check-result"), button = $("check-button");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const left = document.getElementById("left").value, right = document.getElementById("right").value;
+    const left = $("left").value, right = $("right").value;
     button.disabled = true;
     out.textContent = python ? "Calcul…" : "Chargement de Python et SymPy…";
     try {
@@ -220,26 +217,29 @@ function setUpChecker() {
       py.globals.set("left", left);
       py.globals.set("right", right);
       const [status, reason] = py.runPython("v = check_equality(left, right); [v.status, v.reason]").toJs();
-      const explained = REASONS[reason] || (reason.startsWith("unparseable") ? `lecture impossible (${reason.slice(13)})`
-        : reason.startsWith("not an identity") ? "les deux membres diffèrent comme expressions : la ligne peut dépendre des précédentes"
+      const explained = REASONS[reason] || (reason.startsWith("unparseable") ? "expression illisible pour le vérificateur"
+        : reason.startsWith("not an identity") ? "les membres diffèrent comme expressions : la ligne peut dépendre des précédentes"
           : reason);
-      out.replaceChildren(el("span", { class: `status ${status === "vérifié" ? "good" : ""}`, text: status }),
-        math(el("span", { text: `$${left} = ${right}$` })), el("br"), el("small", { text: explained }));
+      out.replaceChildren(el("span", { class: "status", text: status }), math(el("span", { text: `$${left} = ${right}$` })),
+        el("br"), el("small", { text: explained }));
     } catch (error) {
       python = null;
-      out.textContent = `Python n'a pas pu se charger (${error.message || error}). Vérifiez la connexion et réessayez.`;
+      out.textContent = `Python n'a pas pu se charger (${error.message || error}).`;
     } finally {
       button.disabled = false;
     }
   });
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = store.get("groq-key");
+  if (saved) { $("key").value = saved; $("remember").checked = true; }
+  $("remember").addEventListener("change", () => store.set("groq-key", $("remember").checked ? $("key").value.trim() : null));
+  $("key").addEventListener("input", () => { if ($("remember").checked) store.set("groq-key", $("key").value.trim()); });
+  $("form").addEventListener("submit", submit);
+  for (const id of ["statement", "attempt"]) $(id).addEventListener("input", () => { flagged = null; previewSoon(); });
+  setUpExamples();
+  setUpEvaluation();
   setUpChecker();
-  try {
-    await load();
-    setUp();
-  } catch (error) {
-    document.getElementById("sheet").textContent = `Les données de la démonstration n'ont pas pu se charger (${error.message}).`;
-  }
+  const ready = setInterval(() => { if (window.renderMathInElement) { clearInterval(ready); preview(); } }, 100);
 });

@@ -1,4 +1,7 @@
-"""Assemble the static demo in _site: the page, its public data, the evaluation numbers and the checker's Python."""
+"""Assemble the static site in _site: the page, the examples, the evaluation numbers and the checker's Python.
+
+Vercel runs this as the build step; the live tutor itself is the function in api/review.py.
+"""
 
 import json
 import shutil
@@ -12,7 +15,7 @@ CHECKER = ["__init__.py", "check/__init__.py", "check/parser.py", "check/equalit
 def main() -> None:
     shutil.rmtree(OUT, ignore_errors=True)
     shutil.copytree(ROOT / "site", OUT)
-    shutil.copy(ROOT / "data/demo/exercises.json", OUT / "data/exercises.json")
+    shutil.copy(ROOT / "data/demo/exercises.json", OUT / "data/examples.json")
     shutil.copy(ROOT / "reports/agent.json", OUT / "data/agent.json")
     for name in CHECKER:
         target = OUT / "py/mathhinter" / name
@@ -20,8 +23,9 @@ def main() -> None:
         source = ROOT / "src/mathhinter" / name
         target.write_text(source.read_text(encoding="utf-8") if source.exists() else "", encoding="utf-8")
     (OUT / ".nojekyll").write_text("")
-    reviews = json.loads((OUT / "data/runs.json").read_text(encoding="utf-8"))["reviews"]
-    print(f"built {OUT} with {len(reviews)} reviews")
+    (OUT / "data/corpus.json").unlink()  # the course is only needed by the function
+    examples = json.loads((OUT / "data/examples.json").read_text(encoding="utf-8"))["exercises"]
+    print(f"built {OUT} with {len(examples)} examples")
 
 
 if __name__ == "__main__":

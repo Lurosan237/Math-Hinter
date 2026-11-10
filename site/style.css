@@ -40,19 +40,12 @@ h1 { font: 700 clamp(2.4rem, 6vw, 3.6rem)/1 var(--hand); margin: 0 0 .75rem; col
 .links { font: 500 .95rem var(--sans); display: flex; gap: 1.5rem; margin: 0; }
 h2 { font: 600 1.6rem/1.2 var(--serif); margin: 0 0 .75rem; }
 
-.exercises { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0; font-family: var(--sans); font-size: .9rem; }
-.exercises button { border: 1px solid var(--rule-strong); background: var(--paper); border-radius: 3px; padding: .35rem .7rem; }
-.exercises button[aria-current="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.copy-switch { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: 3px; overflow: hidden; font: 500 .9rem var(--sans); margin-bottom: 1rem; }
-.copy-switch button { border: 0; background: var(--paper); padding: .45rem .9rem; }
-.copy-switch button[aria-checked="true"] { background: var(--wash); box-shadow: inset 0 -3px 0 var(--margin); }
-
-.desk { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
-@media (max-width: 820px) { .desk { grid-template-columns: 1fr; } }
+.desk { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; margin-top: .5rem; }
+@media (max-width: 860px) { .desk { grid-template-columns: 1fr; } }
 
 /* Seyès-ruled sheet: the student's copy */
 .sheet {
-  position: relative; background-color: var(--paper); padding: var(--line) 1.25rem var(--line) 4.5rem; min-height: 22rem;
+  position: relative; background-color: var(--paper); padding: 1.25rem 1.25rem var(--line) 4.5rem; margin: 0;
   background-image:
     linear-gradient(to right, transparent 3.4rem, var(--margin) 3.4rem, var(--margin) calc(3.4rem + 2px), transparent calc(3.4rem + 2px)),
     linear-gradient(var(--rule-strong) 1px, transparent 1px),
@@ -61,35 +54,59 @@ h2 { font: 600 1.6rem/1.2 var(--serif); margin: 0 0 .75rem; }
   background-position: 0 0, 0 calc(var(--line) - 1px), 0 calc(var(--line) - 1px);
   border-radius: 2px; box-shadow: 0 1px 0 var(--rule-strong), 0 12px 30px -18px rgba(29, 39, 66, .35);
 }
-.sheet h3 { font: 600 1.15rem/var(--line) var(--serif); margin: 0; }
-.statement { margin: 0 0 var(--line); line-height: var(--line); }
+.field { display: flex; flex-direction: column; gap: .3rem; margin-bottom: 1rem; }
+.field > span { font: 500 .85rem var(--sans); color: var(--pencil); }
+.field textarea, .field input {
+  width: 100%; font: 1rem/1.6 ui-monospace, Menlo, Consolas, monospace; color: var(--ink);
+  background: color-mix(in srgb, var(--paper) 88%, transparent); border: 1px solid var(--rule-strong); border-radius: 3px;
+  padding: .55rem .7rem; resize: vertical;
+}
+.field textarea:focus, .field input:focus { border-color: var(--ink); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--margin) 35%, transparent); }
+.tip { font: .82rem/1.5 var(--sans); color: var(--pencil); margin: -.4rem 0 1.25rem; }
+.preview { border-top: 1px dashed var(--rule-strong); padding-top: .75rem; }
+.preview-statement { font: 600 1.15rem/var(--line) var(--serif); margin: 0 0 .5rem; }
+.preview-statement:empty, .attempt:empty { display: none; }
 .attempt { list-style: none; margin: 0; padding: 0; }
-.attempt li { position: relative; line-height: var(--line); min-height: var(--line); padding: 0 .25rem; }
+.attempt li { position: relative; line-height: var(--line); min-height: var(--line); padding: 0 .25rem; overflow-wrap: anywhere; }
 .attempt li::before { content: attr(data-n); position: absolute; left: -3.2rem; width: 2.4rem; text-align: right; font: .8rem/var(--line) var(--sans); color: var(--pencil); }
 .attempt li.flagged { background: color-mix(in srgb, var(--red) 12%, transparent); }
-.attempt li .mark { position: absolute; left: -4.4rem; font: 700 1.1rem/var(--line) var(--hand); color: var(--red); }
-.planted { margin: var(--line) 0 0; line-height: var(--line); color: var(--pencil); font-size: 1rem; }
-.planted summary { cursor: pointer; font-family: var(--sans); font-size: .9rem; }
+.attempt li .mark { position: absolute; left: -4.4rem; top: 0; font: 700 1.2rem/var(--line) var(--hand); color: var(--red); }
 
-/* The three readers' notes */
-.reviews { display: flex; flex-direction: column; gap: 1rem; }
-.review { background: var(--paper); border-left: 3px solid var(--rule-strong); padding: .9rem 1rem 1rem; }
-.review[aria-current="true"] { border-left-color: var(--margin); }
-.review header { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; font-family: var(--sans); }
-.review h4 { margin: 0; font: 600 1rem var(--sans); }
-.review .what { font-size: .82rem; color: var(--pencil); margin: .1rem 0 .6rem; font-family: var(--sans); }
-.verdict { font: 700 1.15rem var(--hand); white-space: nowrap; }
+/* The reviewer's side */
+.panel { background: var(--paper); padding: 1.1rem 1.1rem 1.25rem; border-left: 3px solid var(--margin); }
+.versions { border: 0; padding: 0; margin: 0 0 1rem; display: grid; gap: .45rem; }
+.versions legend { font: 500 .85rem var(--sans); color: var(--pencil); margin-bottom: .35rem; }
+.versions label { display: grid; grid-template-columns: auto 1fr; column-gap: .5rem; font: .95rem/1.3 var(--sans); cursor: pointer; }
+.versions input { grid-row: span 2; margin-top: .2rem; accent-color: var(--margin); }
+.versions b { font-weight: 600; }
+.versions small { color: var(--pencil); font-size: .8rem; }
+.go { width: 100%; border: 0; border-radius: 3px; background: var(--ink); color: var(--paper); padding: .75rem 1rem; font: 600 1.05rem var(--sans); }
+.go:hover { background: color-mix(in srgb, var(--ink) 85%, var(--margin)); }
+.go[disabled] { opacity: .6; cursor: progress; }
+.status { font: .92rem/1.45 var(--sans); color: var(--pencil); margin: .75rem 0 0; min-height: 1.2em; }
+.result:empty { display: none; }
+.result { margin-top: .5rem; }
+.verdict { font: 700 1.35rem/1.3 var(--hand); margin: .25rem 0 .4rem; }
 .verdict.good { color: var(--green); }
 .verdict.bad { color: var(--red); }
-.review .hint { font: 400 1.25rem/1.35 var(--hand); color: var(--red); margin: .2rem 0 .5rem; }
-.review details { font-size: 1rem; margin-top: .4rem; }
-.review summary { cursor: pointer; font: 500 .85rem var(--sans); color: var(--pencil); }
+.hint { font: 400 1.3rem/1.35 var(--hand); color: var(--red); margin: 0 0 .75rem; }
+.aside { color: var(--pencil); font-size: 1rem; }
+.result details { margin-top: .6rem; font-size: 1rem; }
+.result summary, .own-key summary { cursor: pointer; font: 500 .88rem var(--sans); color: var(--pencil); }
 .trace { margin: .4rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
-.passage { white-space: pre-line; margin: .5rem 0; padding: .5rem .75rem; background: var(--wash); font-size: .98rem; max-height: 14rem; overflow: auto; }
-.passage .source { display: block; font: 500 .78rem var(--sans); color: var(--pencil); margin-bottom: .2rem; }
-.recorded { font: .85rem/1.5 var(--sans); color: var(--pencil); max-width: 46rem; margin: 1rem 0 0; }
+.passage { white-space: pre-line; margin: .5rem 0; padding: .5rem .75rem; background: var(--wash); font-size: .98rem; max-height: 16rem; overflow: auto; }
+.passage .source { display: block; white-space: normal; font: 500 .78rem var(--sans); color: var(--pencil); margin-bottom: .2rem; }
+.meta { font: .78rem var(--sans); color: var(--pencil); margin: 1rem 0 0; }
+.own-key { margin-top: 1.25rem; border-top: 1px solid var(--rule); padding-top: .75rem; }
+.own-key p { font-size: .95rem; }
+.check { font: .88rem var(--sans); display: flex; gap: .4rem; align-items: center; }
 
-section.checker, section.evaluation { margin-top: 4rem; max-width: 46rem; }
+.examples { margin: 1.5rem 0 0; font: .9rem var(--sans); color: var(--pencil); }
+.examples > div { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+.examples button { border: 1px dashed var(--rule-strong); background: var(--paper); border-radius: 3px; padding: .35rem .7rem; font-size: .88rem; }
+.examples button:hover { border-style: solid; }
+
+section.checker, section.honest { margin-top: 4rem; max-width: 46rem; }
 .check-form { display: flex; flex-wrap: wrap; align-items: end; gap: .6rem; margin: 1rem 0 .5rem; }
 .check-form label { display: flex; flex-direction: column; font: 500 .82rem var(--sans); color: var(--pencil); flex: 1 1 12rem; gap: .25rem; }
 .check-form input { font: 1rem ui-monospace, Menlo, monospace; padding: .5rem .6rem; border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--paper); color: var(--ink); }
@@ -103,23 +120,23 @@ section.checker, section.evaluation { margin-top: 4rem; max-width: 46rem; }
 .note { font-size: .95rem; color: var(--pencil); }
 code { font-size: .9em; }
 
-.evaluation table { width: 100%; border-collapse: collapse; font: .92rem/1.4 var(--sans); margin: 1rem 0; }
-.evaluation th, .evaluation td { text-align: right; padding: .45rem .5rem; border-bottom: 1px solid var(--rule-strong); }
-.evaluation th:first-child, .evaluation td:first-child { text-align: left; }
-.evaluation thead th { font-weight: 600; color: var(--pencil); vertical-align: bottom; }
+.honest table { width: 100%; border-collapse: collapse; font: .92rem/1.4 var(--sans); margin: 1rem 0; }
+.honest th, .honest td { text-align: right; padding: .45rem .5rem; border-bottom: 1px solid var(--rule-strong); }
+.honest th:first-child, .honest td:first-child { text-align: left; }
+.honest thead th { font-weight: 600; color: var(--pencil); vertical-align: bottom; }
 .table-wrap { overflow-x: auto; }
-.evaluation .finding { font-size: 1.2rem; }
+.honest .finding { font-size: 1.2rem; }
 
 footer { margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 3rem; border-top: 1px solid var(--rule-strong); font-size: .95rem; color: var(--pencil); max-width: 72rem; }
 footer p { max-width: 46rem; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 600px) {
-  .exercises { flex-wrap: nowrap; overflow-x: auto; margin-right: -16px; padding-bottom: .3rem; }
-  .exercises button { flex: none; }
   .sheet { padding-left: 2.9rem; padding-right: .9rem;
     background-image:
       linear-gradient(to right, transparent 2.2rem, var(--margin) 2.2rem, var(--margin) calc(2.2rem + 2px), transparent calc(2.2rem + 2px)),
       linear-gradient(var(--rule-strong) 1px, transparent 1px), linear-gradient(var(--rule) 1px, transparent 1px); }
   .attempt li::before { left: -2.7rem; width: 1.6rem; }
   .attempt li .mark { left: -2.75rem; }
+  .top { padding-top: 2rem; }
 }
