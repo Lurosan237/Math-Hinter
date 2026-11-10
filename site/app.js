@@ -22,7 +22,7 @@ function math(node) {
   if (window.renderMathInElement) {
     renderMathInElement(node, {
       delimiters: [{ left: "\\[", right: "\\]", display: true }, { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false }],
+        { left: "\\(", right: "\\)", display: false }, { left: "$", right: "$", display: false }],
       throwOnError: false,
     });
   }

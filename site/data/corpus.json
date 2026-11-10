@@ -78,7 +78,7 @@
 {
 "id": "exo7:0006",
 "kind": "proposition",
-"text": "Proposition. {$\\sqrt{2}\\notin \\mathbb{Q}$}",
+"text": "Proposition. $\\sqrt{2}\\notin \\mathbb{Q}$",
 "volume": "Exo7 Analyse 1",
 "module": "reels",
 "section": "L'ensemble des nombres rationnels $\\mathbb{Q}$",
@@ -198,7 +198,7 @@
 {
 "id": "exo7:0016",
 "kind": "proposition",
-"text": "Proposition. Soit $x\\in \\mathbb{R}$, il existe un unique entier relatif, la\npartie entière notée $E(x)$, tel que :\n{$E(x)\\leq x <E(x)+1$}",
+"text": "Proposition. Soit $x\\in \\mathbb{R}$, il existe un unique entier relatif, la\npartie entière notée $E(x)$, tel que :\n$E(x)\\leq x <E(x)+1$",
 "volume": "Exo7 Analyse 1",
 "module": "reels",
 "section": "Propriétés de $\\mathbb{R}$",
@@ -774,7 +774,7 @@
 {
 "id": "exo7:0064",
 "kind": "definition",
-"text": "Définition. La suite $(u_n)_{n\\in \\mathbb{N}}$ a pour limite $\\ell\\in \\mathbb{R}$ si :\npour tout $\\epsilon >0$, il existe un entier naturel $N$ tel que si $n\\geq N$ alors\n$\\lvert u_n-\\ell\\rvert\\leq\\epsilon$ :\n{$\\forall \\epsilon >0 \\quad \\exists N \\in \\mathbb{N} \\quad\n \\forall n \\in \\mathbb{N} \\qquad\n \\left( n\\geq N \\implies \\lvert u_n-\\ell\\rvert\\leq\\epsilon \\right)$}",
+"text": "Définition. La suite $(u_n)_{n\\in \\mathbb{N}}$ a pour limite $\\ell\\in \\mathbb{R}$ si :\npour tout $\\epsilon >0$, il existe un entier naturel $N$ tel que si $n\\geq N$ alors\n$\\lvert u_n-\\ell\\rvert\\leq\\epsilon$ :\n$\\forall \\epsilon >0 \\quad \\exists N \\in \\mathbb{N} \\quad\n \\forall n \\in \\mathbb{N} \\qquad\n \\left( n\\geq N \\implies \\lvert u_n-\\ell\\rvert\\leq\\epsilon \\right)$",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Limites",
@@ -1146,7 +1146,7 @@
 {
 "id": "exo7:0095",
 "kind": "proposition",
-"text": "Proposition (Série géométrique). Soit $a$ un réel, $a\\neq 1$. En notant $\\sum_{k=0}^na^k=1+a+a^2+\\cdots+a^n$, on a :\n {$ \\sum_{k=0}^na^k=\\frac{1-a^{n+1}}{1-a} $}",
+"text": "Proposition (Série géométrique). Soit $a$ un réel, $a\\neq 1$. En notant $\\sum_{k=0}^na^k=1+a+a^2+\\cdots+a^n$, on a :\n $ \\sum_{k=0}^na^k=\\frac{1-a^{n+1}}{1-a} $",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Exemples remarquables",
@@ -1206,7 +1206,7 @@
 {
 "id": "exo7:0100",
 "kind": "corollary",
-"text": "Corollaire. Soit $(u_n)_{n\\in \\mathbb{N}}$ une suite de réels non nuls.\n{Si $\\lim_{n\\to +\\infty}\\frac{u_{n+1}}{u_n}= 0$, alors $\\lim_{n\\to +\\infty} u_n= 0$.}",
+"text": "Corollaire. Soit $(u_n)_{n\\in \\mathbb{N}}$ une suite de réels non nuls.\nSi $\\lim_{n\\to +\\infty}\\frac{u_{n+1}}{u_n}= 0$, alors $\\lim_{n\\to +\\infty} u_n= 0$.",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Exemples remarquables",
@@ -1350,7 +1350,7 @@
 {
 "id": "exo7:0112",
 "kind": "theorem",
-"text": "Théorème. {Toute suite croissante et majorée est convergente.}",
+"text": "Théorème. Toute suite croissante et majorée est convergente.",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Théorème de convergence",
@@ -1410,7 +1410,7 @@
 {
 "id": "exo7:0117",
 "kind": "theorem",
-"text": "Théorème. {Si les suites $(u_n)_{n\\in \\mathbb{N}}$ et $(v_n)_{n\\in \\mathbb{N}}$ sont adjacentes, \\\\\n elles convergent vers la même limite.}",
+"text": "Théorème. Si les suites $(u_n)_{n\\in \\mathbb{N}}$ et $(v_n)_{n\\in \\mathbb{N}}$ sont adjacentes, \\\\\n elles convergent vers la même limite.",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Théorème de convergence",
@@ -1602,7 +1602,7 @@
 {
 "id": "exo7:0133",
 "kind": "proposition",
-"text": "Proposition. Si $f$ est une fonction continue et la suite récurrente $(u_n)$ converge vers $\\ell$, alors\n$\\ell$ est une solution de l'équation :\n{$f(\\ell)=\\ell$}",
+"text": "Proposition. Si $f$ est une fonction continue et la suite récurrente $(u_n)$ converge vers $\\ell$, alors\n$\\ell$ est une solution de l'équation :\n$f(\\ell)=\\ell$",
 "volume": "Exo7 Analyse 1",
 "module": "suites",
 "section": "Suites récurrentes",
@@ -1962,7 +1962,7 @@
 {
 "id": "exo7:0163",
 "kind": "definition",
-"text": "Définition. Soit $\\ell\\in\\mathbb{R}$. On dit que $f$ a pour limite $\\ell$ en $x_0$ si\n{$\n\\forall \\epsilon>0 \\quad \\exists \\delta>0 \\quad \\forall x\\in I \\quad \\vert x-x_0\\vert <\\delta\n\\implies \\vert f(x)-\\ell\\vert <\\epsilon\n$}\nOn dit aussi que $f(x)$ tend vers $\\ell$ lorsque $x$ tend vers $x_0$.\nOn note alors $\\lim_{x\\to x_0}f(x)=\\ell$ ou bien $\\lim_{x_0} f=\\ell$.",
+"text": "Définition. Soit $\\ell\\in\\mathbb{R}$. On dit que $f$ a pour limite $\\ell$ en $x_0$ si\n$\n\\forall \\epsilon>0 \\quad \\exists \\delta>0 \\quad \\forall x\\in I \\quad \\vert x-x_0\\vert <\\delta\n\\implies \\vert f(x)-\\ell\\vert <\\epsilon\n$\nOn dit aussi que $f(x)$ tend vers $\\ell$ lorsque $x$ tend vers $x_0$.\nOn note alors $\\lim_{x\\to x_0}f(x)=\\ell$ ou bien $\\lim_{x_0} f=\\ell$.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Limites",
@@ -2070,7 +2070,7 @@
 {
 "id": "exo7:0172",
 "kind": "proposition",
-"text": "Proposition. {Si une fonction admet une limite, alors cette limite est unique.}",
+"text": "Proposition. Si une fonction admet une limite, alors cette limite est unique.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Limites",
@@ -2130,7 +2130,7 @@
 {
 "id": "exo7:0177",
 "kind": "proposition",
-"text": "Proposition. - Si $f\\leq g$ et si $\\lim_{x_0} f=\\ell\\in\\mathbb{R}$ et $\\lim_{x_0} g=\\ell'\\in\\mathbb{R}$, alors $\\ell\\leq \\ell'$.\n - Si $f\\leq g$ et si $\\lim_{x_0} f=+\\infty$, alors $\\lim_{x_0} g=+\\infty$.\n - Théorème des gendarmes\n {Si $f\\leq g\\leq h$ et si $\\lim_{x_0} f=\\lim_{x_0} h=\\ell\\in\\mathbb{R}$, alors $g$ a une limite en $x_0$ et $\\lim_{x_0} g=\\ell$.}",
+"text": "Proposition. - Si $f\\leq g$ et si $\\lim_{x_0} f=\\ell\\in\\mathbb{R}$ et $\\lim_{x_0} g=\\ell'\\in\\mathbb{R}$, alors $\\ell\\leq \\ell'$.\n - Si $f\\leq g$ et si $\\lim_{x_0} f=+\\infty$, alors $\\lim_{x_0} g=+\\infty$.\n - Théorème des gendarmes\n Si $f\\leq g\\leq h$ et si $\\lim_{x_0} f=\\lim_{x_0} h=\\ell\\in\\mathbb{R}$, alors $g$ a une limite en $x_0$ et $\\lim_{x_0} g=\\ell$.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Limites",
@@ -2166,7 +2166,7 @@
 {
 "id": "exo7:0180",
 "kind": "definition",
-"text": "Définition. - On dit que $f$ est continue en un point $x_0\\in I$ si\n{$\n\\forall \\epsilon>0 \\quad \\exists \\delta>0 \\quad \\forall x\\in I \\quad \\vert x-x_0\\vert <\\delta\n\\implies \\vert f(x)-f(x_0)\\vert <\\epsilon\n$}\nc'est-à-dire si $f$ admet une limite en $x_0$ (cette limite vaut alors nécessairement $f(x_0)$).\n - On dit que $f$ est continue sur $I$ si $f$ est continue en tout point de $I$.",
+"text": "Définition. - On dit que $f$ est continue en un point $x_0\\in I$ si\n$\n\\forall \\epsilon>0 \\quad \\exists \\delta>0 \\quad \\forall x\\in I \\quad \\vert x-x_0\\vert <\\delta\n\\implies \\vert f(x)-f(x_0)\\vert <\\epsilon\n$\nc'est-à-dire si $f$ admet une limite en $x_0$ (cette limite vaut alors nécessairement $f(x_0)$).\n - On dit que $f$ est continue sur $I$ si $f$ est continue en tout point de $I$.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Continuité en un point",
@@ -2310,7 +2310,7 @@
 {
 "id": "exo7:0192",
 "kind": "proposition",
-"text": "Proposition. Soit $f:I\\to\\mathbb{R}$ une fonction et $x_0$ un point de $I$. Alors :\n{$\nf \\text{ est continue en } x_0 \\ \\iff \\\n\\begin{matrix}\n\\text{pour toute suite $(u_n)$ qui converge vers } x_0\\\\\n\\text{la suite $(f(u_n))$ converge vers } f(x_0)\n\\end{matrix}\n$}",
+"text": "Proposition. Soit $f:I\\to\\mathbb{R}$ une fonction et $x_0$ un point de $I$. Alors :\n$\nf \\text{ est continue en } x_0 \\ \\iff \\\n\\begin{matrix}\n\\text{pour toute suite $(u_n)$ qui converge vers } x_0\\\\\n\\text{la suite $(f(u_n))$ converge vers } f(x_0)\n\\end{matrix}\n$",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Continuité en un point",
@@ -2358,7 +2358,7 @@
 {
 "id": "exo7:0196",
 "kind": "theorem",
-"text": "Théorème (Théorème des valeurs intermédiaires). Soit $f:[a,b]\\to\\mathbb{R}$ une fonction continue sur un segment.\n{Pour tout réel $y$ compris entre $f(a)$ et $f(b)$,\\\\ il existe $c\\in[a,b]$ tel que $f(c)=y$.}",
+"text": "Théorème (Théorème des valeurs intermédiaires). Soit $f:[a,b]\\to\\mathbb{R}$ une fonction continue sur un segment.\nPour tout réel $y$ compris entre $f(a)$ et $f(b)$,\\\\ il existe $c\\in[a,b]$ tel que $f(c)=y$.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Continuité sur un intervalle",
@@ -2394,7 +2394,7 @@
 {
 "id": "exo7:0199",
 "kind": "corollary",
-"text": "Corollaire. Soit $f:[a,b]\\to\\mathbb{R}$ une fonction continue sur un segment.\n{Si $f(a)\\cdot f(b)<0$, alors il existe $c\\in]a,b[$ tel que $f(c)=0$.}",
+"text": "Corollaire. Soit $f:[a,b]\\to\\mathbb{R}$ une fonction continue sur un segment.\nSi $f(a)\\cdot f(b)<0$, alors il existe $c\\in]a,b[$ tel que $f(c)=0$.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Continuité sur un intervalle",
@@ -2430,7 +2430,7 @@
 {
 "id": "exo7:0202",
 "kind": "corollary",
-"text": "Corollaire. {Soit $f:I\\to\\mathbb{R}$ une fonction continue sur un intervalle $I$.\\\\\nAlors $f(I)$ est un intervalle.}",
+"text": "Corollaire. Soit $f:I\\to\\mathbb{R}$ une fonction continue sur un intervalle $I$.\\\\\nAlors $f(I)$ est un intervalle.",
 "volume": "Exo7 Analyse 1",
 "module": "fonctions",
 "section": "Continuité sur un intervalle",
@@ -2982,7 +2982,7 @@
 {
 "id": "exo7:0248",
 "kind": "definition",
-"text": "Définition. $f$ est dérivable en $x_0$ si le taux d'accroissement $\\frac{f(x)-f(x_0)}{x-x_0}$\na une limite finie lorsque $x$ tend vers $x_0$.\nLa limite s'appelle alors le nombre dérivé de $f$ en $x_0$ et est noté $f'(x_0)$. Ainsi\n{$ f'(x_0)= \\lim_{x\\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$}",
+"text": "Définition. $f$ est dérivable en $x_0$ si le taux d'accroissement $\\frac{f(x)-f(x_0)}{x-x_0}$\na une limite finie lorsque $x$ tend vers $x_0$.\nLa limite s'appelle alors le nombre dérivé de $f$ en $x_0$ et est noté $f'(x_0)$. Ainsi\n$ f'(x_0)= \\lim_{x\\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Dérivée",
@@ -3174,7 +3174,7 @@
 {
 "id": "exo7:0264",
 "kind": "proposition",
-"text": "Proposition. Si $f$ est dérivable en $x$ et $g$ est dérivable en $f(x)$ alors $g\\circ f$ est\ndérivable en $x$ de dérivée :\n{$\\big( g \\circ f \\big)'(x) = g'\\big( f(x) \\big) \\cdot f'(x)$}",
+"text": "Proposition. Si $f$ est dérivable en $x$ et $g$ est dérivable en $f(x)$ alors $g\\circ f$ est\ndérivable en $x$ de dérivée :\n$\\big( g \\circ f \\big)'(x) = g'\\big( f(x) \\big) \\cdot f'(x)$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Calcul des dérivées",
@@ -3210,7 +3210,7 @@
 {
 "id": "exo7:0267",
 "kind": "corollary",
-"text": "Corollaire. Soit $I$ un intervalle ouvert. Soit $f : I \\to J$ dérivable et bijective dont on note\n$f^{-1} : J \\to I$ la bijection réciproque. Si $f'$ ne s'annule pas sur $I$ alors $f^{-1}$ est dérivable\net on a pour tout $x \\in J$ :\n{$ \\big(f^{-1}\\big)'(x)= \\frac{1}{f'\\big( f^{-1}(x) \\big)} $}",
+"text": "Corollaire. Soit $I$ un intervalle ouvert. Soit $f : I \\to J$ dérivable et bijective dont on note\n$f^{-1} : J \\to I$ la bijection réciproque. Si $f'$ ne s'annule pas sur $I$ alors $f^{-1}$ est dérivable\net on a pour tout $x \\in J$ :\n$ \\big(f^{-1}\\big)'(x)= \\frac{1}{f'\\big( f^{-1}(x) \\big)} $",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Calcul des dérivées",
@@ -3258,7 +3258,7 @@
 {
 "id": "exo7:0271",
 "kind": "theorem",
-"text": "Théorème (Formule de Leibniz). {$ \\big( f \\cdot g \\big)^{(n)} = f^{(n)} \\cdot g + \\binom{n}{1}\\ f^{(n-1)}\\cdot g^{(1)}\n+ \\cdots + \\binom{n}{k} \\ f^{(n-k)} \\cdot g^{(k)}+\\cdots + f \\cdot g^{(n)}$}",
+"text": "Théorème (Formule de Leibniz). $ \\big( f \\cdot g \\big)^{(n)} = f^{(n)} \\cdot g + \\binom{n}{1}\\ f^{(n-1)}\\cdot g^{(1)}\n+ \\cdots + \\binom{n}{k} \\ f^{(n-k)} \\cdot g^{(k)}+\\cdots + f \\cdot g^{(n)}$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Calcul des dérivées",
@@ -3438,7 +3438,7 @@
 {
 "id": "exo7:0286",
 "kind": "theorem",
-"text": "Théorème (Théorème des accroissements finis). Soit $f:[a,b] \\to \\mathbb{R}$ une fonction continue sur $[a,b]$ et dérivable sur $]a,b[$.\nIl existe $c\\in]a,b[$ tel que\n{$f(b)-f(a)= f'(c) \\; (b-a)$}",
+"text": "Théorème (Théorème des accroissements finis). Soit $f:[a,b] \\to \\mathbb{R}$ une fonction continue sur $[a,b]$ et dérivable sur $]a,b[$.\nIl existe $c\\in]a,b[$ tel que\n$f(b)-f(a)= f'(c) \\; (b-a)$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Théorème des accroissements finis",
@@ -3510,7 +3510,7 @@
 {
 "id": "exo7:0292",
 "kind": "corollary",
-"text": "Corollaire (Inégalité des accroissements finis). Soit $f : I \\to \\mathbb{R}$ une fonction dérivable sur un intervalle $I$ ouvert.\nS'il existe une constante $M$ telle que pour tout $x \\in I$, $\\big|f'(x)\\big| \\le M$ alors\n{$\\forall x,y \\in I \\qquad \\big| f(x)-f(y) \\big| \\le M |x-y|$}",
+"text": "Corollaire (Inégalité des accroissements finis). Soit $f : I \\to \\mathbb{R}$ une fonction dérivable sur un intervalle $I$ ouvert.\nS'il existe une constante $M$ telle que pour tout $x \\in I$, $\\big|f'(x)\\big| \\le M$ alors\n$\\forall x,y \\in I \\qquad \\big| f(x)-f(y) \\big| \\le M |x-y|$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Théorème des accroissements finis",
@@ -3534,7 +3534,7 @@
 {
 "id": "exo7:0294",
 "kind": "example",
-"text": "Exemple. Soit $f(x)=\\sin(x)$. Comme $f'(x)=\\cos x$ alors $|f'(x)| \\le 1$ pour tout $x\\in \\mathbb{R}$.\nL'inégalité des accroissements finis s'écrit alors :\n$$\\text{pour tout } x,y \\in \\mathbb{R} \\qquad |\\sin x - \\sin y | \\le |x-y|.$$\nEn particulier si l'on fixe $y=0$ alors\non obtient\n{$|\\sin x| \\le |x|$}\nce qui est particulièrement intéressant pour $x$ proche de $0$.\n{\n}",
+"text": "Exemple. Soit $f(x)=\\sin(x)$. Comme $f'(x)=\\cos x$ alors $|f'(x)| \\le 1$ pour tout $x\\in \\mathbb{R}$.\nL'inégalité des accroissements finis s'écrit alors :\n$$\\text{pour tout } x,y \\in \\mathbb{R} \\qquad |\\sin x - \\sin y | \\le |x-y|.$$\nEn particulier si l'on fixe $y=0$ alors\non obtient\n$|\\sin x| \\le |x|$\nce qui est particulièrement intéressant pour $x$ proche de $0$.\n{\n}",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Théorème des accroissements finis",
@@ -3558,7 +3558,7 @@
 {
 "id": "exo7:0296",
 "kind": "corollary",
-"text": "Corollaire (Règle de l'Hospital). Soient $f,g : I \\to \\mathbb{R}$ deux fonctions dérivables et soit $x_0\\in I$.\nOn suppose que\n - $f(x_0)=g(x_0)=0$,\n - $\\forall x \\in I\\setminus\\{x_0\\} \\quad g'(x)\\neq0$.\n{Si \\quad $ \\lim_{x\\to x_0} \\frac{f'(x)}{g'(x)} = \\ell \\quad (\\in \\mathbb{R})$\n\\quad alors \\quad $ \\lim_{x\\to x_0} \\frac{f(x)}{g(x)} = \\ell.$}",
+"text": "Corollaire (Règle de l'Hospital). Soient $f,g : I \\to \\mathbb{R}$ deux fonctions dérivables et soit $x_0\\in I$.\nOn suppose que\n - $f(x_0)=g(x_0)=0$,\n - $\\forall x \\in I\\setminus\\{x_0\\} \\quad g'(x)\\neq0$.\nSi \\quad $ \\lim_{x\\to x_0} \\frac{f'(x)}{g'(x)} = \\ell \\quad (\\in \\mathbb{R})$\n\\quad alors \\quad $ \\lim_{x\\to x_0} \\frac{f(x)}{g(x)} = \\ell.$",
 "volume": "Exo7 Analyse 1",
 "module": "derivee",
 "section": "Théorème des accroissements finis",
@@ -3666,7 +3666,7 @@
 {
 "id": "exo7:0305",
 "kind": "definition",
-"text": "Définition. Pour une fonction en escalier comme ci-dessus, son intégrale\nest le réel $\\int_a^b f(x) \\; dx$ défini par\n{$ \\int_a^b f(x) \\; dx = \\sum_{i=1}^n c_i(x_i-x_{i-1})$}",
+"text": "Définition. Pour une fonction en escalier comme ci-dessus, son intégrale\nest le réel $\\int_a^b f(x) \\; dx$ défini par\n$ \\int_a^b f(x) \\; dx = \\sum_{i=1}^n c_i(x_i-x_{i-1})$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "L'intégrale de Riemann",
@@ -3894,7 +3894,7 @@
 {
 "id": "exo7:0324",
 "kind": "proposition",
-"text": "Proposition (Positivité de l'intégrale). Soit $a \\le b$ deux réels et $f$ et $g$ deux fonctions intégrables sur $[a,b]$.\n{Si $f\\le g$ \\quad alors \\quad $ \\int_a^b f(x)\\;dx \\le\\int_a^b g(x)\\;dx$}",
+"text": "Proposition (Positivité de l'intégrale). Soit $a \\le b$ deux réels et $f$ et $g$ deux fonctions intégrables sur $[a,b]$.\nSi $f\\le g$ \\quad alors \\quad $ \\int_a^b f(x)\\;dx \\le\\int_a^b g(x)\\;dx$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Propriétés de l'intégrale",
@@ -3918,7 +3918,7 @@
 {
 "id": "exo7:0326",
 "kind": "proposition",
-"text": "Proposition. Soient $f,g$ deux fonctions intégrables sur $[a,b]$.\n - $f+g$ est une fonction intégrable et\n$\\int_a^b (f+g)(x) \\; dx= \\int_a^b f(x) \\; dx+ \\int_a^b g(x) \\; dx$.\n - Pour tout réel $\\lambda$, $\\lambda f$ est\nintégrable et on a $\\int_a^b \\lambda f(x) \\; dx= \\lambda \\int_a^b f(x) \\; dx$.\nPar ces deux premiers points\nnous avons la linéarité de l'intégrale :\npour tous réels $\\lambda,\\mu$\n{$\n\\int_a^b \\big(\\lambda f(x)+\\mu g(x)\\big)\\;dx= \\lambda\\int_a^b f(x)\\;dx+\\mu\\int_a^b g(x)\\;dx$}\n - $f \\times g$ est une fonction intégrable sur $[a,b]$\nmais en général $\\int_a^b (f g)(x)\\;dx \\neq\n\\big(\\int_a^b f(x)\\;dx\\big)\\big(\\int_a^b g(x)\\;dx\\big)$.\n - $|f|$ est une fonction intégrable sur $[a,b]$ et\n{$\\left\\vert\\int_a^b f(x) \\;dx\\right\\vert\\le\\int_a^b\\big\\vert f(x)\\big\\vert \\;dx$}",
+"text": "Proposition. Soient $f,g$ deux fonctions intégrables sur $[a,b]$.\n - $f+g$ est une fonction intégrable et\n$\\int_a^b (f+g)(x) \\; dx= \\int_a^b f(x) \\; dx+ \\int_a^b g(x) \\; dx$.\n - Pour tout réel $\\lambda$, $\\lambda f$ est\nintégrable et on a $\\int_a^b \\lambda f(x) \\; dx= \\lambda \\int_a^b f(x) \\; dx$.\nPar ces deux premiers points\nnous avons la linéarité de l'intégrale :\npour tous réels $\\lambda,\\mu$\n$\n\\int_a^b \\big(\\lambda f(x)+\\mu g(x)\\big)\\;dx= \\lambda\\int_a^b f(x)\\;dx+\\mu\\int_a^b g(x)\\;dx$\n - $f \\times g$ est une fonction intégrable sur $[a,b]$\nmais en général $\\int_a^b (f g)(x)\\;dx \\neq\n\\big(\\int_a^b f(x)\\;dx\\big)\\big(\\int_a^b g(x)\\;dx\\big)$.\n - $|f|$ est une fonction intégrable sur $[a,b]$ et\n$\\left\\vert\\int_a^b f(x) \\;dx\\right\\vert\\le\\int_a^b\\big\\vert f(x)\\big\\vert \\;dx$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Propriétés de l'intégrale",
@@ -4098,7 +4098,7 @@
 {
 "id": "exo7:0341",
 "kind": "theorem",
-"text": "Théorème. Soit $f : [a,b] \\to \\mathbb{R}$ une fonction continue.\nLa fonction $F:I \\to \\mathbb{R}$ définie par\n{$ F(x)=\\int_a^x f(t) \\; dt$}\nest une primitive de $f$, c'est-à-dire $F$ est dérivable et $F'(x)=f(x)$.\nPar conséquent pour une primitive $F$ quelconque de $f$:\n{$ \\int_a^b f(t) \\; dt = F(b)-F(a)$}",
+"text": "Théorème. Soit $f : [a,b] \\to \\mathbb{R}$ une fonction continue.\nLa fonction $F:I \\to \\mathbb{R}$ définie par\n$ F(x)=\\int_a^x f(t) \\; dt$\nest une primitive de $f$, c'est-à-dire $F$ est dérivable et $F'(x)=f(x)$.\nPar conséquent pour une primitive $F$ quelconque de $f$:\n$ \\int_a^b f(t) \\; dt = F(b)-F(a)$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Primitive d'une fonction",
@@ -4146,7 +4146,7 @@
 {
 "id": "exo7:0345",
 "kind": "theorem",
-"text": "Théorème. Soit $f : [a,b] \\to \\mathbb{R}$ une fonction intégrable, alors \n{$ S_n = \\tfrac{b-a}{n} \\sum_{k=1}^{n} f\\big(a+k\\tfrac{b-a}{n} \\big)\n\\qquad \\xrightarrow[n\\to+\\infty]{} \\qquad \\int_a^b f(x) \\; dx$}",
+"text": "Théorème. Soit $f : [a,b] \\to \\mathbb{R}$ une fonction intégrable, alors \n$ S_n = \\tfrac{b-a}{n} \\sum_{k=1}^{n} f\\big(a+k\\tfrac{b-a}{n} \\big)\n\\qquad \\xrightarrow[n\\to+\\infty]{} \\qquad \\int_a^b f(x) \\; dx$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Primitive d'une fonction",
@@ -4194,7 +4194,7 @@
 {
 "id": "exo7:0349",
 "kind": "theorem",
-"text": "Théorème. Soient $u$ et $v$ deux fonctions de classe $\\mathcal{C}^1$ sur un intervalle $[a,b]$.\n{$\\int_a^b u(x) \\, v'(x)\\;dx= \\big[uv\\big]_a^b - \\int_a^b u'(x) \\, v(x)\\;dx$}",
+"text": "Théorème. Soient $u$ et $v$ deux fonctions de classe $\\mathcal{C}^1$ sur un intervalle $[a,b]$.\n$\\int_a^b u(x) \\, v'(x)\\;dx= \\big[uv\\big]_a^b - \\int_a^b u'(x) \\, v(x)\\;dx$",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Intégration par parties -- Changement de variable",
@@ -4254,7 +4254,7 @@
 {
 "id": "exo7:0354",
 "kind": "theorem",
-"text": "Théorème. Soit $f$ une fonction définie sur un intervalle $I$ et $\\varphi : J \\to I$ une bijection de classe $\\mathcal{C}^1$.\nPour tout $a,b\\in J$\n{$\\int_{\\varphi(a)}^{\\varphi(b)} f(x) \\; dx = \\int_a^b f\\big(\\varphi(t)\\big)\\cdot\\varphi'(t) \\; dt$}\nSi $F$ est une primitive de $f$ alors $F\\circ \\varphi$ est une primitive de\n$\\big(f \\circ \\varphi\\big)\\cdot\\varphi'$.",
+"text": "Théorème. Soit $f$ une fonction définie sur un intervalle $I$ et $\\varphi : J \\to I$ une bijection de classe $\\mathcal{C}^1$.\nPour tout $a,b\\in J$\n$\\int_{\\varphi(a)}^{\\varphi(b)} f(x) \\; dx = \\int_a^b f\\big(\\varphi(t)\\big)\\cdot\\varphi'(t) \\; dt$\nSi $F$ est une primitive de $f$ alors $F\\circ \\varphi$ est une primitive de\n$\\big(f \\circ \\varphi\\big)\\cdot\\varphi'$.",
 "volume": "Exo7 Analyse 1",
 "module": "int",
 "section": "Intégration par parties -- Changement de variable",
@@ -4458,7 +4458,7 @@
 {
 "id": "exo7:0371",
 "kind": "theorem",
-"text": "Théorème (Formule de Taylor avec reste intégral). Soit $f : I\\to\\mathbb{R}$ une fonction de classe $\\mathcal{C}^{n+1}$ ($n \\in \\mathbb{N}$)\net soit $a,x \\in I$.\nAlors\n{\n$\\begin{array}{lr}\nf(x)=f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots & \\\\[2ex]\n&\\hspace*{-4cm} \\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n+\\int_a^x \\frac{f^{(n+1)}(t)}{n!}(x-t)^ndt. \n\\end{array}$\n}",
+"text": "Théorème (Formule de Taylor avec reste intégral). Soit $f : I\\to\\mathbb{R}$ une fonction de classe $\\mathcal{C}^{n+1}$ ($n \\in \\mathbb{N}$)\net soit $a,x \\in I$.\nAlors\n$\\begin{array}{lr}\nf(x)=f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots & \\\\[2ex]\n&\\hspace*{-4cm} \\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n+\\int_a^x \\frac{f^{(n+1)}(t)}{n!}(x-t)^ndt. \n\\end{array}$",
 "volume": "Exo7 Analyse 1",
 "module": "dl",
 "section": "Formules de Taylor",
@@ -4506,7 +4506,7 @@
 {
 "id": "exo7:0375",
 "kind": "theorem",
-"text": "Théorème (Formule de Taylor avec reste $f^{(n+1)}(c)$). \\index{formule!de Taylor avec reste f@de Taylor avec reste $f^{(n+1)}(c)$}\nSoit $f : I\\to\\mathbb{R}$ une fonction de classe $\\mathcal{C}^{n+1}$ ($n \\in \\mathbb{N}$)\net soit $a,x \\in I$.\nIl existe un réel $c$ entre $a$ et $x$ tel que :\n{\n$\\begin{array}{lr}\nf(x)=f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots & \\\\[2ex]\n& \\hspace*{-4cm} \\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n +\\frac{f^{(n+1)}(c)}{(n+1)!}\n(x-a)^{n+1}. \\end{array}$\n}",
+"text": "Théorème (Formule de Taylor avec reste $f^{(n+1)}(c)$). \\index{formule!de Taylor avec reste f@de Taylor avec reste $f^{(n+1)}(c)$}\nSoit $f : I\\to\\mathbb{R}$ une fonction de classe $\\mathcal{C}^{n+1}$ ($n \\in \\mathbb{N}$)\net soit $a,x \\in I$.\nIl existe un réel $c$ entre $a$ et $x$ tel que :\n$\\begin{array}{lr}\nf(x)=f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots & \\\\[2ex]\n& \\hspace*{-4cm} \\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n +\\frac{f^{(n+1)}(c)}{(n+1)!}\n(x-a)^{n+1}. \\end{array}$",
 "volume": "Exo7 Analyse 1",
 "module": "dl",
 "section": "Formules de Taylor",
@@ -4602,7 +4602,7 @@
 {
 "id": "exo7:0383",
 "kind": "theorem",
-"text": "Théorème (Formule de Taylor-Young). Soit $f: I \\to \\mathbb{R}$ une fonction de classe $\\mathcal{C}^n$ et soit $a\\in I$.\nAlors pour tout $x \\in I$ on a :\n{\n$\\begin{array}{lr}\nf(x)= f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots &\\\\[2ex]\n& \\hspace*{-4cm}\\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n +(x-a)^n\\epsilon(x), \n \\end{array}\n$}\noù $\\epsilon$ est une fonction définie sur $I$ telle que $\\epsilon(x) \\xrightarrow[x\\to a]{} 0$.",
+"text": "Théorème (Formule de Taylor-Young). Soit $f: I \\to \\mathbb{R}$ une fonction de classe $\\mathcal{C}^n$ et soit $a\\in I$.\nAlors pour tout $x \\in I$ on a :\n$\\begin{array}{lr}\nf(x)= f(a)+f'(a)(x-a)+\\frac{f''(a)}{2!}(x-a)^2+\\cdots &\\\\[2ex]\n& \\hspace*{-4cm}\\cdots+\\frac{f^{(n)}(a)}{n!}(x-a)^n +(x-a)^n\\epsilon(x), \n \\end{array}\n$\noù $\\epsilon$ est une fonction définie sur $I$ telle que $\\epsilon(x) \\xrightarrow[x\\to a]{} 0$.",
 "volume": "Exo7 Analyse 1",
 "module": "dl",
 "section": "Formules de Taylor",
@@ -6150,7 +6150,7 @@
 {
 "id": "exo7:0512",
 "kind": "theorem",
-"text": "Théorème. Soit $a$ un réel. Soit l'équation différentielle :\n\\begin{equation}\n y' = a y\n \\tag{$E$}\n\\end{equation}\nLes solutions de (), sur $\\mathbb{R}$, sont les fonctions $y$ définies par :\n{$y(x) = k e^{ax}$}\noù $k\\in \\mathbb{R}$ est une constante quelconque.",
+"text": "Théorème. Soit $a$ un réel. Soit l'équation différentielle :\n\\begin{equation}\n y' = a y\n \\tag{$E$}\n\\end{equation}\nLes solutions de (), sur $\\mathbb{R}$, sont les fonctions $y$ définies par :\n$y(x) = k e^{ax}$\noù $k\\in \\mathbb{R}$ est une constante quelconque.",
 "volume": "Exo7 Analyse 1",
 "module": "equadiff",
 "section": "Équation différentielle linéaire du premier ordre",
@@ -6198,7 +6198,7 @@
 {
 "id": "exo7:0516",
 "kind": "theorem",
-"text": "Théorème. Soit $a : I \\to \\mathbb{R}$ une fonction continue. Soit $A : I \\to \\mathbb{R}$ une primitive de $a$.\nSoit l'équation différentielle :\n\\begin{equation}\n y' = a(x) y\n \\tag{$E$}\n\\end{equation}\nLes solutions sur $I$ de () sont les fonctions $y$ définies par :\n{$y(x) = k e^{A(x)}$}\noù $k\\in \\mathbb{R}$ est une constante quelconque.",
+"text": "Théorème. Soit $a : I \\to \\mathbb{R}$ une fonction continue. Soit $A : I \\to \\mathbb{R}$ une primitive de $a$.\nSoit l'équation différentielle :\n\\begin{equation}\n y' = a(x) y\n \\tag{$E$}\n\\end{equation}\nLes solutions sur $I$ de () sont les fonctions $y$ définies par :\n$y(x) = k e^{A(x)}$\noù $k\\in \\mathbb{R}$ est une constante quelconque.",
 "volume": "Exo7 Analyse 1",
 "module": "equadiff",
 "section": "Équation différentielle linéaire du premier ordre",
@@ -6426,7 +6426,7 @@
 {
 "id": "exo7:0535",
 "kind": "theorem",
-"text": "Théorème. - Si $\\Delta >0$, l'équation caractéristique possède deux racines réelles distinctes\n$r_1\\neq r_2$ et les solutions de () sont les\n{$y(x) = \\lambda e^{r_1x}+ \\mu e^{r_2x} \\quad \\text{ où } \\lambda, \\mu \\in \\mathbb{R}.$}\n- Si $\\Delta=0$, l'équation caractéristique possède une racine double $r_0$\net les solutions de () sont les\n{$y(x) = (\\lambda+\\mu x)e^{r_0 x} \\quad \\text{ où } \\lambda, \\mu \\in \\mathbb{R}.$}\n- Si $\\Delta<0$, l'équation caractéristique possède deux racines complexes\nconjuguées $r_1=\\alpha+\\mathrm{i} \\beta$, $r_2=\\alpha-\\mathrm{i} \\beta$ et les solutions de () sont les\n{$y(x) = e^{\\alpha x}\\big(\\lambda\\cos (\\beta x)+\\mu\\sin (\\beta x)\\big) \\quad \\text{ où }\n\\lambda, \\mu \\in \\mathbb{R}.$}",
+"text": "Théorème. - Si $\\Delta >0$, l'équation caractéristique possède deux racines réelles distinctes\n$r_1\\neq r_2$ et les solutions de () sont les\n$y(x) = \\lambda e^{r_1x}+ \\mu e^{r_2x} \\quad \\text{ où } \\lambda, \\mu \\in \\mathbb{R}.$\n- Si $\\Delta=0$, l'équation caractéristique possède une racine double $r_0$\net les solutions de () sont les\n$y(x) = (\\lambda+\\mu x)e^{r_0 x} \\quad \\text{ où } \\lambda, \\mu \\in \\mathbb{R}.$\n- Si $\\Delta<0$, l'équation caractéristique possède deux racines complexes\nconjuguées $r_1=\\alpha+\\mathrm{i} \\beta$, $r_2=\\alpha-\\mathrm{i} \\beta$ et les solutions de () sont les\n$y(x) = e^{\\alpha x}\\big(\\lambda\\cos (\\beta x)+\\mu\\sin (\\beta x)\\big) \\quad \\text{ où }\n\\lambda, \\mu \\in \\mathbb{R}.$",
 "volume": "Exo7 Analyse 1",
 "module": "equadiff",
 "section": "Équation différentielle linéaire du second ordre à coefficients constants",
@@ -6474,7 +6474,7 @@
 {
 "id": "exo7:0539",
 "kind": "theorem",
-"text": "Théorème (Théorème de Cauchy-Lipschitz). Pour chaque $x_0\\in I$ et chaque couple $(y_0,y_1) \\in \\mathbb{R}^2$,\nl'équation () admet une unique\nsolution $y$ sur $I$ satisfaisant aux conditions initiales :\n{$y(x_0) = y_0$ \\quad et \\quad $y'(x_0) = y_1$.}",
+"text": "Théorème (Théorème de Cauchy-Lipschitz). Pour chaque $x_0\\in I$ et chaque couple $(y_0,y_1) \\in \\mathbb{R}^2$,\nl'équation () admet une unique\nsolution $y$ sur $I$ satisfaisant aux conditions initiales :\n$y(x_0) = y_0$ \\quad et \\quad $y'(x_0) = y_1$.",
 "volume": "Exo7 Analyse 1",
 "module": "equadiff",
 "section": "Équation différentielle linéaire du second ordre à coefficients constants",
@@ -6990,7 +6990,7 @@
 {
 "id": "exo7:0582",
 "kind": "definition",
-"text": "Définition. Soit $A \\subset E$ et $f : E \\to F$, l'image directe de $A$ par $f$ est l'ensemble\n{$f(A) = \\big\\{ f(x) \\mid x \\in A \\big\\}$}",
+"text": "Définition. Soit $A \\subset E$ et $f : E \\to F$, l'image directe de $A$ par $f$ est l'ensemble\n$f(A) = \\big\\{ f(x) \\mid x \\in A \\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Applications",
@@ -7002,7 +7002,7 @@
 {
 "id": "exo7:0583",
 "kind": "definition",
-"text": "Définition. Soit $B \\subset F$ et $f : E \\to F$, l'image réciproque de $B$ par $f$ est l'ensemble\n{$f^{-1}(B) = \\big\\{ x \\in E \\mid f(x) \\in B \\big\\}$}",
+"text": "Définition. Soit $B \\subset F$ et $f : E \\to F$, l'image réciproque de $B$ par $f$ est l'ensemble\n$f^{-1}(B) = \\big\\{ x \\in E \\mid f(x) \\in B \\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Applications",
@@ -7050,7 +7050,7 @@
 {
 "id": "exo7:0587",
 "kind": "definition",
-"text": "Définition. $f$ est injective si pour tout $x,x' \\in E$ avec $f(x)=f(x')$ alors $x=x'$.\nAutrement dit :\n{$\\forall x, x' \\in E \\quad \\big( f(x)=f(x') \\implies x=x'\\big)$}",
+"text": "Définition. $f$ est injective si pour tout $x,x' \\in E$ avec $f(x)=f(x')$ alors $x=x'$.\nAutrement dit :\n$\\forall x, x' \\in E \\quad \\big( f(x)=f(x') \\implies x=x'\\big)$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Injection, surjection, bijection",
@@ -7062,7 +7062,7 @@
 {
 "id": "exo7:0588",
 "kind": "definition",
-"text": "Définition. $f$ est surjective si pour tout $y \\in F$, il existe $x \\in E$ tel que $y=f(x)$.\nAutrement dit :\n{$\\forall y \\in F \\quad \\exists x \\in E \\quad \\big( y = f(x) \\big)$}",
+"text": "Définition. $f$ est surjective si pour tout $y \\in F$, il existe $x \\in E$ tel que $y=f(x)$.\nAutrement dit :\n$\\forall y \\in F \\quad \\exists x \\in E \\quad \\big( y = f(x) \\big)$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Injection, surjection, bijection",
@@ -7098,7 +7098,7 @@
 {
 "id": "exo7:0591",
 "kind": "definition",
-"text": "Définition. $f$ est bijective si elle injective et surjective. Cela équivaut à :\npour tout $y \\in F$ il existe un unique $x \\in E$ tel que $y=f(x)$.\nAutrement dit :\n{$\\forall y \\in F \\quad \\exists! x \\in E \\quad \\big( y = f(x) \\big)$}",
+"text": "Définition. $f$ est bijective si elle injective et surjective. Cela équivaut à :\npour tout $y \\in F$ il existe un unique $x \\in E$ tel que $y=f(x)$.\nAutrement dit :\n$\\forall y \\in F \\quad \\exists! x \\in E \\quad \\big( y = f(x) \\big)$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Injection, surjection, bijection",
@@ -7134,7 +7134,7 @@
 {
 "id": "exo7:0594",
 "kind": "proposition",
-"text": "Proposition. Soient $f : E \\to F$ et $g : F \\to G$ des applications bijectives.\nL'application $g \\circ f$ est bijective et sa bijection réciproque est\n{$(g\\circ f)^{-1} = f^{-1} \\circ g^{-1}$}",
+"text": "Proposition. Soient $f : E \\to F$ et $g : F \\to G$ des applications bijectives.\nL'application $g \\circ f$ est bijective et sa bijection réciproque est\n$(g\\circ f)^{-1} = f^{-1} \\circ g^{-1}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Injection, surjection, bijection",
@@ -7278,7 +7278,7 @@
 {
 "id": "exo7:0606",
 "kind": "proposition",
-"text": "Proposition. Le nombre d'applications différentes de $E$ dans $F$ est :\n{$p^n$}",
+"text": "Proposition. Le nombre d'applications différentes de $E$ dans $F$ est :\n$p^n$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7338,7 +7338,7 @@
 {
 "id": "exo7:0611",
 "kind": "proposition",
-"text": "Proposition. Le nombre de bijections d'un ensemble $E$ de cardinal $n$ dans lui-même est :\n{$n!$}",
+"text": "Proposition. Le nombre de bijections d'un ensemble $E$ de cardinal $n$ dans lui-même est :\n$n!$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7386,7 +7386,7 @@
 {
 "id": "exo7:0615",
 "kind": "proposition",
-"text": "Proposition. Il y a $2^{\\operatorname{Card} E}$ sous-ensembles de $E$ :\n{$\\operatorname{Card} \\mathcal{P}(E) = 2^n$}",
+"text": "Proposition. Il y a $2^{\\operatorname{Card} E}$ sous-ensembles de $E$ :\n$\\operatorname{Card} \\mathcal{P}(E) = 2^n$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7482,7 +7482,7 @@
 {
 "id": "exo7:0623",
 "kind": "proposition",
-"text": "Proposition. \\ \\\\[-2em]\n{$ \\binom n k = \\binom{n-1}{k} + \\binom{n-1}{k-1} \\qquad (0<k<n)$}",
+"text": "Proposition. \\ \\\\[-2em]\n$ \\binom n k = \\binom{n-1}{k} + \\binom{n-1}{k-1} \\qquad (0<k<n)$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7506,7 +7506,7 @@
 {
 "id": "exo7:0625",
 "kind": "proposition",
-"text": "Proposition. \\\n{$ \\binom n k = \\frac{n!}{k!(n-k)!}$}",
+"text": "Proposition. \\\n$ \\binom n k = \\frac{n!}{k!(n-k)!}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7542,7 +7542,7 @@
 {
 "id": "exo7:0628",
 "kind": "theorem",
-"text": "Théorème. Soient $a,b \\in\\mathbb{R}$ et $n$ un entier positif alors:\n{$ (a+b)^n = \\sum_{k=0}^n \\binom{n}{k} \\ a^{n-k} \\cdot b^{k}$}",
+"text": "Théorème. Soient $a,b \\in\\mathbb{R}$ et $n$ un entier positif alors:\n$ (a+b)^n = \\sum_{k=0}^n \\binom{n}{k} \\ a^{n-k} \\cdot b^{k}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Ensembles finis",
@@ -7650,7 +7650,7 @@
 {
 "id": "exo7:0637",
 "kind": "definition",
-"text": "Définition. Soit $\\mathcal{R}$ une relation d'équivalence sur un ensemble $E$.\nSoit $x\\in E$, la classe d'équivalence de $x$ est\n{$\\text{cl}(x) = \\big\\{ y \\in E \\mid y\\mathcal{R}x \\big\\}$}",
+"text": "Définition. Soit $\\mathcal{R}$ une relation d'équivalence sur un ensemble $E$.\nSoit $x\\in E$, la classe d'équivalence de $x$ est\n$\\text{cl}(x) = \\big\\{ y \\in E \\mid y\\mathcal{R}x \\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ensembles",
 "section": "Relation d'équivalence",
@@ -7794,7 +7794,7 @@
 {
 "id": "exo7:0649",
 "kind": "proposition",
-"text": "Proposition. Pour tout $z \\in \\mathbb{C}$ différent de $1$\n{$1 + z + z^2 + \\cdots + z^n = \\dfrac{1 - z^{n + 1}}{1 - z} .$}",
+"text": "Proposition. Pour tout $z \\in \\mathbb{C}$ différent de $1$\n$1 + z + z^2 + \\cdots + z^n = \\dfrac{1 - z^{n + 1}}{1 - z} .$",
 "volume": "Exo7 Algèbre 1",
 "module": "complexes",
 "section": "Les nombres complexes",
@@ -7818,7 +7818,7 @@
 {
 "id": "exo7:0651",
 "kind": "proposition",
-"text": "Proposition (L'inégalité triangulaire). \\ \n{$\\left| z + z' \\right| \\leqslant \\left| z \\right| + \\left| z' \\right|$}",
+"text": "Proposition (L'inégalité triangulaire). \\ \n$\\left| z + z' \\right| \\leqslant \\left| z \\right| + \\left| z' \\right|$",
 "volume": "Exo7 Algèbre 1",
 "module": "complexes",
 "section": "Les nombres complexes",
@@ -7938,7 +7938,7 @@
 {
 "id": "exo7:0661",
 "kind": "proposition",
-"text": "Proposition. L'équation du second degré $az^2 + bz + c = 0$, o\\`u $a, b, c \\in\n \\mathbb{C}$ et $a \\neq 0$, possède deux solutions $z_1, z_2 \\in \\mathbb{C}$\n éventuellement confondues.\n Soit $\\Delta = b^2 - 4 ac$ le discriminant et\n $\\delta \\in \\mathbb{C}$ une racine carrée de $\\Delta$. Alors les\n solutions sont\n {\n $ z_1 = \\dfrac{- b + \\delta}{2 a} \\quad \\text{ et } \\quad z_2 = \\dfrac{- b - \\delta}{2\n a} . $\n}",
+"text": "Proposition. L'équation du second degré $az^2 + bz + c = 0$, o\\`u $a, b, c \\in\n \\mathbb{C}$ et $a \\neq 0$, possède deux solutions $z_1, z_2 \\in \\mathbb{C}$\n éventuellement confondues.\n Soit $\\Delta = b^2 - 4 ac$ le discriminant et\n $\\delta \\in \\mathbb{C}$ une racine carrée de $\\Delta$. Alors les\n solutions sont\n $ z_1 = \\dfrac{- b + \\delta}{2 a} \\quad \\text{ et } \\quad z_2 = \\dfrac{- b - \\delta}{2\n a} . $",
 "volume": "Exo7 Algèbre 1",
 "module": "complexes",
 "section": "Racines carrées, équation du second degré",
@@ -8118,7 +8118,7 @@
 {
 "id": "exo7:0676",
 "kind": "proposition",
-"text": "Proposition. Il y a $n$ racines $n$-ièmes $\\omega_0, \\omega_1, \\ldots, \\omega_{n - 1}$ de $z=\\rho e^{\\mathrm{i} \\theta}$, ce sont :\n{$\\omega_k = \\rho^{1 / n} e^{\\frac{\\mathrm{i}\\theta + 2 \\mathrm{i} k \\pi}{n}} \\ , \\quad k = 0,1,\\ldots, n - 1$}",
+"text": "Proposition. Il y a $n$ racines $n$-ièmes $\\omega_0, \\omega_1, \\ldots, \\omega_{n - 1}$ de $z=\\rho e^{\\mathrm{i} \\theta}$, ce sont :\n$\\omega_k = \\rho^{1 / n} e^{\\frac{\\mathrm{i}\\theta + 2 \\mathrm{i} k \\pi}{n}} \\ , \\quad k = 0,1,\\ldots, n - 1$",
 "volume": "Exo7 Algèbre 1",
 "module": "complexes",
 "section": "Argument et trigonométrie",
@@ -8310,7 +8310,7 @@
 {
 "id": "exo7:0692",
 "kind": "definition",
-"text": "Définition. Soient $a,b \\in \\mathbb{Z}$. On dit que $b$ divise $a$ et on note $b | a$ s'il existe\n$q \\in \\mathbb{Z}$ tel que\n{$a = bq$.}",
+"text": "Définition. Soient $a,b \\in \\mathbb{Z}$. On dit que $b$ divise $a$ et on note $b | a$ s'il existe\n$q \\in \\mathbb{Z}$ tel que\n$a = bq$.",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Division euclidienne et pgcd",
@@ -8334,7 +8334,7 @@
 {
 "id": "exo7:0694",
 "kind": "theorem",
-"text": "Théorème (Division euclidienne). Soit $a\\in \\mathbb{Z}$ et $b\\in \\mathbb{N}\\setminus \\{0\\}$.\nIl existe des entiers $q,r \\in \\mathbb{Z}$ tels que\n{$a=bq+r \\qquad \\text{ et } \\qquad 0 \\le r < b$}\nDe plus $q$ et $r$ sont uniques.",
+"text": "Théorème (Division euclidienne). Soit $a\\in \\mathbb{Z}$ et $b\\in \\mathbb{N}\\setminus \\{0\\}$.\nIl existe des entiers $q,r \\in \\mathbb{Z}$ tels que\n$a=bq+r \\qquad \\text{ et } \\qquad 0 \\le r < b$\nDe plus $q$ et $r$ sont uniques.",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Division euclidienne et pgcd",
@@ -8418,7 +8418,7 @@
 {
 "id": "exo7:0701",
 "kind": "lemma",
-"text": "Lemme. Soient $a,b \\in \\mathbb{N}^*$. \\'Ecrivons la division euclidienne $a=bq+r$.\nAlors\n{$\\operatorname{pgcd}(a,b)=\\operatorname{pgcd}(b,r)$}",
+"text": "Lemme. Soient $a,b \\in \\mathbb{N}^*$. \\'Ecrivons la division euclidienne $a=bq+r$.\nAlors\n$\\operatorname{pgcd}(a,b)=\\operatorname{pgcd}(b,r)$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Division euclidienne et pgcd",
@@ -8502,7 +8502,7 @@
 {
 "id": "exo7:0708",
 "kind": "example",
-"text": "Exemple. Pour deux entiers quelconques $a,b \\in \\mathbb{Z}$, notons $d = \\operatorname{pgcd}(a,b)$.\nLa décomposition suivante est souvent utile :\n{$\\left\\{\\begin{array}{ll} a &= \\ a'd \\\\ b &=\\ b'd \\\\ \\end{array} \\quad \\text{ avec }\\quad a',b' \\in \\mathbb{Z} \\text{ et } \\operatorname{pgcd}(a',b')=1 \\right.$}",
+"text": "Exemple. Pour deux entiers quelconques $a,b \\in \\mathbb{Z}$, notons $d = \\operatorname{pgcd}(a,b)$.\nLa décomposition suivante est souvent utile :\n$\\left\\{\\begin{array}{ll} a &= \\ a'd \\\\ b &=\\ b'd \\\\ \\end{array} \\quad \\text{ avec }\\quad a',b' \\in \\mathbb{Z} \\text{ et } \\operatorname{pgcd}(a',b')=1 \\right.$}",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Division euclidienne et pgcd",
@@ -8538,7 +8538,7 @@
 {
 "id": "exo7:0711",
 "kind": "theorem",
-"text": "Théorème (Théorème de Bézout). Soient $a,b$ des entiers. Il existe\ndes entiers $u,v \\in \\mathbb{Z}$ tels que\n{$au+bv=\\operatorname{pgcd}(a,b)$}",
+"text": "Théorème (Théorème de Bézout). Soient $a,b$ des entiers. Il existe\ndes entiers $u,v \\in \\mathbb{Z}$ tels que\n$au+bv=\\operatorname{pgcd}(a,b)$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Théorème de Bézout",
@@ -8610,7 +8610,7 @@
 {
 "id": "exo7:0717",
 "kind": "corollary",
-"text": "Corollaire. Soient $a, b$ deux entiers. $a$ et $b$ sont premiers entre eux\nsi et seulement si il existe $u,v \\in \\mathbb{Z}$ tels que\n{$au+bv=1$}",
+"text": "Corollaire. Soient $a, b$ deux entiers. $a$ et $b$ sont premiers entre eux\nsi et seulement si il existe $u,v \\in \\mathbb{Z}$ tels que\n$au+bv=1$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Théorème de Bézout",
@@ -8634,7 +8634,7 @@
 {
 "id": "exo7:0719",
 "kind": "corollary",
-"text": "Corollaire (Lemme de Gauss). Soient $a,b,c \\in \\mathbb{Z}$.\n{Si \\ \\ $a | bc$ \\ \\ et \\ \\ $\\operatorname{pgcd}(a,b)=1$ \\ \\ alors \\ \\ $a|c$}",
+"text": "Corollaire (Lemme de Gauss). Soient $a,b,c \\in \\mathbb{Z}$.\nSi \\ \\ $a | bc$ \\ \\ et \\ \\ $\\operatorname{pgcd}(a,b)=1$ \\ \\ alors \\ \\ $a|c$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Théorème de Bézout",
@@ -8682,7 +8682,7 @@
 {
 "id": "exo7:0723",
 "kind": "example",
-"text": "Exemple. Trouver les solutions entières de\n \\begin{equation}\n\\tag{E}\n161x+368y=115\n\\end{equation}\n - Première étape. Y a-t-il des solutions ? L'algorithme d'Euclide.\nOn effectue l'algorithme d'Euclide pour calculer le pgcd de $a=161$ et $b=368$.\n$$\n\\begin{array}{rclclcl}\n368 & = & 161 & \\times & 2 & + & 46 \\\\\n161 & = & 46 & \\times & 3 & + & {23} \\\\\n46 & = & 23 & \\times & 2 & + & 0 \\\\\n\\end{array}\n$$\nDonc $\\operatorname{pgcd}(368,161)=23$.\nComme $115=5\\times23$ alors $\\operatorname{pgcd}(368,161) | 115$.\nPar le théorème de Bézout, l'équation () admet des solutions entières.\n - Deuxième étape. Trouver une solution particulière : la remontée de l'algorithme d'Euclide.\nOn effectue la remontée de l'algorithme d'Euclide pour calculer les coefficients de Bézout.\n$$\n\\begin{array}{rclclcl}\n&&&&&&\\\\\n368 & = & 161 & \\times & 2 & + & 46 \\\\\n161 & = & 46 & \\times & 3 & + & {23} \\\\\n46 & = & 23 & \\times & 2 & + & 0 \\\\\n\\end{array}\n\\qquad\n\\begin{array}{rcl}\n{23} &=&\n\\left|\\begin{array}{l}\n161 \\times {7} + 368 \\times ({-3})\\\\\n161 + (368-2\\times 161)\\times (-3)\\\\\n\\end{array}\\right.\\\\\n{23} &=& 161 -3 \\times 46 \\\\\n&& \\\\\n\\end{array}\n$$\nOn trouve donc $161\\times7 + 368\\times(-3)=23$.\nComme $115=5\\times23$ en multipliant par $5$ on obtient :\n$$161\\times35 + 368\\times(-15)=115$$\nAinsi $(x_0,y_0) = (35,-15)$ est une solution particulière de ().\n - Troisième étape. Recherche de toutes les solutions.\nSoit $(x,y) \\in \\mathbb{Z}^2$ une solution de ().\nNous savons que $(x_0,y_0)$ est aussi solution. Ainsi :\n$$161x+368y=115 \\quad \\text{ et } \\quad 161x_0+368y_0=115$$\n(on n'a aucun intérêt à remplacer $x_0$ et $y_0$ par leurs valeurs).\nLa différence de ces deux égalités conduit à\n\\begin{align*}\n& 161 \\times (x-x_0) + 368 \\times (y-y_0) = 0 \\\\\n\\implies \\quad & 23 \\times 7 \\times (x-x_0) + 23 \\times 16 \\times (y-y_0) = 0 \\\\\n\\implies \\quad & 7 (x-x_0) = -16 (y-y_0) \\qquad (*)\\\\\n\\end{align*}\nNous avons simplifié par $23$ qui est le pgcd de $161$ et $368$.\n(Attention, n'oubliez surtout pas cette simplification, sinon la suite du raisonnement\nserait fausse.)\nAinsi $7 | 16(y-y_0)$, or $\\operatorname{pgcd}(7,16)=1$ donc par le lemme de Gauss $7|y-y_0$.\nIl existe donc $k\\in \\mathbb{Z}$ tel que $y-y_0 = 7 \\times k$.\nRepartant de l'équation $(*)$ : $7 (x-x_0) = -16 (y-y_0)$.\nOn obtient maintenant $7(x-x_0)=-16\\times 7 \\times k$.\nD'où $x-x_0 = -16k$. (C'est le même $k$ pour $x$ et pour $y$.)\nNous avons donc $(x,y) = (x_0-16k,y_0+7k)$.\nIl n'est pas dur de voir que tout couple de cette forme est solution de l'équation ().\nIl reste donc juste à substituer $(x_0,y_0)$ par sa valeur et nous obtenons :\n{Les solutions entières de $161x+368y=115$\nsont les $(x,y) = (35-16k,-15+7k)$, $k$ parcourant $\\mathbb{Z}$.}\nPour se rassurer, prenez une valeur de $k$ au hasard et vérifiez\n que vous obtenez bien une solution de l'équation.",
+"text": "Exemple. Trouver les solutions entières de\n \\begin{equation}\n\\tag{E}\n161x+368y=115\n\\end{equation}\n - Première étape. Y a-t-il des solutions ? L'algorithme d'Euclide.\nOn effectue l'algorithme d'Euclide pour calculer le pgcd de $a=161$ et $b=368$.\n$$\n\\begin{array}{rclclcl}\n368 & = & 161 & \\times & 2 & + & 46 \\\\\n161 & = & 46 & \\times & 3 & + & {23} \\\\\n46 & = & 23 & \\times & 2 & + & 0 \\\\\n\\end{array}\n$$\nDonc $\\operatorname{pgcd}(368,161)=23$.\nComme $115=5\\times23$ alors $\\operatorname{pgcd}(368,161) | 115$.\nPar le théorème de Bézout, l'équation () admet des solutions entières.\n - Deuxième étape. Trouver une solution particulière : la remontée de l'algorithme d'Euclide.\nOn effectue la remontée de l'algorithme d'Euclide pour calculer les coefficients de Bézout.\n$$\n\\begin{array}{rclclcl}\n&&&&&&\\\\\n368 & = & 161 & \\times & 2 & + & 46 \\\\\n161 & = & 46 & \\times & 3 & + & {23} \\\\\n46 & = & 23 & \\times & 2 & + & 0 \\\\\n\\end{array}\n\\qquad\n\\begin{array}{rcl}\n{23} &=&\n\\left|\\begin{array}{l}\n161 \\times {7} + 368 \\times ({-3})\\\\\n161 + (368-2\\times 161)\\times (-3)\\\\\n\\end{array}\\right.\\\\\n{23} &=& 161 -3 \\times 46 \\\\\n&& \\\\\n\\end{array}\n$$\nOn trouve donc $161\\times7 + 368\\times(-3)=23$.\nComme $115=5\\times23$ en multipliant par $5$ on obtient :\n$$161\\times35 + 368\\times(-15)=115$$\nAinsi $(x_0,y_0) = (35,-15)$ est une solution particulière de ().\n - Troisième étape. Recherche de toutes les solutions.\nSoit $(x,y) \\in \\mathbb{Z}^2$ une solution de ().\nNous savons que $(x_0,y_0)$ est aussi solution. Ainsi :\n$$161x+368y=115 \\quad \\text{ et } \\quad 161x_0+368y_0=115$$\n(on n'a aucun intérêt à remplacer $x_0$ et $y_0$ par leurs valeurs).\nLa différence de ces deux égalités conduit à\n\\begin{align*}\n& 161 \\times (x-x_0) + 368 \\times (y-y_0) = 0 \\\\\n\\implies \\quad & 23 \\times 7 \\times (x-x_0) + 23 \\times 16 \\times (y-y_0) = 0 \\\\\n\\implies \\quad & 7 (x-x_0) = -16 (y-y_0) \\qquad (*)\\\\\n\\end{align*}\nNous avons simplifié par $23$ qui est le pgcd de $161$ et $368$.\n(Attention, n'oubliez surtout pas cette simplification, sinon la suite du raisonnement\nserait fausse.)\nAinsi $7 | 16(y-y_0)$, or $\\operatorname{pgcd}(7,16)=1$ donc par le lemme de Gauss $7|y-y_0$.\nIl existe donc $k\\in \\mathbb{Z}$ tel que $y-y_0 = 7 \\times k$.\nRepartant de l'équation $(*)$ : $7 (x-x_0) = -16 (y-y_0)$.\nOn obtient maintenant $7(x-x_0)=-16\\times 7 \\times k$.\nD'où $x-x_0 = -16k$. (C'est le même $k$ pour $x$ et pour $y$.)\nNous avons donc $(x,y) = (x_0-16k,y_0+7k)$.\nIl n'est pas dur de voir que tout couple de cette forme est solution de l'équation ().\nIl reste donc juste à substituer $(x_0,y_0)$ par sa valeur et nous obtenons :\nLes solutions entières de $161x+368y=115$\nsont les $(x,y) = (35-16k,-15+7k)$, $k$ parcourant $\\mathbb{Z}$.\nPour se rassurer, prenez une valeur de $k$ au hasard et vérifiez\n que vous obtenez bien une solution de l'équation.",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Théorème de Bézout",
@@ -8718,7 +8718,7 @@
 {
 "id": "exo7:0726",
 "kind": "proposition",
-"text": "Proposition. Si $a,b$ sont des entiers (non tous les deux nuls) alors\n{$\\operatorname{pgcd}(a,b) \\times \\text{ppcm}(a,b) = |ab|$}",
+"text": "Proposition. Si $a,b$ sont des entiers (non tous les deux nuls) alors\n$\\operatorname{pgcd}(a,b) \\times \\text{ppcm}(a,b) = |ab|$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Théorème de Bézout",
@@ -9006,7 +9006,7 @@
 {
 "id": "exo7:0750",
 "kind": "example",
-"text": "Exemple. Critère de divisibilité par $9$.\n{\n\\begin{minipage}{0.7\\textwidth}\n\\center\n$N$ est divisible par $9$ si et seulement si\\\\\nla somme de ses chiffres est divisible par $9$.\n\\end{minipage}\n}\nPour prouver cela nous utilisons les congruences.\nRemarquons d'abord que $9 | N$ équivaut à $N \\equiv 0 \\pmod 9$\net notons aussi que $10 \\equiv 1 \\pmod 9$, $10^2 \\equiv 1 \\pmod 9$, $10^3 \\equiv 1 \\pmod 9$,...\nNous allons donc calculer $N$ modulo $9$.\n\\'Ecrivons $N$ en base $10$ :\n$N = \\underline{a_k \\cdots a_2 a_1 a_0}$ ($a_0$ est le chiffre des unités, $a_1$ celui des dizaines,...)\nalors $N = 10^k a_k + \\cdots + 10^2 a_2 + 10^1 a_1 + a_0$.\nDonc\n\\begin{align*}\nN &= 10^k a_k + \\cdots + 10^2 a_2 + 10^1 a_1 + a_0 \\\\\n &\\equiv a_k + \\cdots + a_2 + a_1 + a_0 \\pmod 9 \\\\\n\\end{align*}\nDonc $N$ est congru à la somme de ses chiffres modulo $9$. Ainsi\n$N \\equiv 0 \\pmod 9$ si et seulement si la somme des chiffres vaut $0$ modulo $9$.\nVoyons cela sur un exemple : $N = 488\\, 889$.\nIci $a_0 = 9$ est le chiffre des unités, $a_1=8$ celui des dizaines,...\nCette écriture décimale signifie $N = 4 \\cdot 10^5 + 8 \\cdot 10^4\n+ 8 \\cdot 10^3 + 8 \\cdot 10^2 + 8 \\cdot 10 + 9$.\n\\begin{align*}\n N &= 4 \\cdot 10^5 + 8 \\cdot 10^4 + 8 \\cdot 10^3 + 8 \\cdot 10^2 + 8 \\cdot 10 + 9 \\\\\n &\\equiv 4 + 8 + 8 + 8 + 8 + 9 \\pmod{9} \\\\\n &\\equiv 45 \\pmod{9} \\qquad \\text{et on refait la somme des chiffres de $45$} \\\\\n &\\equiv 9 \\pmod{9} \\\\\n &\\equiv 0 \\pmod{9} \\\\\n\\end{align*}\nAinsi nous savons que $488\\, 889$ est divisible par $9$\nsans avoir effectué de division euclidienne.",
+"text": "Exemple. Critère de divisibilité par $9$.\n\\begin{minipage}{0.7\\textwidth}\n\\center\n$N$ est divisible par $9$ si et seulement si\\\\\nla somme de ses chiffres est divisible par $9$.\n\\end{minipage}\nPour prouver cela nous utilisons les congruences.\nRemarquons d'abord que $9 | N$ équivaut à $N \\equiv 0 \\pmod 9$\net notons aussi que $10 \\equiv 1 \\pmod 9$, $10^2 \\equiv 1 \\pmod 9$, $10^3 \\equiv 1 \\pmod 9$,...\nNous allons donc calculer $N$ modulo $9$.\n\\'Ecrivons $N$ en base $10$ :\n$N = \\underline{a_k \\cdots a_2 a_1 a_0}$ ($a_0$ est le chiffre des unités, $a_1$ celui des dizaines,...)\nalors $N = 10^k a_k + \\cdots + 10^2 a_2 + 10^1 a_1 + a_0$.\nDonc\n\\begin{align*}\nN &= 10^k a_k + \\cdots + 10^2 a_2 + 10^1 a_1 + a_0 \\\\\n &\\equiv a_k + \\cdots + a_2 + a_1 + a_0 \\pmod 9 \\\\\n\\end{align*}\nDonc $N$ est congru à la somme de ses chiffres modulo $9$. Ainsi\n$N \\equiv 0 \\pmod 9$ si et seulement si la somme des chiffres vaut $0$ modulo $9$.\nVoyons cela sur un exemple : $N = 488\\, 889$.\nIci $a_0 = 9$ est le chiffre des unités, $a_1=8$ celui des dizaines,...\nCette écriture décimale signifie $N = 4 \\cdot 10^5 + 8 \\cdot 10^4\n+ 8 \\cdot 10^3 + 8 \\cdot 10^2 + 8 \\cdot 10 + 9$.\n\\begin{align*}\n N &= 4 \\cdot 10^5 + 8 \\cdot 10^4 + 8 \\cdot 10^3 + 8 \\cdot 10^2 + 8 \\cdot 10 + 9 \\\\\n &\\equiv 4 + 8 + 8 + 8 + 8 + 9 \\pmod{9} \\\\\n &\\equiv 45 \\pmod{9} \\qquad \\text{et on refait la somme des chiffres de $45$} \\\\\n &\\equiv 9 \\pmod{9} \\\\\n &\\equiv 0 \\pmod{9} \\\\\n\\end{align*}\nAinsi nous savons que $488\\, 889$ est divisible par $9$\nsans avoir effectué de division euclidienne.",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Congruences",
@@ -9090,7 +9090,7 @@
 {
 "id": "exo7:0757",
 "kind": "theorem",
-"text": "Théorème (Petit théorème de Fermat). Si $p$ est un nombre premier et $a \\in \\mathbb{Z}$ alors\n{$a^p \\equiv a \\pmod p$}",
+"text": "Théorème (Petit théorème de Fermat). Si $p$ est un nombre premier et $a \\in \\mathbb{Z}$ alors\n$a^p \\equiv a \\pmod p$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Congruences",
@@ -9102,7 +9102,7 @@
 {
 "id": "exo7:0758",
 "kind": "corollary",
-"text": "Corollaire. Si $p$ ne divise pas $a$ alors\n{$a^{p-1} \\equiv 1 \\pmod p$}",
+"text": "Corollaire. Si $p$ ne divise pas $a$ alors\n$a^{p-1} \\equiv 1 \\pmod p$",
 "volume": "Exo7 Algèbre 1",
 "module": "arithmetique",
 "section": "Congruences",
@@ -9270,7 +9270,7 @@
 {
 "id": "exo7:0772",
 "kind": "proposition",
-"text": "Proposition. Soient $P$ et $Q$ deux polynômes à coefficients dans $\\mathbb{K}$.\n{$\\operatorname{deg}(P\\times Q)=\\operatorname{deg} P + \\operatorname{deg} Q$}\n{$\\operatorname{deg}(P+Q) \\le \\max(\\operatorname{deg} P, \\operatorname{deg} Q)$}",
+"text": "Proposition. Soient $P$ et $Q$ deux polynômes à coefficients dans $\\mathbb{K}$.\n$\\operatorname{deg}(P\\times Q)=\\operatorname{deg} P + \\operatorname{deg} Q$\n$\\operatorname{deg}(P+Q) \\le \\max(\\operatorname{deg} P, \\operatorname{deg} Q)$",
 "volume": "Exo7 Algèbre 1",
 "module": "polynomes",
 "section": "Définitions",
@@ -9366,7 +9366,7 @@
 {
 "id": "exo7:0780",
 "kind": "theorem",
-"text": "Théorème (Division euclidienne des polynômes). Soient $A,B \\in\\mathbb{K}[X]$, avec $B \\neq 0$, alors il existe un\nunique polynôme $Q$ et il existe un unique polynôme $R$ tels que :\n{$A=BQ+R \\quad \\text{ et } \\quad \\operatorname{deg} R < \\operatorname{deg} B$.}",
+"text": "Théorème (Division euclidienne des polynômes). Soient $A,B \\in\\mathbb{K}[X]$, avec $B \\neq 0$, alors il existe un\nunique polynôme $Q$ et il existe un unique polynôme $R$ tels que :\n$A=BQ+R \\quad \\text{ et } \\quad \\operatorname{deg} R < \\operatorname{deg} B$.",
 "volume": "Exo7 Algèbre 1",
 "module": "polynomes",
 "section": "Arithmétique des polynômes",
@@ -10290,7 +10290,7 @@
 {
 "id": "exo7:0857",
 "kind": "definition",
-"text": "Définition. Soient $(G,\\star)$ et $(G',\\diamond)$ deux groupes. Une application\n$f : G \\longrightarrow G'$ est un morphisme de groupes si :\n{$\\text{pour tout } x,x' \\in G \\qquad f(x \\star x') = f(x) \\diamond f(x')$}",
+"text": "Définition. Soient $(G,\\star)$ et $(G',\\diamond)$ deux groupes. Une application\n$f : G \\longrightarrow G'$ est un morphisme de groupes si :\n$\\text{pour tout } x,x' \\in G \\qquad f(x \\star x') = f(x) \\diamond f(x')$",
 "volume": "Exo7 Algèbre 1",
 "module": "groupes",
 "section": "Morphismes de groupes",
@@ -10386,7 +10386,7 @@
 {
 "id": "exo7:0865",
 "kind": "definition",
-"text": "Définition. Le noyau de $f$ est\n{$\\operatorname{Ker} f = \\big\\{ x \\in G \\mid f(x) = e_{G'} \\big\\}$}",
+"text": "Définition. Le noyau de $f$ est\n$\\operatorname{Ker} f = \\big\\{ x \\in G \\mid f(x) = e_{G'} \\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "groupes",
 "section": "Morphismes de groupes",
@@ -10398,7 +10398,7 @@
 {
 "id": "exo7:0866",
 "kind": "definition",
-"text": "Définition. L'image de $f$ est\n{$\\operatorname{Im} f = \\big\\{ f(x) \\mid x \\in G \\big\\}$}",
+"text": "Définition. L'image de $f$ est\n$\\operatorname{Im} f = \\big\\{ f(x) \\mid x \\in G \\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "groupes",
 "section": "Morphismes de groupes",
@@ -11286,7 +11286,7 @@
 {
 "id": "exo7:0940",
 "kind": "definition",
-"text": "Définition (Produit de deux matrices). Soient $A=(a_{ij})$ une matrice $n\\times p$ et $B=(b_{ij})$ une matrice $p\\times q$.\nAlors le produit $C=AB$ est une matrice $n\\times q$ dont les coefficients $c_{ij}$\nsont définis par :\n{$\nc_{ij} = \\sum_{k=1}^p a_{ik}b_{kj}\n$}",
+"text": "Définition (Produit de deux matrices). Soient $A=(a_{ij})$ une matrice $n\\times p$ et $B=(b_{ij})$ une matrice $p\\times q$.\nAlors le produit $C=AB$ est une matrice $n\\times q$ dont les coefficients $c_{ij}$\nsont définis par :\n$\nc_{ij} = \\sum_{k=1}^p a_{ik}b_{kj}\n$",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Multiplication de matrices",
@@ -11634,7 +11634,7 @@
 {
 "id": "exo7:0969",
 "kind": "proposition",
-"text": "Proposition. Soit $A$ une matrice inversible. Alors\n$A^{-1}$ est aussi inversible et on a :\n{$(A^{-1})^{-1}=A$}",
+"text": "Proposition. Soit $A$ une matrice inversible. Alors\n$A^{-1}$ est aussi inversible et on a :\n$(A^{-1})^{-1}=A$",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Inverse d'une matrice : définition",
@@ -11646,7 +11646,7 @@
 {
 "id": "exo7:0970",
 "kind": "proposition",
-"text": "Proposition. Soient $A$ et $B$ deux matrices inversibles de même taille. Alors\n $AB$ est inversible et\n {$ (AB)^{-1} = B^{-1} A^{-1}$}",
+"text": "Proposition. Soient $A$ et $B$ deux matrices inversibles de même taille. Alors\n $AB$ est inversible et\n $ (AB)^{-1} = B^{-1} A^{-1}$",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Inverse d'une matrice : définition",
@@ -11718,7 +11718,7 @@
 {
 "id": "exo7:0976",
 "kind": "proposition",
-"text": "Proposition. Si $ad - bc \\not= 0$, alors $A$ est inversible et\n{$A^{-1} = \\frac{1}{ad-bc} \\begin{pmatrix}\nd & -b\\\\\n -c & a\n\\end{pmatrix}$}",
+"text": "Proposition. Si $ad - bc \\not= 0$, alors $A$ est inversible et\n$A^{-1} = \\frac{1}{ad-bc} \\begin{pmatrix}\nd & -b\\\\\n -c & a\n\\end{pmatrix}$",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Inverse d'une matrice : calcul",
@@ -11814,7 +11814,7 @@
 {
 "id": "exo7:0984",
 "kind": "proposition",
-"text": "Proposition. Si la matrice $A$ est inversible, alors\nla solution du système $AX=B$ est unique et est :\n{$X = A^{-1}B$.}",
+"text": "Proposition. Si la matrice $A$ est inversible, alors\nla solution du système $AX=B$ est unique et est :\n$X = A^{-1}B$.",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Inverse d'une matrice : systèmes linéaires et matrices élémentaires",
@@ -12126,7 +12126,7 @@
 {
 "id": "exo7:1010",
 "kind": "definition",
-"text": "Définition. La trace de la matrice $A$ est\nle nombre obtenu en additionnant les éléments diagonaux de $A$.\nAutrement dit,\n{$\\operatorname{tr} A = a_{11} + a_{22} + \\cdots +a_{nn}.$}",
+"text": "Définition. La trace de la matrice $A$ est\nle nombre obtenu en additionnant les éléments diagonaux de $A$.\nAutrement dit,\n$\\operatorname{tr} A = a_{11} + a_{22} + \\cdots +a_{nn}.$",
 "volume": "Exo7 Algèbre 1",
 "module": "matrices",
 "section": "Matrices triangulaires, transposition, trace, matrices symétriques",
@@ -12486,7 +12486,7 @@
 {
 "id": "exo7:1040",
 "kind": "corollary",
-"text": "Corollaire. Si $f$ est bijective, alors\n{$\\operatorname{Mat}(f^{-1}) = \\big(\\operatorname{Mat} (f) \\big)^{-1}$.}",
+"text": "Corollaire. Si $f$ est bijective, alors\n$\\operatorname{Mat}(f^{-1}) = \\big(\\operatorname{Mat} (f) \\big)^{-1}$.",
 "volume": "Exo7 Algèbre 1",
 "module": "erene",
 "section": "Propriétés des applications linéaires",
@@ -13518,7 +13518,7 @@
 {
 "id": "exo7:1126",
 "kind": "proposition",
-"text": "Proposition (Caractérisation d'une application linéaire). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et\n$f$ une application de $E$ dans $F$.\nL'application $f$ est linéaire si et seulement si,\npour tous vecteurs $u$ et $v$ de $E$ et pour tous scalaires\n$\\lambda$ et $\\mu$ de $\\mathbb{K}$,\n{$f(\\lambda u + \\mu v)=\\lambda f(u)+\\mu f(v)$.}",
+"text": "Proposition (Caractérisation d'une application linéaire). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et\n$f$ une application de $E$ dans $F$.\nL'application $f$ est linéaire si et seulement si,\npour tous vecteurs $u$ et $v$ de $E$ et pour tous scalaires\n$\\lambda$ et $\\mu$ de $\\mathbb{K}$,\n$f(\\lambda u + \\mu v)=\\lambda f(u)+\\mu f(v)$.",
 "volume": "Exo7 Algèbre 1",
 "module": "ev",
 "section": "Application linéaire (début)",
@@ -13662,7 +13662,7 @@
 {
 "id": "exo7:1138",
 "kind": "definition",
-"text": "Définition (Définition du noyau). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et $f$ une application linéaire de $E$ dans $F$.\nLe noyau de $f$, noté $\\operatorname{Ker}(f)$, est l'ensemble des\néléments de $E$ dont l'image est $0_{F}$ :\n{$\\operatorname{Ker} (f)=\\big\\{x \\in E \\mid f(x)=0_{F}\\big\\}$}\n Autrement dit, le noyau est l'image réciproque du vecteur nul de l'espace d'arrivée :\n $\\operatorname{Ker}(f) = f^{-1} \\{0_F\\}$.",
+"text": "Définition (Définition du noyau). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et $f$ une application linéaire de $E$ dans $F$.\nLe noyau de $f$, noté $\\operatorname{Ker}(f)$, est l'ensemble des\néléments de $E$ dont l'image est $0_{F}$ :\n$\\operatorname{Ker} (f)=\\big\\{x \\in E \\mid f(x)=0_{F}\\big\\}$\n Autrement dit, le noyau est l'image réciproque du vecteur nul de l'espace d'arrivée :\n $\\operatorname{Ker}(f) = f^{-1} \\{0_F\\}$.",
 "volume": "Exo7 Algèbre 1",
 "module": "ev",
 "section": "Application linéaire (fin)",
@@ -13746,7 +13746,7 @@
 {
 "id": "exo7:1145",
 "kind": "theorem",
-"text": "Théorème (Caractérisation des applications linéaires injectives). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et $f$ une application linéaire de $E$ dans $F$. Alors :\n{$f$ injective \\quad $\\iff \\quad \\operatorname{Ker}(f) = \\big\\{0_E\\big\\}$}",
+"text": "Théorème (Caractérisation des applications linéaires injectives). Soient $E$ et $F$ deux $\\mathbb{K}$-espaces vectoriels et $f$ une application linéaire de $E$ dans $F$. Alors :\n$f$ injective \\quad $\\iff \\quad \\operatorname{Ker}(f) = \\big\\{0_E\\big\\}$",
 "volume": "Exo7 Algèbre 1",
 "module": "ev",
 "section": "Application linéaire (fin)",
@@ -14874,7 +14874,7 @@
 {
 "id": "exo7:1239",
 "kind": "theorem",
-"text": "Théorème (Théorème des quatre dimensions). Soient $E$ un espace vectoriel de dimension finie\net $F,G$ des sous-espaces vectoriels de $E$.\nAlors~:\n{$\\dim(F+G) = \\dim F + \\dim G - \\dim (F\\cap G)$}",
+"text": "Théorème (Théorème des quatre dimensions). Soient $E$ un espace vectoriel de dimension finie\net $F,G$ des sous-espaces vectoriels de $E$.\nAlors~:\n$\\dim(F+G) = \\dim F + \\dim G - \\dim (F\\cap G)$",
 "volume": "Exo7 Algèbre 1",
 "module": "dimension",
 "section": "Dimension des sous-espaces vectoriels",
@@ -14970,7 +14970,7 @@
 {
 "id": "exo7:1247",
 "kind": "definition",
-"text": "Définition (Rang d'une famille finie de vecteurs). Soit $E$ un $\\mathbb{K}$-espace vectoriel et soit $\\{v_1, \\ldots ,v_p\\}$\nune famille finie de vecteurs de $E$.\nLe rang de la famille $\\{v_1, \\ldots ,v_p\\}$\nest la dimension du sous-espace vectoriel $\\operatorname{Vect}(v_1, \\ldots ,v_p)$\nengendré par les vecteurs $v_1, \\dots ,v_p$.\nAutrement dit :\n{$\\operatorname{rg}(v_1, \\dots ,v_p) = \\dim \\operatorname{Vect}(v_1, \\ldots ,v_p)$}",
+"text": "Définition (Rang d'une famille finie de vecteurs). Soit $E$ un $\\mathbb{K}$-espace vectoriel et soit $\\{v_1, \\ldots ,v_p\\}$\nune famille finie de vecteurs de $E$.\nLe rang de la famille $\\{v_1, \\ldots ,v_p\\}$\nest la dimension du sous-espace vectoriel $\\operatorname{Vect}(v_1, \\ldots ,v_p)$\nengendré par les vecteurs $v_1, \\dots ,v_p$.\nAutrement dit :\n$\\operatorname{rg}(v_1, \\dots ,v_p) = \\dim \\operatorname{Vect}(v_1, \\ldots ,v_p)$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Rang d'une famille de vecteurs",
@@ -15282,7 +15282,7 @@
 {
 "id": "exo7:1273",
 "kind": "proposition",
-"text": "Proposition. Si $E$ est de dimension finie, alors :\n - $\\operatorname{Im} f = f(E)$ est un espace vectoriel de dimension finie.\n - Si $(e_1,\\ldots,e_n)$ est une base de $E$, alors\n $\\operatorname{Im} f = \\operatorname{Vect} \\big( f(e_1),\\ldots,f(e_n) \\big)$.\nLa dimension de cet espace vectoriel $\\operatorname{Im} f$ est appelée rang de $f$ :\n{$\\operatorname{rg} (f) = \\dim \\operatorname{Im} f = \\dim \\operatorname{Vect} \\big( f(e_1),\\ldots,f(e_n) \\big)$}",
+"text": "Proposition. Si $E$ est de dimension finie, alors :\n - $\\operatorname{Im} f = f(E)$ est un espace vectoriel de dimension finie.\n - Si $(e_1,\\ldots,e_n)$ est une base de $E$, alors\n $\\operatorname{Im} f = \\operatorname{Vect} \\big( f(e_1),\\ldots,f(e_n) \\big)$.\nLa dimension de cet espace vectoriel $\\operatorname{Im} f$ est appelée rang de $f$ :\n$\\operatorname{rg} (f) = \\dim \\operatorname{Im} f = \\dim \\operatorname{Vect} \\big( f(e_1),\\ldots,f(e_n) \\big)$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Applications linéaires en dimension finie",
@@ -15342,7 +15342,7 @@
 {
 "id": "exo7:1278",
 "kind": "theorem",
-"text": "Théorème (Théorème du rang). Soit $f : E \\to F$ une application linéaire entre deux $\\mathbb{K}$-espaces vectoriels,\n$E$ étant de dimension finie.\nAlors\n{$\\dim E =\\dim \\operatorname{Ker} f + \\dim \\operatorname{Im} f$}",
+"text": "Théorème (Théorème du rang). Soit $f : E \\to F$ une application linéaire entre deux $\\mathbb{K}$-espaces vectoriels,\n$E$ étant de dimension finie.\nAlors\n$\\dim E =\\dim \\operatorname{Ker} f + \\dim \\operatorname{Im} f$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Applications linéaires en dimension finie",
@@ -15546,7 +15546,7 @@
 {
 "id": "exo7:1295",
 "kind": "proposition",
-"text": "Proposition. Soient $f : E \\to F$ et $g : F \\to G$ deux applications linéaires et soient\n$\\mathcal{B}$ une base de $E$, $\\mathcal{B}'$ une base de $F$\net $\\mathcal{B}''$ une base de $G$.\nAlors :\n{$\\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}''} (g \\circ f)\n= \\operatorname{Mat}_{\\mathcal{B}',\\mathcal{B}''} (g) \\times \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f)$}",
+"text": "Proposition. Soient $f : E \\to F$ et $g : F \\to G$ deux applications linéaires et soient\n$\\mathcal{B}$ une base de $E$, $\\mathcal{B}'$ une base de $F$\net $\\mathcal{B}''$ une base de $G$.\nAlors :\n$\\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}''} (g \\circ f)\n= \\operatorname{Mat}_{\\mathcal{B}',\\mathcal{B}''} (g) \\times \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f)$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Matrice d'une application linéaire",
@@ -15714,7 +15714,7 @@
 {
 "id": "exo7:1309",
 "kind": "proposition",
-"text": "Proposition. - Soit $A = \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f)$.\n - Pour $x \\in E$, notons $X = \\operatorname{Mat}_{\\mathcal{B}} (x) =\n \\left(\\begin{smallmatrix}x_1\\cr x_2\\cr \\vdots \\cr x_p\\end{smallmatrix}\\right)_{\\!\\!\\mathcal{B}}$.\n - Pour $y \\in F$, notons $Y = \\operatorname{Mat}_{\\mathcal{B}'} (y) =\n \\left(\\begin{smallmatrix}y_1\\cr y_2\\cr \\vdots \\cr y_n\\end{smallmatrix}\\right)_{\\!\\!\\mathcal{B}'}$.\nAlors, si $y = f(x)$, on a\n{$Y = AX$}\nAutrement dit :\n{$\\operatorname{Mat}_{\\mathcal{B}'} \\big( f(x) \\big)\n= \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f) \\times \\operatorname{Mat}_{\\mathcal{B}} (x)$}",
+"text": "Proposition. - Soit $A = \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f)$.\n - Pour $x \\in E$, notons $X = \\operatorname{Mat}_{\\mathcal{B}} (x) =\n \\left(\\begin{smallmatrix}x_1\\cr x_2\\cr \\vdots \\cr x_p\\end{smallmatrix}\\right)_{\\!\\!\\mathcal{B}}$.\n - Pour $y \\in F$, notons $Y = \\operatorname{Mat}_{\\mathcal{B}'} (y) =\n \\left(\\begin{smallmatrix}y_1\\cr y_2\\cr \\vdots \\cr y_n\\end{smallmatrix}\\right)_{\\!\\!\\mathcal{B}'}$.\nAlors, si $y = f(x)$, on a\n$Y = AX$\nAutrement dit :\n$\\operatorname{Mat}_{\\mathcal{B}'} \\big( f(x) \\big)\n= \\operatorname{Mat}_{\\mathcal{B},\\mathcal{B}'} (f) \\times \\operatorname{Mat}_{\\mathcal{B}} (x)$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Changement de bases",
@@ -15786,7 +15786,7 @@
 {
 "id": "exo7:1315",
 "kind": "proposition",
-"text": "Proposition. La matrice de passage $\\mathrm{P}_{\\mathcal{B},\\mathcal{B}'}$\nde la base $\\mathcal{B}$ vers la base $\\mathcal{B}'$\nest la matrice associée à l'identité $\\mathrm{id}_E : (E, \\mathcal{B}') \\to (E,\\mathcal{B})$\noù $E$ est l'espace de départ muni de la base $\\mathcal{B}'$,\net $E$ est aussi l'espace d'arrivée, mais muni de la base $\\mathcal{B}$ :\n{$\\mathrm{P}_{\\mathcal{B},\\mathcal{B'}} = \\operatorname{Mat}_{\\mathcal{B}',\\mathcal{B}} (\\mathrm{id}_E) $}",
+"text": "Proposition. La matrice de passage $\\mathrm{P}_{\\mathcal{B},\\mathcal{B}'}$\nde la base $\\mathcal{B}$ vers la base $\\mathcal{B}'$\nest la matrice associée à l'identité $\\mathrm{id}_E : (E, \\mathcal{B}') \\to (E,\\mathcal{B})$\noù $E$ est l'espace de départ muni de la base $\\mathcal{B}'$,\net $E$ est aussi l'espace d'arrivée, mais muni de la base $\\mathcal{B}$ :\n$\\mathrm{P}_{\\mathcal{B},\\mathcal{B'}} = \\operatorname{Mat}_{\\mathcal{B}',\\mathcal{B}} (\\mathrm{id}_E) $",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Changement de bases",
@@ -15846,7 +15846,7 @@
 {
 "id": "exo7:1320",
 "kind": "proposition",
-"text": "Proposition. {$X = \\mathrm{P}_{\\mathcal{B},\\mathcal{B}'} \\times X'$}",
+"text": "Proposition. $X = \\mathrm{P}_{\\mathcal{B},\\mathcal{B}'} \\times X'$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Changement de bases",
@@ -15882,7 +15882,7 @@
 {
 "id": "exo7:1323",
 "kind": "theorem",
-"text": "Théorème (Formule de changement de base). {$B = Q^{-1} A P$}",
+"text": "Théorème (Formule de changement de base). $B = Q^{-1} A P$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Changement de bases",
@@ -15906,7 +15906,7 @@
 {
 "id": "exo7:1325",
 "kind": "corollary",
-"text": "Corollaire. {$B = P^{-1} A P$}",
+"text": "Corollaire. $B = P^{-1} A P$",
 "volume": "Exo7 Algèbre 1",
 "module": "matlin",
 "section": "Changement de bases",
@@ -16338,7 +16338,7 @@
 {
 "id": "exo7:1361",
 "kind": "theorem",
-"text": "Théorème. ~\n{$\\det (AB)=\\det A \\cdot \\det B$}",
+"text": "Théorème. ~\n$\\det (AB)=\\det A \\cdot \\det B$",
 "volume": "Exo7 Algèbre 1",
 "module": "determinants",
 "section": "Propriétés du déterminant",
@@ -16374,7 +16374,7 @@
 {
 "id": "exo7:1364",
 "kind": "corollary",
-"text": "Corollaire. Une matrice carrée $A$ est inversible si et seulement si son\ndéterminant est non nul. De plus si $A$ est inversible,\nalors:\n{$ \\det \\big(A^{-1}\\big)=\\frac1{\\det A}$}",
+"text": "Corollaire. Une matrice carrée $A$ est inversible si et seulement si son\ndéterminant est non nul. De plus si $A$ est inversible,\nalors:\n$ \\det \\big(A^{-1}\\big)=\\frac1{\\det A}$",
 "volume": "Exo7 Algèbre 1",
 "module": "determinants",
 "section": "Propriétés du déterminant",
@@ -16422,7 +16422,7 @@
 {
 "id": "exo7:1368",
 "kind": "corollary",
-"text": "Corollaire. ~\n{$\\det \\big(A^T\\big)=\\det A$}",
+"text": "Corollaire. ~\n$\\det \\big(A^T\\big)=\\det A$",
 "volume": "Exo7 Algèbre 1",
 "module": "determinants",
 "section": "Propriétés du déterminant",
@@ -16578,7 +16578,7 @@
 {
 "id": "exo7:1381",
 "kind": "theorem",
-"text": "Théorème. Soient $A$ une matrice inversible, et $C$ sa comatrice.\nOn a alors\n{$ A^{-1} = \\frac{1}{\\det A} \\, C^T$}",
+"text": "Théorème. Soient $A$ une matrice inversible, et $C$ sa comatrice.\nOn a alors\n$ A^{-1} = \\frac{1}{\\det A} \\, C^T$",
 "volume": "Exo7 Algèbre 1",
 "module": "determinants",
 "section": "Calculs de déterminants",
@@ -17034,7 +17034,7 @@
 {
 "id": "exo7:1419",
 "kind": "proposition",
-"text": "Proposition (Relation de Chasles). Soit $f : [a,+\\infty[ \\to \\mathbb{R}$ une fonction continue et soit\n $a' \\in [a,+\\infty[$. \n Alors les intégrales impropres $\\int_a^{+\\infty} f(t) \\;\\mathrm{d} t$ \n et $\\int_{a'}^{+\\infty} f(t) \\;\\mathrm{d} t $ sont de même nature. \n Si elles convergent, alors \n {$ \\int_a^{+\\infty} f(t) \\;\\mathrm{d} t = \\int_{a}^{a'} f(t) \\;\\mathrm{d} t+ \\int_{a'}^{+\\infty} f(t) \\;\\mathrm{d} t.$}",
+"text": "Proposition (Relation de Chasles). Soit $f : [a,+\\infty[ \\to \\mathbb{R}$ une fonction continue et soit\n $a' \\in [a,+\\infty[$. \n Alors les intégrales impropres $\\int_a^{+\\infty} f(t) \\;\\mathrm{d} t$ \n et $\\int_{a'}^{+\\infty} f(t) \\;\\mathrm{d} t $ sont de même nature. \n Si elles convergent, alors \n $ \\int_a^{+\\infty} f(t) \\;\\mathrm{d} t = \\int_{a}^{a'} f(t) \\;\\mathrm{d} t+ \\int_{a'}^{+\\infty} f(t) \\;\\mathrm{d} t.$",
 "volume": "Exo7 Analyse 2",
 "module": "intimp",
 "section": "Définitions et premières propriétés",
@@ -17094,7 +17094,7 @@
 {
 "id": "exo7:1424",
 "kind": "proposition",
-"text": "Proposition (Positivité de l'intégrale). Soient $f,g : [a,+\\infty[ \\to \\mathbb{R}$ des fonctions continues, ayant une intégrale convergente.\n{$ \\text{ Si }\\quad f \\le g \\quad \\text{ alors }\\quad\n\\int_a^{+\\infty} f(t)\\;\\mathrm{d} t \\le \\int_a^{+\\infty} g(t)\\;\\mathrm{d} t.$}",
+"text": "Proposition (Positivité de l'intégrale). Soient $f,g : [a,+\\infty[ \\to \\mathbb{R}$ des fonctions continues, ayant une intégrale convergente.\n$ \\text{ Si }\\quad f \\le g \\quad \\text{ alors }\\quad\n\\int_a^{+\\infty} f(t)\\;\\mathrm{d} t \\le \\int_a^{+\\infty} g(t)\\;\\mathrm{d} t.$",
 "volume": "Exo7 Analyse 2",
 "module": "intimp",
 "section": "Définitions et premières propriétés",

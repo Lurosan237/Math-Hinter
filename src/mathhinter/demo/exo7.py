@@ -51,7 +51,7 @@ def unwrap(tex: str, name: str) -> str:
 def clean(tex: str) -> str:
     tex = re.sub(r"(?<!\\)%.*", "", tex)
     tex = _DROP.sub("", tex)
-    tex = re.sub(r"\\mybox\{", "{", tex)
+    tex = unwrap(tex, "mybox")
     tex = re.sub(r"\\assertion\{((?:[^{}]|\{[^{}]*\})*)\}", r"« \1 »", tex)
     for macro, value in sorted(MACROS.items(), key=lambda item: -len(item[0])):
         tex = re.sub(re.escape(macro) + r"(?![A-Za-z])", lambda _m, v=value: v, tex)
