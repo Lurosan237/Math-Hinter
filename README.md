@@ -2,7 +2,7 @@
 
 A French maths study assistant that finds your first wrong step, without giving away the answer.
 
-> **Status:** stage 5 of 6. The tutor is evaluated and has a [public demo](https://lurosan237.github.io/Math-Hinter/). Next: real student
+> **Status:** stage 5 of 6. The tutor is evaluated and has a live site, being deployed on Vercel. Next: real student
 > attempts. See the [design](docs/design.md).
 
 ## Stage 1: getting formulas out of the books
@@ -132,19 +132,24 @@ They are published works. Everything derived from them stays in `data/private`, 
 that nothing from it gets committed. Reports contain numbers only, and CI runs on a small PDF written for the tests, so
 the report itself can only be regenerated with a copy of the books.
 
-## The public demo
+## Try it
 
-The [demo](https://lurosan237.github.io/Math-Hinter/) runs the same tutor on openly licensed material: the
-[Exo7](https://exo7.emath.fr) course *Analyse 1* (CC BY-NC-SA 3.0 FR), converted from its
-[LaTeX sources](https://github.com/exo7math/cours-exo7), and eight exercises written for the demo. Each has a copy with
-one planted error and a correct copy. The answers were recorded once with the evaluated model, so the page makes no live
-calls. The equality checker runs in the browser through Pyodide, using the code in `src/mathhinter/check`. The demo
-exercises are too few to compare versions; the numbers above come from the held-out evaluation.
+The live site runs the evaluated tutor on your own work: type an exercise and your
+attempt, one step per line, and it names the first wrong line with a hint. It's the same model, prompts, search and
+checker as in the evaluation, but it searches Exo7's openly licensed courses instead of the books: *Analyse 1*,
+*Algèbre 1* and the improper integrals chapter, 1480 passages converted from their
+[LaTeX sources](https://github.com/exo7math/cours-exo7) (CC BY-NC-SA 3.0 FR). That course hasn't been evaluated.
+
+- A Vercel function (`api/review.py`, logic in `src/mathhinter/web.py`) holds the Groq key, so it never reaches the
+  browser.
+- The free Groq tier is shared by every visitor, so each visitor gets a few reviews a day on the site's key. After
+  that, they can paste their own free key, which is used for their request and never stored.
+- Nothing is logged or cached: the attempt goes to Groq and the answer comes back.
+- The equality checker also runs in the browser through Pyodide, with the code in `src/mathhinter/check`.
 
 ```bash
-python scripts/build_demo_corpus.py --source path/to/cours-exo7
-PYTHONPATH=src python scripts/run_demo.py      # resumes after rate limits
-python scripts/build_site.py                   # writes _site/
+python scripts/build_demo_corpus.py --source path/to/cours-exo7   # writes site/data/corpus.json
+python scripts/build_site.py                                      # writes _site/, Vercel's build step
 ```
 
 ## Run it
@@ -180,4 +185,4 @@ python scripts/report_extraction.py
 
 ## Licence
 
-Code: [MIT](LICENSE). Demo course text and exercises in `site/data` and `data/demo`: CC BY-NC-SA 3.0 FR, after Exo7.
+Code: [MIT](LICENSE). Course text in `site/data` and example exercises in `data/demo`: CC BY-NC-SA 3.0 FR, after Exo7.
