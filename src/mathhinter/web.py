@@ -9,6 +9,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
+import sys
 import threading
 import time
 from dataclasses import dataclass, field
@@ -92,6 +94,19 @@ def read_request(body: bytes) -> dict:
 
 
 class Service:
+    @staticmethod
+    def _api_error(failure: str, own_key: str) -> tuple[int, dict]:
+        """Groq's status code is logged and returned so failures can be diagnosed. Its text, which can quote the
+        request, is not."""
+        found = re.search(r"HTTP (\d{3})", failure)
+        status = found[1] if found else "connexion"
+        print(f"groq error: {status} ({'visitor' if own_key else 'site'} key)", file=sys.stderr)
+        if status == "401":
+            message = "Votre clé Groq a été refusée." if own_key else "La clé du site est refusée par Groq."
+        else:
+            message = "Groq n'a pas répondu correctement. Réessayez dans un instant."
+        return 502, {"error": message, "code": "api", "groq_status": status}
+
     def __init__(self, units: list[dict], site_key: str, cache_dir: Path | None = None, limiter: Limiter | None = None,
                  client_factory=None):
         self.units = {u["id"]: u for u in units}
@@ -133,13 +148,9 @@ class Service:
             return 429, {"error": f"Groq refuse pour l'instant : la limite de {whose} est atteinte. Réessayez plus "
                                   f"tard{then}", "code": "groq"}
         except LLMError as error:
-            message = "Votre clé Groq a été refusée." if own_key and "401" in str(error) else \
-                "Groq n'a pas répondu correctement. Réessayez dans un instant."
-            return 502, {"error": message, "code": "api"}
+            return self._api_error(str(error), own_key)
         if (review.failure or "").startswith("api:"):
-            refused = own_key and "401" in review.failure
-            return 502, {"error": "Votre clé Groq a été refusée." if refused else
-                         "Groq n'a pas répondu correctement. Réessayez dans un instant.", "code": "api"}
+            return self._api_error(review.failure, own_key)
         record = review.record()
         record.pop("llm_calls", None)
         ids = list(dict.fromkeys(record["citations"] + record["shown"]))
