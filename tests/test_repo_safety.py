@@ -110,3 +110,13 @@ def test_readme_photo_numbers_come_from_the_reports():
     assert judged["error_kept"] == judged["wrong_attempts"] == report["wrong_attempts"]
     assert f"right {report['photo_reviews_right']} times from the photo" in readme
     assert f"and {report['typed_reviews_right']} from the typed text" in readme
+
+
+def test_readme_hint_numbers_come_from_the_hand_check():
+    judged = json.loads((ROOT / "data" / "hand_checks" / "hints.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    first, second = judged["round_1"], judged["round_2"]
+    before = first["second_hint_gives_the_fix"] + first["third_hint_gives_the_fix"]
+    after = second["second_hint_gives_the_fix"] + second["third_hint_gives_the_fix"]
+    assert f"gave the fix in {before} of {judged['hints_per_round']} further hints" in readme
+    assert f"the revised one\n  in {after}, with {second['borderline']} borderline" in readme

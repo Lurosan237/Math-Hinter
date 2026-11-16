@@ -1,0 +1,93 @@
+{
+ "model": "openai/gpt-oss-120b",
+ "rows": [
+  {
+   "exercise": "demo:01",
+   "title": "Dérivée d'un produit",
+   "planted_line": 2,
+   "flagged_line": 2,
+   "hints": [
+    "Quelle est la dérivée de la fonction exponentielle $e^x$ ?",
+    "Dans la ligne 2, observez le terme $xe^{x-1}$ : le facteur $x$ placé devant l’exponentielle et l’exposant $x-1$ ne proviennent d’aucune règle de dérivation appliquée à $e^x$.",
+    "Le cours indique que, pour toute fonction $u$ dérivable, on a $(e^{u})' = u'\\,e^{u}$. Quel est $u$ dans la fonction $v(x)=e^x$ que tu dérives ?"
+   ]
+  },
+  {
+   "exercise": "demo:02",
+   "title": "Limite par développement limité",
+   "planted_line": 0,
+   "flagged_line": 0,
+   "hints": [
+    "Quel est le terme de degré 2 dans le développement limité de $e^x$ autour de $0$ ?",
+    "Dans la ligne 0, examinez le facteur qui multiplie $x^2$ dans le développement de $e^x$ autour de 0.",
+    "Le cours indique, pour une fonction $f$ deux fois dérivable en $a$, que $f(x)=f(a)+f'(a)(x-a)+\\frac{f''(a)}{2}(x-a)^2+o\\big((x-a)^2\\big)$. Quel est le facteur qui multiplie $(x-0)^2$ dans ce développement ?"
+   ]
+  },
+  {
+   "exercise": "demo:03",
+   "title": "Intégration par parties",
+   "planted_line": 1,
+   "flagged_line": 1,
+   "hints": [
+    "Quel est le signe qui apparaît dans la formule \\(\\int u\\,dv = uv - \\int v\\,du\\) ?",
+    "Dans la ligne 1, observez le signe qui se trouve devant l’intégrale $\\int_{0}^{1} e^{x}\\,dx$ après le terme $[xe^{x}]_{0}^{1}$.",
+    "Le cours indique, pour $u$ et $v$ dérivables, que $\\displaystyle\\int_{a}^{b} u\\,dv = [uv]_{a}^{b} - \\int_{a}^{b} v\\,du$. En appliquant cette formule, quel signe doit accompagner l’intégrale contenant $v\\,du$ ?"
+   ]
+  },
+  {
+   "exercise": "demo:04",
+   "title": "Somme géométrique",
+   "planted_line": 1,
+   "flagged_line": 1,
+   "hints": [
+    "Vérifiez l'exposant qui apparaît dans la formule du cours pour la somme d'une suite géométrique.",
+    "Dans la ligne 1, examinez le terme $2^{\\text{...}}$ qui apparaît dans le numérateur de la fraction : quel est l’exposant utilisé ?",
+    "Le cours indique, pour $a\\neq1$, que $\\sum_{k=0}^{n} a^{k}=\\frac{1-a^{n+1}}{1-a}$. Dans la ligne 1, quel doit être l’exposant qui apparaît dans $a^{\\dots}$ au numérateur ?"
+   ]
+  },
+  {
+   "exercise": "demo:05",
+   "title": "Extremums locaux",
+   "planted_line": 2,
+   "flagged_line": 1,
+   "hints": [
+    "Quel est le signe exact de $f'(x)$ aux points $x=-1$ et $x=1$ ?",
+    "Dans la ligne 1, regardez comment les intervalles $]-\\infty,-1]$ et $[-1,1]$ sont écrits : les bornes $-1$ et $1$ y sont incluses alors que $f'(\\pm1)=0$.",
+    "Le cours indique que, pour une fonction $g$ dérivable sur un intervalle $I$, si $g'(x)>0$ (ou $g'(x)<0$) pour tout $x\\in I$, alors $g$ est strictement croissante (ou décroissante) sur $I$ ; les points où $g'(x)=0$ doivent donc être exclus de $I$ lorsqu’on étudie le signe de $g'$."
+   ]
+  },
+  {
+   "exercise": "demo:06",
+   "title": "Accroissements finis",
+   "planted_line": 2,
+   "flagged_line": 2,
+   "hints": [
+    "Quel est l'énoncé exact du théorème des accroissements finis pour la fonction sin sur [a,b] ?",
+    "Dans la ligne 2, regardez l’égalité écrite entre $\\sin b-\\sin a$ et $\\cos c$ : vérifiez si un facteur dépendant de $b$ et $a$ a été omis dans cette relation.",
+    "Le cours donne, pour une fonction $f$ continue sur $[a,b]$ et dérivable sur $]a,b[$, l’égalité $f(b)-f(a)=f'(c)\\,(b-a)$ avec $c\\in]a,b[$. Quelle fonction $f$ devez‑vous choisir ici ?"
+   ]
+  },
+  {
+   "exercise": "demo:07",
+   "title": "Équation différentielle linéaire",
+   "planted_line": 2,
+   "flagged_line": 2,
+   "hints": [
+    "Quel est le signe du coefficient devant x dans l'exponentielle lorsqu'on résout y' = -2y ?",
+    "Dans la ligne 2, examinez le signe du terme $2x$ qui apparaît dans l’exposant de $e$.",
+    "Le cours indique que pour une équation de la forme $y' = a\\,y$, la solution générale s’écrit $y(x)=C\\,e^{a x}$. Quel est le coefficient $a$ dans votre équation $y' = -2\\,y$ ?"
+   ]
+  },
+  {
+   "exercise": "demo:08",
+   "title": "Existence d'une racine",
+   "planted_line": 2,
+   "flagged_line": 2,
+   "hints": [
+    "Quel théorème assure l'existence d'un point où f s'annule quand f est continue sur [a,b] et que f(a) et f(b) ont des signes opposés ?",
+    "Dans la ligne 2, examinez le théorème cité : vérifiez si les hypothèses de ce théorème (notamment l’égalité $f(0)=f(1)$) sont réellement satisfaites dans votre situation.",
+    "Le cours donne, pour une fonction $u$ continue sur $[a,b]$ et vérifiant $u(a)\\,u(b)<0$, l’existence d’un $c\\in]a,b[$ tel que $u(c)=0$. Quelle fonction $u$ et quels intervalles $[a,b]$ choisissez‑vous ici ?"
+   ]
+  }
+ ]
+}

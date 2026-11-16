@@ -43,3 +43,14 @@ def test_site_builds_with_the_checker_and_the_evaluation(tmp_path, monkeypatch):
     for name in ["index.html", "app.js", "data/examples.json", "data/agent.json", "data/transcription.json",
                  "py/mathhinter/check/equality.py"]:
         assert (site / name).exists(), name
+
+
+def test_real_photos_are_grouped_by_attempt(tmp_path):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("eval_real_photos", ROOT / "scripts/eval_real_photos.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for name in ["amina-1.jpg", "amina-2.jpg", "paul.png", "notes.txt"]:
+        (tmp_path / name).write_bytes(b"x")
+    assert {k: [p.name for p in v] for k, v in module.groups(tmp_path).items()} == {
+        "amina": ["amina-1.jpg", "amina-2.jpg"], "paul": ["paul.png"]}

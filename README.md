@@ -150,6 +150,11 @@ checker as in the evaluation, but it searches Exo7's openly licensed courses ins
   8 wrong attempts (checked by hand: one line had a misread bracket). The review was right 14 times from the photo
   and 15 from the typed text. Those pages are typeset, so this shows that errors survive transcription, not that
   real handwriting is read well.
+- A stuck student can ask for two more hints: the second points at what is wrong without saying what it should be,
+  the third quotes the general rule. Checked by hand on the 8 example errors ([hints](reports/hints.md),
+  [verdicts](data/hand_checks/hints.json)), the first prompt gave the fix in 6 of 16 further hints; the revised one
+  in 0, with 1 borderline. That re-check used the same examples, so it confirms the fix rather than measuring it.
+- The review shows its steps as they happen: the passages it joined, the agent's searches and what they found.
 - Nothing is logged or cached: the attempt goes to Groq and the answer comes back.
 - The equality checker also runs in the browser through Pyodide, with the code in `src/mathhinter/check`.
 

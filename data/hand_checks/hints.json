@@ -1,0 +1,19 @@
+{
+ "question": "Does a further hint give the answer away: the corrected line or term, the missing factor, or a value computed for the student?",
+ "checked_by": "hand, reading reports/hints.md",
+ "hints_per_round": 16,
+ "round_1": {
+  "prompt": "first version",
+  "second_hint_gives_the_fix": 4,
+  "third_hint_gives_the_fix": 2,
+  "notes": "demo:03, 04, 06, 07: the second hint said what the term should be. demo:01, 02: the third hint applied the rule to the student's function or computed the coefficient."
+ },
+ "round_2": {
+  "prompt": "revised: where to look, never what it should be; rules in general form; prompt examples from other topics",
+  "second_hint_gives_the_fix": 0,
+  "third_hint_gives_the_fix": 0,
+  "borderline": 1,
+  "notes": "demo:06: the second hint says a factor depending on a and b is missing, close to giving it. demo:05: the review flagged the wrong line, and the further hints elaborate on that false flag."
+ },
+ "caveat": "Round 2 uses the same 8 examples that motivated the revision, so it is a check of the fix, not an independent measure."
+}
