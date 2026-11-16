@@ -147,3 +147,9 @@ def test_streaming_sends_steps_then_the_result(monkeypatch):
         server.shutdown()
     assert [x["step"]["step"] for x in lines[:-1]] == ["reading", "tool", "reading"]
     assert lines[-1]["status"] == 200 and lines[-1]["body"]["review"]["verdict"] == "wrong"
+
+
+def test_hints_count_lines_from_one_like_the_page():
+    from mathhinter.hints import messages
+    task = messages("E", "a\nb\nc", 1, ["h"], "x", [])[1]["content"]
+    assert "1: a\n2: b\n3: c" in task and "First wrong line: 2" in task
