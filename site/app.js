@@ -83,7 +83,11 @@ function showResult(out, config) {
     parts.push(el("p", { class: "verdict bad", text: `Première erreur : ligne ${review.first_wrong_line + 1}` }));
     const quoted = out.lines[review.first_wrong_line];
     if (quoted) parts.push(el("blockquote", { class: "quoted", text: quoted }));
-    if (review.hint) parts.push(el("p", { class: "hint", text: review.hint }));
+    if (review.hint) {
+      const ladder = el("div", { class: "hints" }, el("p", { class: "hint", text: review.hint }));
+      parts.push(ladder);
+      if (review.explanation) parts.push(moreHints(ladder, out, review));
+    }
   }
   if (review.explanation) {
     parts.push(el("details", {}, el("summary", { text: "Voir l'explication (elle peut donner la réponse)" }),
@@ -156,6 +160,69 @@ function updateButton() {
   $("reset").hidden = !(photos.length || $("statement").value || $("attempt").value);
 }
 
+/* A review streams its steps, one JSON per line, then {"status", "body"}. Older servers just send the body. */
+async function postStreaming(path, payload, onStep) {
+  const response = await fetch(path, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...payload, stream: true }),
+  });
+  if (!(response.headers.get("content-type") || "").includes("ndjson") || !response.body) {
+    return finish(response, await response.json().catch(() => null));
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "", last = null;
+  for (;;) {
+    const { value, done } = await reader.read();
+    buffer += decoder.decode(value || new Uint8Array(), { stream: !done });
+    let cut;
+    while ((cut = buffer.indexOf("\n")) >= 0) {
+      const line = buffer.slice(0, cut).trim();
+      buffer = buffer.slice(cut + 1);
+      if (!line) continue;
+      const data = JSON.parse(line);
+      if (data.step) onStep(data.step); else last = data;
+    }
+    if (done) break;
+  }
+  if (!last) throw new Error("La relecture a été interrompue. Réessayez.");
+  return finish({ ok: last.status === 200, status: last.status }, last.body);
+}
+
+function finish(response, out) {
+  if (!out) out = { error: response.status === 504 ? "Le service a mis trop de temps à répondre. Réessayez dans une minute."
+    : `Le serveur a répondu ${response.status}.` };
+  if (!response.ok) {
+    if (["visitor", "site", "nokey"].includes(out.code)) $("own-key").open = true;
+    throw new Error(out.error || "La demande a échoué.");
+  }
+  return out;
+}
+
+/* Live steps, shown while the review runs. */
+function stepList() {
+  const list = el("ol", { class: "steps", "aria-live": "polite" });
+  $("status").replaceChildren(list);
+  return (step) => {
+    let text = null;
+    if (step.step === "reading") {
+      if (list.lastChild && list.lastChild.dataset.kind === "reading") return;
+      text = list.children.length ? "Relit la copie avec ce qu'il a trouvé…" : "Relit la copie…";
+    } else if (step.step === "passages") {
+      text = `Joint ${step.found.length} passages du cours : ${step.found.join(" ; ")}`;
+    } else if (step.step === "tool" && step.tool === "search_course") {
+      text = `A cherché « ${step.query} » dans le cours`
+        + (step.found && step.found.length ? ` : ${step.found.join(" ; ")}` : " : rien trouvé");
+    } else if (step.step === "tool" && step.tool === "check_equality") {
+      text = `A vérifié $${step.left} = ${step.right}$ : ${step.status}`;
+    }
+    if (!text) return;
+    [...list.children].forEach((li) => li.classList.add("done"));
+    const li = el("li", { "data-kind": step.step, text });
+    list.append(li);
+    math(li);
+  };
+}
+
 async function post(path, payload) {
   const response = await fetch(path, {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload),
@@ -187,6 +254,37 @@ async function readPhotos(key) {
   updateButton();
 }
 
+/* Up to two more hints, each more explicit, none giving the answer. */
+function moreHints(ladder, out, review) {
+  const given = [review.hint];
+  const button = el("button", { type: "button", class: "more-hint", text: "Un autre indice" });
+  const note = el("p", { class: "aside" });
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    button.textContent = "Un instant…";
+    try {
+      const reply = await post("/api/review?hint=1", {
+        statement: $("statement").value.trim(), attempt: out.lines.join("\n"), key: $("key").value.trim(),
+        line: review.first_wrong_line, hints: given, explanation: review.explanation, citations: review.citations,
+      });
+      given.push(reply.hint);
+      const p = el("p", { class: "hint", text: reply.hint });
+      ladder.append(el("span", { class: "hint-level", text: `Indice ${reply.level}` }), p);
+      math(p);
+      if (reply.last) {
+        button.remove();
+        note.textContent = "C'était le dernier indice. Si vous bloquez encore, l'explication ci-dessous donne la réponse.";
+      }
+    } catch (error) {
+      note.textContent = error.message;
+    } finally {
+      button.disabled = false;
+      if (button.isConnected) button.textContent = "Un autre indice";
+    }
+  });
+  return el("div", { class: "hint-actions" }, button, note);
+}
+
 async function submit(event) {
   event.preventDefault();
   clearResult();
@@ -200,9 +298,7 @@ async function submit(event) {
     const attempt = lines().join("\n");
     if (!statement) { $("status").textContent = "Écrivez l'énoncé, ou photographiez-le avec la copie."; $("statement").focus(); return; }
     if (!attempt) { $("status").textContent = "Écrivez votre rédaction, ou photographiez-la."; $("attempt").focus(); return; }
-    $("status").textContent = config === "agent" ? "L'agent relit et cherche dans le cours… (jusqu'à une minute)"
-      : "Relecture en cours… (quelques secondes)";
-    const out = await post("/api/review", { statement, attempt, config, key });
+    const out = await postStreaming("/api/review", { statement, attempt, config, key }, stepList());
     $("status").textContent = "";
     showResult(out, config);
   } catch (error) {

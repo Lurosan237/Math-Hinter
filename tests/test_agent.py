@@ -165,3 +165,11 @@ def test_passages_name_their_source_by_label_when_there_is_one():
     shown = format_passages(labelled.search("Rolle", "x", hidden=set()))
     assert "(theorem, Exo7, derivee, 2)" in shown
     assert "tome 1, p. 3" in format_passages([CourseSearch(UNITS).passage(1)])
+
+
+def test_labelled_units_are_found_by_the_heading_above_them():
+    units = [dict(unit("h", "heading", "Intégration par parties"), label="Exo7, Intégrales, Calculs"),
+             dict(unit("t", "theorem", "Théorème. Soient u et v de classe C1 ..."), label="Exo7, Intégrales, Calculs"),
+             dict(unit("o", "theorem", "Théorème. Autre résultat sur les parties."), label="Exo7, Ensembles, Autre")]
+    found = CourseSearch(units).search("intégration par parties", "web", hidden=set())
+    assert found[0]["id"] == "t"

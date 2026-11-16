@@ -82,3 +82,68 @@ def test_limits_and_api_failures_become_plain_messages():
     service = Service(UNITS, site_key="", client_factory=Fake(LLMError("HTTP 401: bad")))
     status, out = service.review(read_request(body(key="gsk_bad", config="llm_only")), "a")
     assert status == 502 and "refusée" in out["error"]
+
+
+SEARCH = {"action": "search_course", "query": "dérivée exponentielle"}
+
+
+def test_progress_reports_searches_with_readable_sources_and_changes_nothing():
+    steps = []
+    fake = Fake(SEARCH, ANSWER)
+    service = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=fake)
+    status, out = service.review(read_request(body(config="agent")), "a", on_step=steps.append)
+    assert status == 200 and out["review"]["verdict"] == "wrong"
+    tool = next(s for s in steps if s["step"] == "tool")
+    assert tool["query"] == "dérivée exponentielle" and tool["found"][0].startswith("Exo7")
+    quiet = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=Fake(SEARCH, ANSWER))
+    assert quiet.review(read_request(body(config="agent")), "a")[1]["review"] == out["review"]
+
+
+def hint_body(**fields):
+    base = {"statement": "Dériver $e^x$.", "attempt": "On a\n$(e^x)'=xe^{x-1}$", "line": 1,
+            "hints": ["Pourquoi ?"], "explanation": "La dérivée de exp est exp.", "citations": ["t", "nope"]}
+    return json.dumps({**base, **fields}).encode()
+
+
+class HintFake(Fake):
+    def chat(self, model, messages, temperature=0.0, max_tokens=0):
+        self.sent.append(messages)
+        return super().chat(model, messages, temperature, max_tokens)
+
+
+def test_further_hints_get_more_explicit_and_stop_at_the_third():
+    fake = HintFake({"hint": "Regardez l'exposant."}, {"hint": "La dérivée de $e^x$ suit une règle du cours."})
+    fake.sent = []
+    service = Service(UNITS, site_key="gsk_site", client_factory=fake)
+    status, out = service.hint(hint_body(), "a")
+    assert status == 200 and out == {"hint": "Regardez l'exposant.", "level": 2, "last": False}
+    system, task = fake.sent[0][0]["content"], fake.sent[0][1]["content"]
+    assert "Name precisely what is wrong" in system and "Never give the answer" in system
+    assert "Exo7, Dérivée, Calcul" in task and "Pourquoi ?" in task
+    status, out = service.hint(hint_body(hints=["Pourquoi ?", "Regardez l'exposant."]), "a")
+    assert out["level"] == 3 and out["last"] and "general form" in fake.sent[1][0]["content"]
+    for bad in [hint_body(hints=["a", "b", "c"]), hint_body(hints=[]), hint_body(line=9), b"{}", b"x"]:
+        assert service.hint(bad, "a")[0] == 400
+
+
+def test_streaming_sends_steps_then_the_result(monkeypatch):
+    import importlib.util
+    import threading
+    import urllib.request
+    from http.server import ThreadingHTTPServer
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location("api_review", Path(__file__).parent.parent / "api" / "review.py")
+    api = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(api)
+    api.SERVICE = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=Fake(SEARCH, ANSWER))
+    server = ThreadingHTTPServer(("127.0.0.1", 0), api.handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        request = urllib.request.Request(f"http://127.0.0.1:{server.server_port}/api/review",
+                                         data=body(config="agent", stream=True), method="POST")
+        lines = [json.loads(x) for x in urllib.request.urlopen(request, timeout=10).read().splitlines()]
+    finally:
+        server.shutdown()
+    assert [x["step"]["step"] for x in lines[:-1]] == ["reading", "tool", "reading"]
+    assert lines[-1]["status"] == 200 and lines[-1]["body"]["review"]["verdict"] == "wrong"

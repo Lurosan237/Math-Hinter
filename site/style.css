@@ -165,3 +165,18 @@ footer p { max-width: 46rem; }
 .quoted { margin: 0 0 .6rem; padding: .3rem .7rem; border-left: 2px solid var(--red); font-size: 1.05rem; overflow-wrap: anywhere; }
 .reset { width: 100%; margin-top: .5rem; border: 1px solid var(--rule-strong); border-radius: 3px; background: transparent; padding: .5rem 1rem; font: 500 .9rem var(--sans); color: var(--pencil); }
 .reset:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Live steps and further hints */
+.steps { list-style: none; margin: .25rem 0 0; padding: 0; font: .9rem/1.45 var(--sans); }
+.steps li { position: relative; padding-left: 1.4rem; margin-bottom: .35rem; color: var(--ink); overflow-wrap: anywhere; }
+.steps li::before { content: ""; position: absolute; left: .15rem; top: .35em; width: .7rem; height: .7rem; border-radius: 50%;
+  border: 2px solid var(--margin); border-right-color: transparent; animation: spin .8s linear infinite; }
+.steps li.done { color: var(--pencil); }
+.steps li.done::before { content: "✓"; border: 0; animation: none; color: var(--green); font-weight: 700; top: 0; width: auto; height: auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .steps li::before { animation: none; border-right-color: var(--margin); } }
+.hint-level { display: block; font: 500 .78rem var(--sans); color: var(--pencil); margin-top: .5rem; }
+.hint-actions { margin: .1rem 0 .6rem; }
+.more-hint { border: 1px dashed var(--red); color: var(--red); background: transparent; border-radius: 3px; padding: .4rem .8rem; font: 500 .9rem var(--sans); }
+.more-hint:hover { border-style: solid; }
+.more-hint[disabled] { opacity: .6; cursor: progress; }

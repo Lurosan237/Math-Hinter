@@ -18,6 +18,7 @@ from pathlib import Path
 
 from .agent.course import CourseSearch
 from .agent.tutor import Tutor
+from .hints import MAX_LEVEL, next_hint
 from .llm.client import Client, LLMError, QuotaExhausted
 from .transcribe import BadImage, check_images, transcribe
 
@@ -28,6 +29,8 @@ MAX_ATTEMPT = 2500
 MAX_LINES = 40
 VISITOR_LIMIT = int(os.environ.get("MH_VISITOR_LIMIT", "5"))  # reviews per visitor per day on the site's key
 SITE_LIMIT = int(os.environ.get("MH_SITE_LIMIT", "40"))  # reviews per day on the site's key, per running instance
+HINT_VISITOR_LIMIT = int(os.environ.get("MH_HINT_VISITOR_LIMIT", "12"))  # further hints, same idea
+HINT_SITE_LIMIT = int(os.environ.get("MH_HINT_SITE_LIMIT", "120"))
 PHOTO_VISITOR_LIMIT = int(os.environ.get("MH_PHOTO_VISITOR_LIMIT", "10"))  # photo readings, same idea
 PHOTO_SITE_LIMIT = int(os.environ.get("MH_PHOTO_SITE_LIMIT", "100"))
 
@@ -117,10 +120,27 @@ class Service:
         self.site_key = site_key
         self.cache_dir = cache_dir
         self.limiter = limiter or Limiter(VISITOR_LIMIT, SITE_LIMIT)
+        self.hint_limiter = Limiter(HINT_VISITOR_LIMIT, HINT_SITE_LIMIT)
         self.client_factory = client_factory or (
             lambda key: Client(key, cache_dir=self.cache_dir, max_retries=3, max_wait=20))
 
-    def review(self, request: dict, address: str) -> tuple[int, dict]:
+    def _label(self, ident: str) -> str:
+        unit = self.units.get(ident)
+        return unit.get("label", ident) if unit else ident
+
+    def _progress(self, on_step):
+        """The tutor's steps, with passage ids turned into readable sources, for the page to show as they happen."""
+        if on_step is None:
+            return None
+
+        def report(event: dict) -> None:
+            event = dict(event)
+            if "found" in event:
+                event["found"] = [self._label(i) for i in event["found"]]
+            on_step(event)
+        return report
+
+    def review(self, request: dict, address: str, on_step=None) -> tuple[int, dict]:
         """HTTP status and JSON body. A visitor's own key is used for this request only and never kept."""
         own_key = request["key"]
         if not own_key:
@@ -135,7 +155,7 @@ class Service:
             if refused == "site":
                 return 429, {"error": "Le quota du jour du site est épuisé. Ajoutez votre propre clé Groq gratuite "
                                       "pour continuer, ou revenez demain.", "code": "site"}
-        tutor = Tutor(self.client_factory(own_key or self.site_key), MODEL, self.course)
+        tutor = Tutor(self.client_factory(own_key or self.site_key), MODEL, self.course, self._progress(on_step))
         statement, attempt = request["statement"], request["attempt"]
         started = time.time()
         try:
@@ -164,6 +184,40 @@ class Service:
         if not own_key:
             body["remaining"] = self.limiter.remaining(address)
         return 200, body
+
+
+    def hint(self, body: bytes, address: str) -> tuple[int, dict]:
+        """The next, more explicit hint for a line the review flagged."""
+        try:
+            data = json.loads(body.decode("utf-8"))
+            base = read_request(json.dumps({k: data.get(k) for k in ("statement", "attempt", "key")}).encode())
+            line, hints = int(data["line"]), [str(h)[:600] for h in data.get("hints") or []]
+        except BadRequest as error:
+            return 400, {"error": str(error), "code": "input"}
+        except (UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, ValueError, AttributeError):
+            return 400, {"error": "La requête n'est pas lisible.", "code": "input"}
+        lines = base["attempt"].split("\n")
+        if not 0 <= line < len(lines) or not 1 <= len(hints) < MAX_LEVEL:
+            return 400, {"error": "Il n'y a pas d'autre indice pour cette relecture.", "code": "input"}
+        own_key = base["key"]
+        if not own_key:
+            if not self.site_key:
+                return 503, {"error": "Le site n'a pas de clé configurée.", "code": "nokey"}
+            if self.hint_limiter.take(address):
+                return 429, {"error": "Le quota d'indices du jour est atteint. Ajoutez votre propre clé Groq gratuite "
+                                      "pour continuer.", "code": "visitor"}
+        passages = [{"label": self._label(i), "text": self.units[i]["text"][:1200]}
+                    for i in (data.get("citations") or [])[:3] if i in self.units]
+        try:
+            hint = next_hint(self.client_factory(own_key or self.site_key), base["statement"], base["attempt"], line,
+                             hints, str(data.get("explanation") or "")[:1500], passages)
+        except QuotaExhausted:
+            return 429, {"error": "Groq refuse pour l'instant. Réessayez dans une minute.", "code": "groq"}
+        except LLMError as error:
+            return api_error(str(error), own_key)
+        except (ValueError, KeyError):
+            return 422, {"error": "Le modèle n'a pas formulé d'indice. Réessayez.", "code": "unreadable"}
+        return 200, {"hint": hint, "level": len(hints) + 1, "last": len(hints) + 1 >= MAX_LEVEL}
 
 
 class PhotoService:

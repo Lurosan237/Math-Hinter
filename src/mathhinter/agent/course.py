@@ -20,7 +20,16 @@ class CourseSearch:
         self.position = {u["id"]: i for i, u in enumerate(self.units)}
         titles = {(u["volume"], u["module"], u["section"]): u["text"].split("\n")[0]
                   for u in self.units if u["kind"] == "heading"}
-        documents = [f"{titles.get((u['volume'], u['module'], u['section']), '')}\n{u['text']}" for u in self.units]
+        documents, heading = [], ""
+        for u in self.units:
+            if u["kind"] == "heading":
+                heading = u["text"].split("\n")[0]
+            if u.get("label"):
+                # Open courses (the live site) carry a readable label; index it with the nearest heading above,
+                # so a theorem is found by its section's name. The evaluation's books have no labels.
+                documents.append(f"{u['label']}\n{heading}\n{u['text']}")
+            else:
+                documents.append(f"{titles.get((u['volume'], u['module'], u['section']), '')}\n{u['text']}")
         self.index = BM25([tokens(d) for d in documents], K1, B)
         self.results_only = np.array([u["kind"] in TARGET_KINDS for u in self.units])
 

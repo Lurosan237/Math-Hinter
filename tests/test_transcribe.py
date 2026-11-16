@@ -85,3 +85,11 @@ def test_latex_with_single_backslashes_is_repaired():
     assert result["lines"] == ["$\\frac{1}{2}\\times 3$", "$a\\neq b$, $\\beta$"]
     proper = json.dumps({"lines": ["$\\frac{1}{2}$ et \\\"x\\\""]})
     assert parse(proper)["lines"] == ['$\\frac{1}{2}$ et \\"x\\"']
+
+
+def test_hints_are_parsed_even_with_raw_latex():
+    from mathhinter.hints import parse as parse_hint
+    assert parse_hint('{"hint": "Quel est le signe ?"}') == "Quel est le signe ?"
+    assert parse_hint('```json\n{"hint": "Regardez $\\frac{1}{2}$."}\n```') == "Regardez $\\frac{1}{2}$."
+    with pytest.raises(ValueError):
+        parse_hint('{"hint": ""}')

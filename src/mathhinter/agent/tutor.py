@@ -116,8 +116,13 @@ def _fill(review: Review, action: dict, line_count: int) -> None:
 
 
 class Tutor:
-    def __init__(self, client, model: str, course: CourseSearch | None):
+    def __init__(self, client, model: str, course: CourseSearch | None, on_step=None):
         self.client, self.model, self.course = client, model, course
+        self.on_step = on_step  # told about each step, for the live site's progress; changes nothing in the review
+
+    def _report(self, **event) -> None:
+        if self.on_step:
+            self.on_step(event)
 
     def _ask(self, review: Review, messages: list[dict]) -> str | None:
         response = self.client.chat(self.model, messages, temperature=0.0, max_tokens=MAX_TOKENS)
@@ -136,6 +141,9 @@ class Tutor:
         course = f"Course passages:\n{format_passages(passages)}\n\n" if passages else ""
         messages = [{"role": "system", "content": f"{ROLE}\n\n{ANSWER_FORMAT}"},
                     {"role": "user", "content": f"{course}{self._task(statement, attempt)}"}]
+        if passages:
+            self._report(step="passages", found=[p["id"] for p in passages])
+        self._report(step="reading")
         try:
             action = parse_action(self._ask(review, messages))
         except QuotaExhausted:
@@ -167,6 +175,7 @@ class Tutor:
         messages = [{"role": "system", "content": f"{ROLE}\n\n{TOOLS}\n{ANSWER_FORMAT}"},
                     {"role": "user", "content": self._task(statement, attempt)}]
         for _ in range(MAX_TOOL_CALLS + 2):
+            self._report(step="reading")
             try:
                 reply = self._ask(review, messages)
             except QuotaExhausted:
@@ -188,6 +197,8 @@ class Tutor:
                 _fill(review, action, attempt.count("\n") + 1)
                 return review
             observation = self._use_tool(review, action, statement, exercise, hidden)
+            if review.tool_calls:
+                self._report(step="tool", **review.tool_calls[-1])
             messages += [{"role": "assistant", "content": reply}, {"role": "user", "content": observation}]
         review.failure = "no answer within the step limit"
         return review

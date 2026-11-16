@@ -83,13 +83,24 @@ def _escape_backslashes(raw: str) -> str:
     return re.sub(r'\\([\\"/])|\\', lambda m: m[0] if m[1] else "\\\\", raw)
 
 
-def _load(raw: str) -> dict:
+def load_latex_json(raw: str) -> dict:
+    """JSON written by a model that may not have escaped its LaTeX: parsed as is when that gives clean strings,
+    otherwise with the backslashes doubled."""
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
         return json.loads(_escape_backslashes(raw))
-    strings = [str(data.get("statement") or "")] + [str(x) for x in data.get("lines") or []]
-    if any(_CONTROL.search(x) for x in strings):
+
+    def strings(value):
+        if isinstance(value, str):
+            yield value
+        elif isinstance(value, dict):
+            for item in value.values():
+                yield from strings(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from strings(item)
+    if any(_CONTROL.search(x) for x in strings(data)):
         return json.loads(_escape_backslashes(raw))
     return data
 
@@ -99,7 +110,7 @@ def parse(content: str) -> dict:
     match = re.search(r"\{.*\}", content or "", re.S)
     if not match:
         raise ValueError("no JSON in the reply")
-    data = _load(match[0])
+    data = load_latex_json(match[0])
     lines = [_plain(str(line)) for line in data.get("lines") or [] if str(line).strip()]
     if not lines:
         raise ValueError("no lines")
