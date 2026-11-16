@@ -76,3 +76,12 @@ def test_photo_failures_become_plain_messages():
     assert service.read_photos(body(), "a")[1]["code"] == "groq"
     assert PhotoService("", client_factory=Fake()).read_photos(body(), "a")[0] == 503
     assert PhotoService("gsk_site", client_factory=Fake()).read_photos(b"{}", "a")[0] == 400
+
+
+def test_latex_with_single_backslashes_is_repaired():
+    raw = '{"statement": "Calculer \\int_0^1 f", "lines": ["$\\frac{1}{2}\\times 3$", "$a\\neq b$, $\\beta$"]}'
+    result = parse(raw)
+    assert result["statement"] == "Calculer \\int_0^1 f"
+    assert result["lines"] == ["$\\frac{1}{2}\\times 3$", "$a\\neq b$, $\\beta$"]
+    proper = json.dumps({"lines": ["$\\frac{1}{2}$ et \\\"x\\\""]})
+    assert parse(proper)["lines"] == ['$\\frac{1}{2}$ et \\"x\\"']

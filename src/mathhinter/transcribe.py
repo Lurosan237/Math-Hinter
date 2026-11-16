@@ -73,12 +73,33 @@ def _plain(text: str) -> str:
     return text.strip()
 
 
+_CONTROL = re.compile(r"[\b\f\n\r\t]")
+
+
+def _escape_backslashes(raw: str) -> str:
+    """Models often write LaTeX into JSON strings without doubling the backslashes: \\int is invalid JSON, and
+    \\frac or \\times even parse, as a form feed or a tab. Double every backslash that isn't already escaping a
+    backslash, a quote or a slash."""
+    return re.sub(r'\\([\\"/])|\\', lambda m: m[0] if m[1] else "\\\\", raw)
+
+
+def _load(raw: str) -> dict:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return json.loads(_escape_backslashes(raw))
+    strings = [str(data.get("statement") or "")] + [str(x) for x in data.get("lines") or []]
+    if any(_CONTROL.search(x) for x in strings):
+        return json.loads(_escape_backslashes(raw))
+    return data
+
+
 def parse(content: str) -> dict:
     """The transcription from the model's reply. Raises ValueError if there is none."""
     match = re.search(r"\{.*\}", content or "", re.S)
     if not match:
         raise ValueError("no JSON in the reply")
-    data = json.loads(match[0])
+    data = _load(match[0])
     lines = [_plain(str(line)) for line in data.get("lines") or [] if str(line).strip()]
     if not lines:
         raise ValueError("no lines")
