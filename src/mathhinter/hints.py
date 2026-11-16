@@ -1,8 +1,8 @@
 """Further hints after the first: each one more explicit, none giving the corrected line or the result.
 
 The first hint comes with the review. A student who is still stuck can ask for two more:
-- the second names precisely what is wrong in the line (which term, sign, rule) without fixing it;
-- the third states the rule or course result to apply, in general form, not worked out on their numbers.
+- the second points at the part of the line that is wrong (which term, sign, rule) without saying what it should be;
+- the third quotes the rule or course result to apply, in general form, not worked out on their numbers.
 """
 
 from __future__ import annotations
@@ -16,12 +16,20 @@ HINT_MODEL = "openai/gpt-oss-120b"
 MAX_LEVEL = 3
 
 GUIDE = {
-    2: "Name precisely what is wrong in that line: which term, sign, exponent, coefficient, condition or rule. "
-       "Do not write the corrected line or any value it should have. End with a short question that sends the "
-       "student back to that line.",
-    3: "State the rule, formula or course result the student must apply there, in its general form with letters, "
-       "as the course states it. Do not apply it to the student's expressions, do not write the corrected line, "
-       "the missing value or the final result.",
+    2: "Point at the exact part of the line that is wrong: the term, the sign, the exponent, the coefficient, the "
+       "theorem used. Say WHERE to look, never WHAT it should be. Any sentence of the form 'X should be Y', 'X is "
+       "missing', 'Y is required', 'it must be preceded by -' gives the answer away.\n"
+       "Good: «Dans la ligne 3, regardez la dérivée de la fonction intérieure : apparaît-elle dans votre calcul ?»\n"
+       "Bad: «Il manque le facteur $2x$ dans la dérivée.»\n"
+       "Good: «Dans la ligne 1, regardez l'ordre des deux inverses dans le produit.»\n"
+       "Bad: «$(AB)^{-1}$ vaut $B^{-1}A^{-1}$.»",
+    3: "Quote the rule, formula or course result that applies there, in its general form, with generic letters "
+       "(f, g, u, v, a, b, q, n) as the course states it. Do not substitute the student's function, numbers or "
+       "expressions into it, do not compute any coefficient or value, and do not name the value of any parameter. "
+       "The student does the substitution.\n"
+       "Good: «Le cours donne, pour $u$ dérivable et strictement positive : $(\\ln u)'=\\frac{u'}{u}$. Que vaut ici "
+       "$u$ ?»\n"
+       "Bad: «Ici la dérivée de $\\ln(x^2+1)$ vaut $\\frac{2x}{x^2+1}$.» Bad: «Le coefficient cherché vaut $3$.»",
 }
 
 PROMPT = """You help a student find their own mistake in a maths exercise. The first wrong line is known.
@@ -29,9 +37,9 @@ Write the next hint, in French, in one or two sentences, more explicit than the 
 
 {guide}
 
-Never give the answer: no corrected line, no result, no missing coefficient, no final value. If the only way to be
-more explicit would give the answer away, write a hint that stops just before it.
-Write maths in LaTeX between $...$. Reply only with JSON: {{"hint": "..."}}"""
+Never give the answer: no corrected line, no corrected term, no result, no missing coefficient or factor, no final
+value, and never say what something should be. If being more explicit would give the answer away, stop just before
+it. Write maths in LaTeX between $...$. Reply only with JSON: {{"hint": "..."}}"""
 
 
 def messages(statement: str, attempt: str, line: int, hints: list[str], explanation: str,

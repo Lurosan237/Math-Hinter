@@ -118,7 +118,7 @@ def test_further_hints_get_more_explicit_and_stop_at_the_third():
     status, out = service.hint(hint_body(), "a")
     assert status == 200 and out == {"hint": "Regardez l'exposant.", "level": 2, "last": False}
     system, task = fake.sent[0][0]["content"], fake.sent[0][1]["content"]
-    assert "Name precisely what is wrong" in system and "Never give the answer" in system
+    assert "Say WHERE to look, never WHAT" in system and "Never give the answer" in system
     assert "Exo7, Dérivée, Calcul" in task and "Pourquoi ?" in task
     status, out = service.hint(hint_body(hints=["Pourquoi ?", "Regardez l'exposant."]), "a")
     assert out["level"] == 3 and out["last"] and "general form" in fake.sent[1][0]["content"]
