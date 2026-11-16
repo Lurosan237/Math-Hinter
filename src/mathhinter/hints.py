@@ -49,7 +49,8 @@ def messages(statement: str, attempt: str, line: int, hints: list[str], explanat
     numbered = "\n".join(f"{i}: {text}" for i, text in enumerate(attempt.split("\n"), 1))
     course = "\n\n".join(f"[{p['label']}]\n{p['text']}" for p in passages)
     task = (f"Exercise:\n{statement}\n\nStudent's attempt (lines numbered from 1):\n{numbered}\n\n"
-            f"First wrong line: {line + 1}\nWhat is wrong (for you only, never quote it to the student): {explanation}\n\n"
+            f"First wrong line: {line + 1}\n"
+            f"What is wrong (for you only, never quote it to the student): {explanation}\n\n"
             + (f"Course passages:\n{course}\n\n" if course else "")
             + "Previous hints:\n" + "\n".join(f"- {h}" for h in hints))
     return [{"role": "system", "content": PROMPT.format(guide=GUIDE[level])}, {"role": "user", "content": task}]
