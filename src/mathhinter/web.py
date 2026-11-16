@@ -19,6 +19,7 @@ from pathlib import Path
 from .agent.course import CourseSearch
 from .agent.tutor import Tutor
 from .llm.client import Client, LLMError, QuotaExhausted
+from .transcribe import BadImage, check_images, transcribe
 
 MODEL = "openai/gpt-oss-120b"
 CONFIGS = ("llm_only", "rag", "agent")
@@ -27,6 +28,8 @@ MAX_ATTEMPT = 2500
 MAX_LINES = 40
 VISITOR_LIMIT = int(os.environ.get("MH_VISITOR_LIMIT", "5"))  # reviews per visitor per day on the site's key
 SITE_LIMIT = int(os.environ.get("MH_SITE_LIMIT", "40"))  # reviews per day on the site's key, per running instance
+PHOTO_VISITOR_LIMIT = int(os.environ.get("MH_PHOTO_VISITOR_LIMIT", "10"))  # photo readings, same idea
+PHOTO_SITE_LIMIT = int(os.environ.get("MH_PHOTO_SITE_LIMIT", "100"))
 
 
 class BadRequest(ValueError):
@@ -93,20 +96,20 @@ def read_request(body: bytes) -> dict:
     return {"statement": statement, "attempt": attempt, "config": config, "key": key}
 
 
-class Service:
-    @staticmethod
-    def _api_error(failure: str, own_key: str) -> tuple[int, dict]:
-        """Groq's status code is logged and returned so failures can be diagnosed. Its text, which can quote the
-        request, is not."""
-        found = re.search(r"HTTP (\d{3})", failure)
-        status = found[1] if found else "connexion"
-        print(f"groq error: {status} ({'visitor' if own_key else 'site'} key)", file=sys.stderr)
-        if status == "401":
-            message = "Votre clé Groq a été refusée." if own_key else "La clé du site est refusée par Groq."
-        else:
-            message = "Groq n'a pas répondu correctement. Réessayez dans un instant."
-        return 502, {"error": message, "code": "api", "groq_status": status}
+def api_error(failure: str, own_key: str) -> tuple[int, dict]:
+    """Groq's status code is logged and returned so failures can be diagnosed. Its text, which can quote the
+    request, is not."""
+    found = re.search(r"HTTP (\d{3})", failure)
+    status = found[1] if found else "connexion"
+    print(f"groq error: {status} ({'visitor' if own_key else 'site'} key)", file=sys.stderr)
+    if status == "401":
+        message = "Votre clé Groq a été refusée." if own_key else "La clé du site est refusée par Groq."
+    else:
+        message = "Groq n'a pas répondu correctement. Réessayez dans un instant."
+    return 502, {"error": message, "code": "api", "groq_status": status}
 
+
+class Service:
     def __init__(self, units: list[dict], site_key: str, cache_dir: Path | None = None, limiter: Limiter | None = None,
                  client_factory=None):
         self.units = {u["id"]: u for u in units}
@@ -148,9 +151,9 @@ class Service:
             return 429, {"error": f"Groq refuse pour l'instant : la limite de {whose} est atteinte. Réessayez plus "
                                   f"tard{then}", "code": "groq"}
         except LLMError as error:
-            return self._api_error(str(error), own_key)
+            return api_error(str(error), own_key)
         if (review.failure or "").startswith("api:"):
-            return self._api_error(review.failure, own_key)
+            return api_error(review.failure, own_key)
         record = review.record()
         record.pop("llm_calls", None)
         ids = list(dict.fromkeys(record["citations"] + record["shown"]))
@@ -161,3 +164,48 @@ class Service:
         if not own_key:
             body["remaining"] = self.limiter.remaining(address)
         return 200, body
+
+
+class PhotoService:
+    """Reads photographed pages. Kept apart from Service so the photo function doesn't load the course."""
+
+    def __init__(self, site_key: str, limiter: Limiter | None = None, client_factory=None):
+        self.site_key = site_key
+        self.photo_limiter = limiter or Limiter(PHOTO_VISITOR_LIMIT, PHOTO_SITE_LIMIT)
+        self.client_factory = client_factory or (lambda key: Client(key, cache_dir=None, max_retries=3, max_wait=20))
+
+    def read_photos(self, body: bytes, address: str) -> tuple[int, dict]:
+        """Transcribe photographed pages. The images go to Groq and are not kept."""
+        try:
+            data = json.loads(body.decode("utf-8"))
+            images = check_images(data.get("images") if isinstance(data, dict) else None)
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            return 400, {"error": "La requête n'est pas lisible.", "code": "input"}
+        except BadImage as error:
+            return 400, {"error": str(error), "code": "input"}
+        own_key = str(data.get("key") or "").strip()
+        if own_key and not (own_key.startswith("gsk_") and len(own_key) < 200 and own_key.isascii()):
+            return 400, {"error": "Cette clé ne ressemble pas à une clé Groq (elle commence par gsk_).",
+                         "code": "input"}
+        if not own_key:
+            if not self.site_key:
+                return 503, {"error": "Le site n'a pas de clé configurée. Ajoutez votre propre clé Groq.",
+                             "code": "nokey"}
+            refused = self.photo_limiter.take(address)
+            if refused:
+                return 429, {"error": "Le quota de photos du jour est atteint. Tapez votre rédaction, ou ajoutez votre "
+                                      "propre clé Groq gratuite.",
+                             "code": "visitor" if refused == "visitor" else "site"}
+        started = time.time()
+        try:
+            result = transcribe(self.client_factory(own_key or self.site_key), images)
+        except QuotaExhausted:
+            return 429, {"error": "Groq refuse pour l'instant de lire les photos. Réessayez plus tard ou tapez votre "
+                                  "rédaction.", "code": "groq"}
+        except LLMError as error:
+            return api_error(str(error), own_key)
+        except (ValueError, json.JSONDecodeError, KeyError):
+            return 422, {"error": "Le modèle n'a pas réussi à lire la photo. Reprenez-la de face, bien éclairée et "
+                                  "nette, ou tapez votre rédaction.", "code": "unreadable"}
+        result["seconds"] = round(time.time() - started, 1)
+        return 200, result

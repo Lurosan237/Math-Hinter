@@ -33,11 +33,17 @@ const lines = () => $("attempt").value.split("\n").map((l) => l.trimEnd()).filte
 
 /* The preview is the student's copy as it will be read: one numbered line per step. */
 let flagged = null;
+let unclear = new Set();
 function preview() {
   $("preview-statement").textContent = $("statement").value.trim();
   const list = $("preview");
   list.replaceChildren(...lines().map((line, i) => {
     const li = el("li", { "data-n": i + 1, text: line });
+    if (unclear.has(i)) {
+      li.classList.add("unclear");
+      li.title = "Lecture incertaine : vérifiez cette ligne";
+      if (!(flagged && flagged.line === i)) li.append(el("span", { class: "doubt", "aria-label": "lecture incertaine", text: "?" }));
+    }
     if (flagged && flagged.line === i) {
       li.classList.add("flagged");
       li.append(el("span", { class: "mark", "aria-label": "première ligne fausse", text: "✗" }));
@@ -75,6 +81,8 @@ function showResult(out, config) {
   } else {
     flagged = { line: review.first_wrong_line };
     parts.push(el("p", { class: "verdict bad", text: `Première erreur : ligne ${review.first_wrong_line + 1}` }));
+    const quoted = out.lines[review.first_wrong_line];
+    if (quoted) parts.push(el("blockquote", { class: "quoted", text: quoted }));
     if (review.hint) parts.push(el("p", { class: "hint", text: review.hint }));
   }
   if (review.explanation) {
@@ -106,37 +114,119 @@ function showResult(out, config) {
   }
 }
 
+/* Photos: resized in the browser so a phone picture fits the server's limit, then read by the vision model. */
+const photos = [];
+let photosRead = true;
+const MAX_SIDE = 1600;
+
+async function shrink(file) {
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
+  const canvas = el("canvas");
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL("image/jpeg", 0.85);
+}
+
+async function addPhotos(files) {
+  for (const file of files) {
+    if (photos.length >= 3) { $("status").textContent = "3 photos au plus."; break; }
+    try { photos.push(await shrink(file)); } catch { $("status").textContent = "Cette image n'a pas pu être ouverte."; }
+  }
+  photosRead = false;
+  showPhotos();
+}
+
+function showPhotos() {
+  $("thumbs").replaceChildren(...photos.map((url, i) => {
+    const remove = el("button", { type: "button", class: "remove", "aria-label": `Retirer la photo ${i + 1}`, text: "×" });
+    remove.addEventListener("click", () => { photos.splice(i, 1); photosRead = false; showPhotos(); });
+    const img = el("img", { src: url, alt: `Photo ${i + 1} de la copie` });
+    img.addEventListener("click", () => window.open(url, "_blank"));
+    return el("li", {}, img, remove);
+  }));
+  $("photo-tip").hidden = photos.length > 0;
+  updateButton();
+}
+
+function updateButton() {
+  const reading = photos.length && !photosRead;
+  $("go").textContent = reading ? "Lire la photo et relire" : "Faire relire";
+  $("reset").hidden = !(photos.length || $("statement").value || $("attempt").value);
+}
+
+async function post(path, payload) {
+  const response = await fetch(path, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload),
+  });
+  const out = await response.json().catch(() => ({ error: `Le serveur a répondu ${response.status}.` }));
+  if (!response.ok) {
+    if (["visitor", "site", "nokey"].includes(out.code)) $("own-key").open = true;
+    throw new Error(out.error || "La demande a échoué.");
+  }
+  return out;
+}
+
+async function readPhotos(key) {
+  $("status").textContent = "Lecture de la photo… (quelques secondes)";
+  const out = await post("/api/transcribe", { images: photos, key });
+  // The photo's statement replaces an empty one or an earlier reading, never one the student typed.
+  if (out.statement && (!$("statement").value.trim() || $("statement").dataset.fromPhoto)) {
+    $("statement").value = out.statement;
+    $("statement").dataset.fromPhoto = "1";
+  }
+  $("attempt").value = out.lines.join("\n");
+  unclear = new Set(out.unclear || []);
+  photosRead = true;
+  $("read-note").hidden = false;
+  saveDraft();
+  updateButton();
+}
+
 async function submit(event) {
   event.preventDefault();
   clearResult();
-  preview();
-  const statement = $("statement").value.trim();
-  const attempt = lines().join("\n");
-  if (!statement) { $("status").textContent = "Écrivez d'abord l'énoncé."; $("statement").focus(); return; }
-  if (!attempt) { $("status").textContent = "Écrivez votre rédaction, une étape par ligne."; $("attempt").focus(); return; }
   const config = document.querySelector("input[name=config]:checked").value;
   const key = $("key").value.trim();
   $("go").disabled = true;
-  $("status").textContent = config === "agent" ? "L'agent relit et cherche dans le cours… (jusqu'à une minute)"
-    : "Relecture en cours… (10 à 30 secondes)";
   try {
-    const response = await fetch("/api/review", {
-      method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ statement, attempt, config, key }),
-    });
-    const out = await response.json().catch(() => ({ error: `Le serveur a répondu ${response.status}.` }));
-    if (!response.ok) {
-      $("status").textContent = out.error || "La relecture a échoué.";
-      if (["visitor", "site", "nokey"].includes(out.code)) $("own-key").open = true;
-      return;
-    }
+    if (photos.length && !photosRead) await readPhotos(key);
+    preview();
+    const statement = $("statement").value.trim();
+    const attempt = lines().join("\n");
+    if (!statement) { $("status").textContent = "Écrivez l'énoncé, ou photographiez-le avec la copie."; $("statement").focus(); return; }
+    if (!attempt) { $("status").textContent = "Écrivez votre rédaction, ou photographiez-la."; $("attempt").focus(); return; }
+    $("status").textContent = config === "agent" ? "L'agent relit et cherche dans le cours… (jusqu'à une minute)"
+      : "Relecture en cours… (quelques secondes)";
+    const out = await post("/api/review", { statement, attempt, config, key });
     $("status").textContent = "";
     showResult(out, config);
-  } catch {
-    $("status").textContent = "Le serveur est injoignable. Vérifiez votre connexion et réessayez.";
+  } catch (error) {
+    $("status").textContent = error instanceof TypeError
+      ? "Le serveur est injoignable. Vérifiez votre connexion et réessayez." : error.message;
   } finally {
     $("go").disabled = false;
   }
+}
+
+function saveDraft() {
+  store.set("draft", JSON.stringify({ statement: $("statement").value, attempt: $("attempt").value }));
+}
+
+function resetAll() {
+  photos.length = 0;
+  photosRead = true;
+  unclear = new Set();
+  $("statement").value = "";
+  $("attempt").value = "";
+  delete $("statement").dataset.fromPhoto;
+  $("read-note").hidden = true;
+  store.set("draft", null);
+  clearResult();
+  showPhotos();
+  preview();
+  window.scrollTo({ top: 0 });
 }
 
 async function setUpExamples() {
@@ -148,6 +238,11 @@ async function setUpExamples() {
       button.addEventListener("click", () => {
         $("statement").value = exercise.statement;
         $("attempt").value = exercise.attempts.find((a) => a.kind === "wrong").text;
+        photos.length = 0;
+        photosRead = true;
+        unclear = new Set();
+        $("read-note").hidden = true;
+        showPhotos();
         clearResult();
         preview();
         $("go").focus();
@@ -237,7 +332,25 @@ window.addEventListener("DOMContentLoaded", () => {
   $("remember").addEventListener("change", () => store.set("groq-key", $("remember").checked ? $("key").value.trim() : null));
   $("key").addEventListener("input", () => { if ($("remember").checked) store.set("groq-key", $("key").value.trim()); });
   $("form").addEventListener("submit", submit);
-  for (const id of ["statement", "attempt"]) $(id).addEventListener("input", () => { flagged = null; previewSoon(); });
+  for (const id of ["statement", "attempt"]) {
+    $(id).addEventListener("input", () => {
+      flagged = null;
+      unclear = new Set();
+      if (id === "statement") delete $("statement").dataset.fromPhoto;
+      previewSoon();
+      saveDraft();
+      updateButton();
+    });
+  }
+  for (const id of ["camera", "gallery"]) {
+    $(id).addEventListener("change", (event) => { addPhotos([...event.target.files]); event.target.value = ""; });
+  }
+  $("reset").addEventListener("click", resetAll);
+  try {
+    const draft = JSON.parse(store.get("draft") || "null");
+    if (draft) { $("statement").value = draft.statement || ""; $("attempt").value = draft.attempt || ""; }
+  } catch { /* no draft */ }
+  updateButton();
   setUpExamples();
   setUpEvaluation();
   setUpChecker();

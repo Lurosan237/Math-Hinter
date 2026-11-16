@@ -16,22 +16,39 @@
 <body>
 <header class="top">
   <h1>Math-Hinter</h1>
-  <p class="lede">Écrivez votre rédaction ligne par ligne. Math-Hinter cherche la première ligne fausse et vous donne un indice, sans la réponse, en s'appuyant sur le cours.</p>
+  <p class="lede">Photographiez votre copie ou tapez-la. Math-Hinter cherche la première ligne fausse et vous donne un indice, sans la réponse, en s'appuyant sur le cours.</p>
 </header>
 
 <main>
 <section class="tool" aria-label="Faire relire une rédaction">
   <div class="desk">
     <form class="sheet" id="form" novalidate>
+      <div class="photos" id="photos">
+        <div class="photo-buttons">
+          <label class="photo-button primary">
+            <input type="file" id="camera" accept="image/*" capture="environment" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Photographier ma copie
+          </label>
+          <label class="photo-button">
+            <input type="file" id="gallery" accept="image/*" multiple hidden>
+            Choisir une image
+          </label>
+        </div>
+        <ul class="thumbs" id="thumbs" aria-label="Photos ajoutées"></ul>
+        <p class="photo-tip" id="photo-tip">Une photo nette, de face, avec l'énoncé et votre rédaction. Jusqu'à 3 pages.</p>
+      </div>
+      <p class="or" id="or"><span>ou tapez-la</span></p>
+      <p class="read-note" id="read-note" hidden>Voici ce qui a été lu sur la photo. Les lignes marquées ? sont incertaines. Corrigez ce qui est mal lu, puis relancez la relecture.</p>
       <label class="field">
         <span>Énoncé</span>
-        <textarea id="statement" rows="2" maxlength="1500" placeholder="Calculer la dérivée de $f(x)=x^2e^x$ sur $\mathbb{R}$." required></textarea>
+        <textarea id="statement" rows="2" maxlength="1500" placeholder="Calculer la dérivée de f(x) = x² eˣ" required></textarea>
       </label>
       <label class="field">
         <span>Votre rédaction, une étape par ligne</span>
-        <textarea id="attempt" rows="7" maxlength="2500" spellcheck="false" placeholder="On pose $u(x)=x^2$ et $v(x)=e^x$.&#10;On a $u'(x)=2x$.&#10;…" required></textarea>
+        <textarea id="attempt" rows="6" maxlength="2500" spellcheck="false" placeholder="On pose u(x) = x² et v(x) = e^x&#10;Donc u'(x) = 2x&#10;…" required></textarea>
       </label>
-      <p class="tip">Écrivez les maths entre <code>$…$</code>, comme en LaTeX : <code>$\frac{1}{2}$</code>, <code>$x^{n+1}$</code>, <code>$\sqrt{x}$</code>, <code>$\int_0^1 f$</code>.</p>
+      <p class="tip">Écrivez comme vous voulez : <code>x^2</code>, <code>racine(x)</code>, <code>1/(1+x)</code>. Le LaTeX entre <code>$…$</code> s'affiche plus joliment, mais il n'est pas obligatoire.</p>
       <div class="preview" aria-label="Aperçu de la rédaction">
         <h2 class="preview-statement" id="preview-statement"></h2>
         <ol class="attempt" id="preview"></ol>
@@ -46,6 +63,7 @@
         <label><input type="radio" name="config" value="llm_only"> <b>Sans le cours</b> <small>le modèle seul</small></label>
       </fieldset>
       <button type="submit" form="form" class="go" id="go">Faire relire</button>
+      <button type="button" class="reset" id="reset" hidden>Nouvelle copie</button>
       <p class="status" id="status" role="status" aria-live="polite"></p>
       <div class="result" id="result" aria-live="polite"></div>
       <details class="own-key" id="own-key">
@@ -84,7 +102,7 @@
 
 <footer>
   <p>Le cours cité vient d'<a href="https://exo7.emath.fr">Exo7</a> (livres « Analyse 1 » et « Algèbre 1 », chapitre « Intégrales impropres »), par Arnaud Bodin, Léa Blanc-Centi, Niels Borne, Benjamin Boutin, Laura Desideri et Pascal Romon, sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/fr/">CC BY-NC-SA 3.0 FR</a>, converti depuis les sources LaTeX. Les exemples sont écrits pour ce site, sous la même licence.</p>
-  <p>Votre énoncé et votre rédaction sont envoyés à Groq pour la relecture, puis oubliés : le site ne garde rien. <a href="https://github.com/Lurosan237/Math-Hinter">Code source</a> sous licence MIT.</p>
+  <p>Vos photos, votre énoncé et votre rédaction sont envoyés à Groq pour la lecture et la relecture, puis oubliés : le site ne garde rien. <a href="https://github.com/Lurosan237/Math-Hinter">Code source</a> sous licence MIT.</p>
 </footer>
 <script src="app.js" defer></script>
 </body>
