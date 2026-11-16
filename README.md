@@ -143,6 +143,13 @@ checker as in the evaluation, but it searches Exo7's openly licensed courses ins
   browser.
 - The free Groq tier is shared by every visitor, so each visitor gets a few reviews a day on the site's key. After
   that, they can paste their own free key, which is used for their request and never stored.
+- Students can photograph their copy instead of typing it. A vision model, `qwen/qwen3.8-27b` on Groq, transcribes
+  the pages with orders to keep every error; the transcription fills the form, doubtful lines are marked, and the
+  student can fix it and review again. On the 16 example attempts rendered as notebook pages
+  ([report](reports/transcription.md)), 58 of 60 lines were read identically and the planted error survived in all
+  8 wrong attempts (checked by hand: one line had a misread bracket). The review was right 14 times from the photo
+  and 15 from the typed text. Those pages are typeset, so this shows that errors survive transcription, not that
+  real handwriting is read well.
 - Nothing is logged or cached: the attempt goes to Groq and the answer comes back.
 - The equality checker also runs in the browser through Pyodide, with the code in `src/mathhinter/check`.
 

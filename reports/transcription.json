@@ -1,0 +1,261 @@
+{
+ "summary": {
+  "photos": 16,
+  "vision_model": "qwen/qwen3.8-27b",
+  "review_model": "openai/gpt-oss-120b",
+  "review_config": "rag",
+  "same_line_count": 15,
+  "lines_identical": 58,
+  "lines": 60,
+  "error_line_identical": 7,
+  "wrong_attempts": 8,
+  "typed_reviews_right": 15,
+  "photo_reviews_right": 14
+ },
+ "rows": [
+  {
+   "photo": "demo-01-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 2
+   }
+  },
+  {
+   "photo": "demo-01-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-02-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 0
+   }
+  },
+  {
+   "photo": "demo-02-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-03-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 1
+   }
+  },
+  {
+   "photo": "demo-03-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-04-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 3,
+   "read_lines": 3,
+   "lines_identical": 3,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 1
+   }
+  },
+  {
+   "photo": "demo-04-control.jpg",
+   "kind": "control",
+   "typed_lines": 3,
+   "read_lines": 3,
+   "lines_identical": 3,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-05-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": false,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 1
+   }
+  },
+  {
+   "photo": "demo-05-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": false,
+   "photo_review_right": false,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 1
+   }
+  },
+  {
+   "photo": "demo-06-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 2
+   }
+  },
+  {
+   "photo": "demo-06-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-07-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "error_line_identical": true,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 2
+   }
+  },
+  {
+   "photo": "demo-07-control.jpg",
+   "kind": "control",
+   "typed_lines": 4,
+   "read_lines": 4,
+   "lines_identical": 4,
+   "differences": [],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  },
+  {
+   "photo": "demo-08-wrong.jpg",
+   "kind": "wrong",
+   "typed_lines": 3,
+   "read_lines": 3,
+   "lines_identical": 2,
+   "differences": [
+    {
+     "line": 2,
+     "typed": "Par le théorème de Rolle, il existe $c\\in]0,1[$ tel que $f(c)=0$.",
+     "read": "Par le théorème de Rolle, il existe $c \\in [0, 1]$ tel que $f(c) = 0$."
+    }
+   ],
+   "error_line_identical": false,
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "wrong",
+    "line": 2
+   }
+  },
+  {
+   "photo": "demo-08-control.jpg",
+   "kind": "control",
+   "typed_lines": 3,
+   "read_lines": 4,
+   "lines_identical": 2,
+   "differences": [
+    {
+     "line": 2,
+     "typed": "Comme $f(0)<0<f(1)$, le théorème des valeurs intermédiaires donne $c\\in[0,1]$ tel que $f(c)=0$.",
+     "read": "Comme $f(0) < 0 < f(1)$, le théorème des valeurs intermédiaires donne $c \\in [0, 1]$ tel que"
+    }
+   ],
+   "typed_review_right": true,
+   "photo_review_right": true,
+   "photo_review": {
+    "verdict": "correct",
+    "line": null
+   }
+  }
+ ]
+}

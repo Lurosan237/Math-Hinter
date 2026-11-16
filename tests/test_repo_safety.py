@@ -99,3 +99,14 @@ def test_readme_numbers_come_from_the_report():
         assert f"{row['structure_similarity']:.3f}" in readme
         assert f"{100 * row['exact_share']:.0f}%" in readme
     assert f"{test['scored']} of {test['formulas_sampled']}" in readme
+
+
+def test_readme_photo_numbers_come_from_the_reports():
+    report = json.loads((ROOT / "reports" / "transcription.json").read_text())["summary"]
+    judged = json.loads((ROOT / "data" / "hand_checks" / "transcription.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"{report['lines_identical']} of {report['lines']} lines were read identically" in readme
+    assert f"survived in all\n  {judged['wrong_attempts']} wrong attempts" in readme
+    assert judged["error_kept"] == judged["wrong_attempts"] == report["wrong_attempts"]
+    assert f"right {report['photo_reviews_right']} times from the photo" in readme
+    assert f"and {report['typed_reviews_right']} from the typed text" in readme

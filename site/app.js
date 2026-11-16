@@ -275,6 +275,13 @@ async function setUpEvaluation() {
       + "des manuels de Licence ; ce site cherche dans le cours Exo7, ce qui n'a pas été évalué." }),
     el("p", {}, el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md",
       text: "Lire le rapport complet" })));
+  try {
+    const t = (await fetch("data/transcription.json").then((r) => r.json())).summary;
+    $("evaluation").append(el("p", { text: `Les photos : sur ${t.photos} copies d'exemple photographiées, `
+      + `${t.lines_identical} lignes sur ${t.lines} ont été lues à l'identique et l'erreur de la copie n'a jamais été `
+      + "corrigée en route. Ces pages étaient nettes et imprimées : une écriture réelle se lit moins bien, d'où "
+      + "l'intérêt de vérifier la transcription avant de se fier à la relecture." }));
+  } catch { /* the photo report is optional */ }
 }
 
 /* In-browser checker: the repository's own parser and checker, run by Pyodide. */

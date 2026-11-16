@@ -108,8 +108,8 @@ def write_markdown(s: dict, rows: list[dict]) -> None:
         "Lines count as identical when they match up to spacing and notation (LaTeX or Unicode, `\\sin` or `sin`).", "",
         "| | Result |", "|---|---|",
         f"| Same number of lines as typed | {s['same_line_count']} / {s['photos']} |",
-        f"| Lines read identically (up to spacing) | {s['lines_identical']} / {s['lines']} |",
-        f"| Planted error read identically | {s['error_line_identical']} / {s['wrong_attempts']} |",
+        f"| Lines read identically | {s['lines_identical']} / {s['lines']} |",
+        f"| Planted error line read identically | {s['error_line_identical']} / {s['wrong_attempts']} |",
         f"| Review right, typed attempt | {s['typed_reviews_right']} / {s['photos']} |",
         f"| Review right, photo attempt | {s['photo_reviews_right']} / {s['photos']} |", "",
         "A review is right when it names the planted line, or finds nothing in a correct attempt. "

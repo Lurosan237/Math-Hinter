@@ -1,0 +1,9 @@
+{
+ "question": "In the wrong attempts, does the transcribed line still contain the planted error?",
+ "checked_by": "hand, reading reports/transcription.json",
+ "error_kept": 8,
+ "wrong_attempts": 8,
+ "notes": {
+  "demo-08-wrong.jpg": "The interval ]0,1[ was read as [0,1]; the misused Rolle theorem, which is the planted error, is still there."
+ }
+}

@@ -40,5 +40,6 @@ def test_site_builds_with_the_checker_and_the_evaluation(tmp_path, monkeypatch):
     monkeypatch.setattr(build, "OUT", tmp_path / "_site")
     build.main()
     site = tmp_path / "_site"
-    for name in ["index.html", "app.js", "data/examples.json", "data/agent.json", "py/mathhinter/check/equality.py"]:
+    for name in ["index.html", "app.js", "data/examples.json", "data/agent.json", "data/transcription.json",
+                 "py/mathhinter/check/equality.py"]:
         assert (site / name).exists(), name
