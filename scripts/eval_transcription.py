@@ -30,6 +30,10 @@ from mathhinter.web import MODEL  # noqa: E402
 
 def normal(text: str) -> str:
     """A line without the spacing and notation choices that don't change its meaning."""
+    for old, new in [("∈", "\\in"), ("≤", "\\le"), ("≥", "\\ge"), ("≠", "\\neq"), ("−", "-"), ("×", "\\times"),
+                     ("→", "\\to"), ("∞", "\\infty"), ("π", "\\pi"), ("·", "\\cdot")]:
+        text = text.replace(old, new)
+    text = re.sub(r"\\(sin|cos|tan|ln|exp|lim)\b", r"\1", text)  # \sin and sin read the same
     text = re.sub(r"\\[,;:! ]|\\left|\\right|\\displaystyle|\$|\s|\.$", "", text)
     for old, new in [("\\dfrac", "\\frac"), ("\\tfrac", "\\frac"), ("\\leqslant", "\\le"), ("\\leq", "\\le")]:
         text = text.replace(old, new)
@@ -101,6 +105,7 @@ def write_markdown(s: dict, rows: list[dict]) -> None:
         "The pages are typeset maths in a handwriting font, much easier than real handwriting. This checks that "
         "transcription keeps the student's errors and line breaks; it does not measure reading real handwriting, "
         "which needs real photos.", "",
+        "Lines count as identical when they match up to spacing and notation (LaTeX or Unicode, `\\sin` or `sin`).", "",
         "| | Result |", "|---|---|",
         f"| Same number of lines as typed | {s['same_line_count']} / {s['photos']} |",
         f"| Lines read identically (up to spacing) | {s['lines_identical']} / {s['lines']} |",
