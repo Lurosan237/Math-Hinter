@@ -172,7 +172,8 @@ class PhotoService:
     def __init__(self, site_key: str, limiter: Limiter | None = None, client_factory=None):
         self.site_key = site_key
         self.photo_limiter = limiter or Limiter(PHOTO_VISITOR_LIMIT, PHOTO_SITE_LIMIT)
-        self.client_factory = client_factory or (lambda key: Client(key, cache_dir=None, max_retries=3, max_wait=20))
+        # A student waits for the photo, so a busy Groq means a quick "try again" rather than a minute of retries.
+        self.client_factory = client_factory or (lambda key: Client(key, cache_dir=None, max_retries=1, max_wait=8))
 
     def read_photos(self, body: bytes, address: str) -> tuple[int, dict]:
         """Transcribe photographed pages. The images go to Groq and are not kept."""

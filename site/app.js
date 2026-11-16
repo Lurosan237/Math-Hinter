@@ -160,7 +160,10 @@ async function post(path, payload) {
   const response = await fetch(path, {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload),
   });
-  const out = await response.json().catch(() => ({ error: `Le serveur a répondu ${response.status}.` }));
+  const out = await response.json().catch(() => ({
+    error: response.status === 504 ? "Le service a mis trop de temps à répondre. Réessayez dans une minute."
+      : `Le serveur a répondu ${response.status}.`,
+  }));
   if (!response.ok) {
     if (["visitor", "site", "nokey"].includes(out.code)) $("own-key").open = true;
     throw new Error(out.error || "La demande a échoué.");
