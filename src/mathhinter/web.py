@@ -17,13 +17,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .agent.course import CourseSearch
-from .agent.tutor import Tutor
 from .hints import MAX_LEVEL, next_hint
 from .llm.client import Client, LLMError, QuotaExhausted
+from .pipeline.orchestrate import PipelineTutor
+from .seal import BadSeal, seal, unseal
+from .study import MAX_TURNS, check_answer, explain, similar_exercise
 from .transcribe import BadImage, check_images, transcribe
 
 MODEL = "openai/gpt-oss-120b"
-CONFIGS = ("llm_only", "rag", "agent")
+CONFIGS = ("pipeline", "llm_only", "rag", "agent")
 MAX_STATEMENT = 1500
 MAX_ATTEMPT = 2500
 MAX_LINES = 40
@@ -31,6 +33,8 @@ VISITOR_LIMIT = int(os.environ.get("MH_VISITOR_LIMIT", "5"))  # reviews per visi
 SITE_LIMIT = int(os.environ.get("MH_SITE_LIMIT", "40"))  # reviews per day on the site's key, per running instance
 HINT_VISITOR_LIMIT = int(os.environ.get("MH_HINT_VISITOR_LIMIT", "12"))  # further hints, same idea
 HINT_SITE_LIMIT = int(os.environ.get("MH_HINT_SITE_LIMIT", "120"))
+STUDY_VISITOR_LIMIT = int(os.environ.get("MH_STUDY_VISITOR_LIMIT", "40"))  # similar exercises and explanations
+STUDY_SITE_LIMIT = int(os.environ.get("MH_STUDY_SITE_LIMIT", "400"))
 PHOTO_VISITOR_LIMIT = int(os.environ.get("MH_PHOTO_VISITOR_LIMIT", "10"))  # photo readings, same idea
 PHOTO_SITE_LIMIT = int(os.environ.get("MH_PHOTO_SITE_LIMIT", "100"))
 
@@ -82,7 +86,7 @@ def read_request(body: bytes) -> dict:
         raise BadRequest("La requête n'est pas lisible.")
     statement = str(data.get("statement") or "").strip()
     attempt = "\n".join(line.rstrip() for line in str(data.get("attempt") or "").strip().splitlines() if line.strip())
-    config = data.get("config") or "rag"
+    config = data.get("config") or "pipeline"
     key = str(data.get("key") or "").strip()
     if not statement:
         raise BadRequest("Écrivez l'énoncé de l'exercice.")
@@ -121,6 +125,8 @@ class Service:
         self.cache_dir = cache_dir
         self.limiter = limiter or Limiter(VISITOR_LIMIT, SITE_LIMIT)
         self.hint_limiter = Limiter(HINT_VISITOR_LIMIT, HINT_SITE_LIMIT)
+        self.study_limiter = Limiter(STUDY_VISITOR_LIMIT, STUDY_SITE_LIMIT)
+        self.secret = os.environ.get("MH_SECRET") or site_key or "math-hinter-local"
         self.client_factory = client_factory or (
             lambda key: Client(key, cache_dir=self.cache_dir, max_retries=3, max_wait=20))
 
@@ -155,11 +161,14 @@ class Service:
             if refused == "site":
                 return 429, {"error": "Le quota du jour du site est épuisé. Ajoutez votre propre clé Groq gratuite "
                                       "pour continuer, ou revenez demain.", "code": "site"}
-        tutor = Tutor(self.client_factory(own_key or self.site_key), MODEL, self.course, self._progress(on_step))
+        tutor = PipelineTutor(self.client_factory(own_key or self.site_key), MODEL, self.course,
+                              self._progress(on_step))
         statement, attempt = request["statement"], request["attempt"]
         started = time.time()
         try:
-            if request["config"] == "llm_only":
+            if request["config"] == "pipeline":
+                review = tutor.pipeline(statement, attempt)
+            elif request["config"] == "llm_only":
                 review = tutor.llm_only(statement, attempt)
             elif request["config"] == "rag":
                 review = tutor.rag(statement, attempt, "web", solution="")
@@ -218,6 +227,81 @@ class Service:
         except (ValueError, KeyError):
             return 422, {"error": "Le modèle n'a pas formulé d'indice. Réessayez.", "code": "unreadable"}
         return 200, {"hint": hint, "level": len(hints) + 1, "last": len(hints) + 1 >= MAX_LEVEL}
+
+
+    def _study_request(self, body: bytes, address: str, fields: tuple[str, ...]) -> tuple[dict | None, tuple | None]:
+        """The request's fields and the client to use, or the error to send."""
+        try:
+            data = json.loads(body.decode("utf-8"))
+            if not isinstance(data, dict):
+                raise ValueError
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError):
+            return None, (400, {"error": "La requête n'est pas lisible.", "code": "input"})
+        missing = [f for f in fields if not str(data.get(f) or "").strip()]
+        if missing:
+            return None, (400, {"error": "Il manque des éléments à la demande.", "code": "input"})
+        own_key = str(data.get("key") or "").strip()
+        if own_key and not (own_key.startswith("gsk_") and len(own_key) < 200 and own_key.isascii()):
+            return None, (400, {"error": "Cette clé ne ressemble pas à une clé Groq.", "code": "input"})
+        if not own_key:
+            if not self.site_key:
+                return None, (503, {"error": "Le site n'a pas de clé configurée.", "code": "nokey"})
+            if self.study_limiter.take(address):
+                return None, (429, {"error": "La limite du jour est atteinte. Ajoutez votre propre clé Groq gratuite "
+                                             "pour continuer.", "code": "visitor"})
+        data["client"] = self.client_factory(own_key or self.site_key)
+        data["own_key"] = own_key
+        return data, None
+
+    def similar(self, body: bytes, address: str) -> tuple[int, dict]:
+        """A new exercise on the skill the student got wrong. Its answer, checked by the computer, travels sealed."""
+        data, error = self._study_request(body, address, ("statement", "line", "explanation"))
+        if error:
+            return error
+        try:
+            exercise = similar_exercise(data["client"], str(data["statement"])[:1500], str(data["line"])[:600],
+                                        str(data["explanation"])[:1500])
+        except QuotaExhausted:
+            return 429, {"error": "Groq refuse pour l'instant. Réessayez dans une minute.", "code": "groq"}
+        except LLMError as failure:
+            return api_error(str(failure), data["own_key"])
+        except ValueError:
+            return 422, {"error": "Pas d'exercice vérifiable cette fois. Réessayez.", "code": "unreadable"}
+        token = seal(exercise["check"], self.secret)
+        return 200, {"statement": exercise["statement"], "skill": exercise["skill"],
+                     "answer_label": exercise["answer_label"], "token": token}
+
+    def answer(self, body: bytes) -> tuple[int, dict]:
+        """Check the student's answer to a similar exercise. No model call, so no limit."""
+        try:
+            data = json.loads(body.decode("utf-8"))
+            claim = unseal(data["token"], self.secret)
+            answer = str(data["answer"]).strip().strip("$")[:300]
+        except (UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, BadSeal):
+            return 400, {"error": "La requête n'est pas lisible.", "code": "input"}
+        if not answer:
+            return 400, {"error": "Écrivez votre réponse.", "code": "input"}
+        return 200, {"status": check_answer(claim, answer)}
+
+    def explain(self, body: bytes, address: str) -> tuple[int, dict]:
+        """One turn of a short guided conversation about the flagged line."""
+        data, error = self._study_request(body, address, ("statement", "attempt", "explanation"))
+        if error:
+            return error
+        history = [h for h in data.get("history") or [] if isinstance(h, dict)]
+        if len(history) > 2 * MAX_TURNS:
+            return 400, {"error": "La conversation est terminée : relancez une relecture.", "code": "input"}
+        try:
+            line = int(data.get("line"))
+            reply = explain(data["client"], str(data["statement"])[:1500], str(data["attempt"])[:2500], line,
+                            str(data["explanation"])[:1500], history)
+        except (TypeError, ValueError):
+            return 422, {"error": "Pas de réponse cette fois. Réessayez.", "code": "unreadable"}
+        except QuotaExhausted:
+            return 429, {"error": "Groq refuse pour l'instant. Réessayez dans une minute.", "code": "groq"}
+        except LLMError as failure:
+            return api_error(str(failure), data["own_key"])
+        return 200, {"reply": reply}
 
 
 class PhotoService:

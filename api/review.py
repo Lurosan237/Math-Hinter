@@ -2,6 +2,8 @@
 
 POST /api/review           one review, as JSON; with "stream": true, its steps as they happen, one JSON per line
 POST /api/review?hint=1    the next, more explicit hint for a flagged line
+POST /api/review?similar=1 a similar exercise, its checked answer sealed; ?answer=1 checks the student's answer
+POST /api/review?explain=1 one turn of "Explique-moi" about the flagged line
 """
 
 import json
@@ -31,6 +33,12 @@ class handler(BaseHTTPRequestHandler):  # noqa: N801 (the name Vercel looks for)
         address = (self.headers.get("x-forwarded-for") or self.client_address[0]).split(",")[0].strip()
         if "hint=1" in self.path:
             return self._send(*SERVICE.hint(body, address))
+        if "similar=1" in self.path:
+            return self._send(*SERVICE.similar(body, address))
+        if "answer=1" in self.path:
+            return self._send(*SERVICE.answer(body))
+        if "explain=1" in self.path:
+            return self._send(*SERVICE.explain(body, address))
         try:
             request = read_request(body)
             stream = bool(json.loads(body).get("stream"))

@@ -37,7 +37,7 @@ def body(**fields):
 
 def test_requests_are_checked_and_tidied():
     request = read_request(body(attempt="  ligne 1  \n\n ligne 2 "))
-    assert request["attempt"] == "ligne 1\n ligne 2" and request["config"] == "rag" and request["key"] == ""
+    assert request["attempt"] == "ligne 1\n ligne 2" and request["config"] == "pipeline" and request["key"] == ""
     for bad in [b"not json", body(statement=""), body(attempt=" "), body(config="rag_leak"),
                 body(attempt="x\n" * 50), body(key="sk-wrong")]:
         with pytest.raises(BadRequest):
@@ -58,7 +58,7 @@ def test_limiter_counts_visitors_and_the_site_and_resets_each_day():
 def test_a_review_returns_the_cited_passages_and_counts_against_the_site():
     fake = Fake(ANSWER)
     service = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=fake)
-    status, out = service.review(read_request(body()), "1.2.3.4")
+    status, out = service.review(read_request(body(config="rag")), "1.2.3.4")
     assert status == 200 and out["review"]["verdict"] == "wrong" and out["passages"]["t"]["label"].startswith("Exo7")
     assert out["remaining"] == 4 and fake.keys == ["gsk_site"]
     assert "gsk_site" not in json.dumps(out)
@@ -153,3 +153,11 @@ def test_hints_count_lines_from_one_like_the_page():
     from mathhinter.hints import messages
     task = messages("E", "a\nb\nc", 1, ["h"], "x", [])[1]["content"]
     assert "1: a\n2: b\n3: c" in task and "First wrong line: 2" in task
+
+
+def test_the_site_reviews_with_the_pipeline_by_default():
+    claims = {"claims": [{"type": "derivative", "line": 1, "function": "e^x", "variable": "x", "result": "xe^{x-1}"}]}
+    fake = Fake(claims, ANSWER, {"decision": "confirmed", "reason": "ok"})
+    service = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=fake)
+    status, out = service.review(read_request(body()), "a")
+    assert status == 200 and out["review"]["config"] == "pipeline" and out["review"]["marks"] == ["unchecked", "refuted"]
