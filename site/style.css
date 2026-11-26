@@ -180,3 +180,33 @@ footer p { max-width: 46rem; }
 .more-hint { border: 1px dashed var(--red); color: var(--red); background: transparent; border-radius: 3px; padding: .4rem .8rem; font: 500 .9rem var(--sans); }
 .more-hint:hover { border-style: solid; }
 .more-hint[disabled] { opacity: .6; cursor: progress; }
+
+/* Computation marks, study actions, notebook */
+.attempt li .tick { position: absolute; left: -4.4rem; top: 0; font: 700 1rem/var(--line) var(--sans); color: var(--green); }
+.study-block { margin: .6rem 0; }
+.study-buttons { display: flex; flex-wrap: wrap; gap: .4rem; }
+.study { border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); border-radius: 3px; padding: .4rem .75rem; font: 500 .88rem var(--sans); }
+.study:hover { border-color: var(--ink); }
+.study-area:empty { display: none; }
+.study-area { margin-top: .6rem; padding: .7rem .8rem; background: var(--wash); border-radius: 3px; }
+.go.small { width: auto; padding: .45rem .9rem; font-size: .9rem; }
+.fix label { display: block; font: 500 .82rem var(--sans); color: var(--pencil); margin-bottom: .3rem; }
+.fix-input, .chat-input { width: 100%; font: 1rem/1.5 ui-monospace, Menlo, Consolas, monospace; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule-strong); border-radius: 3px; padding: .45rem .6rem; margin-bottom: .45rem; }
+.chat { max-height: 22rem; overflow-y: auto; margin-bottom: .5rem; }
+.chat p { margin: 0 0 .5rem; padding: .45rem .65rem; border-radius: 3px; font-size: 1rem; overflow-wrap: anywhere; }
+.from-student { background: var(--paper); margin-left: 2rem !important; font-family: var(--sans); font-size: .92rem !important; }
+.from-tutor { color: var(--red); font: 400 1.15rem/1.35 var(--hand) !important; }
+.from-tutor.waiting { color: var(--pencil); }
+.chat-row { display: flex; gap: .4rem; align-items: flex-start; }
+.chat-row .chat-input { margin: 0; flex: 1; }
+.practice-skill { font: 500 .82rem var(--sans); color: var(--pencil); margin: 0 0 .3rem; }
+.practice-statement { font-size: 1.1rem; margin: 0 0 .6rem; }
+section.carnet { margin-top: 4rem; max-width: 46rem; }
+.carnet-intro { color: var(--pencil); font-size: 1rem; }
+.carnet-summary { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; font: .9rem var(--sans); }
+.carnet-summary b { color: var(--red); }
+.carnet-list { list-style: none; padding: 0; margin: 1rem 0; }
+.carnet-list > li { background: var(--paper); border-left: 3px solid var(--margin); padding: .7rem .9rem; margin-bottom: .7rem; }
+.carnet-meta { font: .78rem var(--sans); color: var(--pencil); }
+.carnet-statement { margin: .3rem 0; font-size: 1rem; }

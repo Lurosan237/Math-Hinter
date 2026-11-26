@@ -1,6 +1,6 @@
 "use strict";
 
-const NAMES = { llm_only: "Sans le cours", rag: "Avec le cours", agent: "Agent" };
+const NAMES = { pipeline: "Vérifiée", llm_only: "Rapide", rag: "Avec le cours", agent: "Agent" };
 const KINDS = { theorem: "Théorème", proposition: "Proposition", definition: "Définition", corollary: "Corollaire",
   lemma: "Lemme", example: "Exemple", proof: "Démonstration", heading: "Section" };
 const $ = (id) => document.getElementById(id);
@@ -34,6 +34,7 @@ const lines = () => $("attempt").value.split("\n").map((l) => l.trimEnd()).filte
 /* The preview is the student's copy as it will be read: one numbered line per step. */
 let flagged = null;
 let unclear = new Set();
+let marks = [];  // per line, from the computer: "verified", "refuted" or "unchecked"
 function preview() {
   $("preview-statement").textContent = $("statement").value.trim();
   const list = $("preview");
@@ -43,6 +44,10 @@ function preview() {
       li.classList.add("unclear");
       li.title = "Lecture incertaine : vérifiez cette ligne";
       if (!(flagged && flagged.line === i)) li.append(el("span", { class: "doubt", "aria-label": "lecture incertaine", text: "?" }));
+    }
+    if (marks[i] === "verified" && !(flagged && flagged.line === i)) {
+      li.append(el("span", { class: "tick", title: "Calcul vérifié par l'ordinateur", "aria-label": "calcul vérifié",
+        text: "✓" }));
     }
     if (flagged && flagged.line === i) {
       li.classList.add("flagged");
@@ -58,6 +63,7 @@ function previewSoon() { clearTimeout(timer); timer = setTimeout(preview, 250); 
 
 function clearResult() {
   flagged = null;
+  marks = [];
   $("result").replaceChildren();
   $("status").textContent = "";
 }
@@ -78,6 +84,10 @@ function showResult(out, config) {
   } else if (review.verdict === "correct") {
     parts.push(el("p", { class: "verdict good", text: "Aucune erreur trouvée" }),
       el("p", { class: "aside", text: "Cela ne prouve pas que tout est juste : relisez aussi vous-même." }));
+    if (review.rejected) {
+      parts.push(el("p", { class: "aside", text: `La première lecture avait un doute sur la ligne ${review.rejected.line + 1}, `
+        + "que la seconde lecture n'a pas confirmé. Relisez-la si vous hésitez." }));
+    }
   } else {
     flagged = { line: review.first_wrong_line };
     parts.push(el("p", { class: "verdict bad", text: `Première erreur : ligne ${review.first_wrong_line + 1}` }));
@@ -88,6 +98,8 @@ function showResult(out, config) {
       parts.push(ladder);
       if (review.explanation) parts.push(moreHints(ladder, out, review));
     }
+    if (review.explanation) parts.push(studyActions(out, review));
+    remember(out, review);
   }
   if (review.explanation) {
     parts.push(el("details", {}, el("summary", { text: "Voir l'explication (elle peut donner la réponse)" }),
@@ -109,6 +121,11 @@ function showResult(out, config) {
   }
   const left = out.remaining == null ? "" : ` · ${out.remaining} relecture${out.remaining > 1 ? "s" : ""} restante${out.remaining > 1 ? "s" : ""} aujourd'hui`;
   parts.push(el("p", { class: "meta", text: `${NAMES[config]} · ${out.model} · ${out.seconds} s${left}` }));
+  if (review.marks) {
+    marks = review.marks;
+    const checked = marks.filter((m) => m === "verified").length;
+    if (checked) parts.push(el("p", { class: "aside", text: `✓ ${checked} ligne${checked > 1 ? "s" : ""} dont les calculs ont été refaits par l'ordinateur.` }));
+  }
   box.replaceChildren(...parts);
   math(box);
   preview();
@@ -207,8 +224,19 @@ function stepList() {
     if (step.step === "reading") {
       if (list.lastChild && list.lastChild.dataset.kind === "reading") return;
       text = list.children.length ? "Relit la copie avec ce qu'il a trouvé…" : "Relit la copie…";
+    } else if (step.step === "transcribing") {
+      text = "Traduit chaque ligne en calculs vérifiables…";
+    } else if (step.step === "checked") {
+      const ok = step.checks.filter((c) => c.status === "vérifié").length;
+      const bad = step.checks.filter((c) => c.status === "réfuté").length;
+      text = step.checks.length ? `A refait ${step.checks.length} calcul${step.checks.length > 1 ? "s" : ""} : ${ok} juste${ok > 1 ? "s" : ""}`
+        + (bad ? `, ${bad} faux` : "") : "Aucun calcul à refaire par l'ordinateur";
+      marks = step.marks || [];
+      preview();
+    } else if (step.step === "confirming") {
+      text = `Seconde lecture de la ligne ${step.line + 1} avant de la signaler…`;
     } else if (step.step === "passages") {
-      text = `Joint ${step.found.length} passages du cours : ${step.found.join(" ; ")}`;
+      text = `Énoncé du cours consulté : ${step.found.join(" ; ")}`;
     } else if (step.step === "tool" && step.tool === "search_course") {
       text = `A cherché « ${step.query} » dans le cours`
         + (step.found && step.found.length ? ` : ${step.found.join(" ; ")}` : " : rien trouvé");
@@ -283,6 +311,162 @@ function moreHints(ladder, out, review) {
     }
   });
   return el("div", { class: "hint-actions" }, button, note);
+}
+
+/* After an error: correct the line, talk it through, or practise the same skill. */
+function studyActions(out, review) {
+  const line = review.first_wrong_line;
+  const area = el("div", { class: "study-area" });
+  const fix = el("button", { type: "button", class: "study", text: `Corriger la ligne ${line + 1}` });
+  const talk = el("button", { type: "button", class: "study", text: "Explique-moi" });
+  const practise = el("button", { type: "button", class: "study", text: "Exercice du même type" });
+  fix.addEventListener("click", () => area.replaceChildren(fixLine(out, line)));
+  talk.addEventListener("click", () => area.replaceChildren(conversation(out, review)));
+  practise.addEventListener("click", () => area.replaceChildren(similar($("statement").value.trim(),
+    out.lines[line], review.explanation)));
+  return el("div", { class: "study-block" }, el("div", { class: "study-buttons" }, fix, talk, practise), area);
+}
+
+function fixLine(out, line) {
+  const input = el("textarea", { class: "fix-input", rows: "2", spellcheck: "false" });
+  input.value = out.lines[line];
+  const go = el("button", { type: "button", class: "go small", text: "Revérifier" });
+  go.addEventListener("click", () => {
+    const fixed = input.value.trim();
+    if (!fixed) return;
+    const all = lines();
+    all[line] = fixed;
+    $("attempt").value = all.join("\n");
+    saveDraft();
+    $("form").requestSubmit();
+  });
+  setTimeout(() => input.focus(), 0);
+  return el("div", { class: "fix" }, el("label", { text: `Votre nouvelle ligne ${line + 1}` }), input, go);
+}
+
+function conversation(out, review) {
+  const history = [];
+  const list = el("div", { class: "chat", "aria-live": "polite" });
+  const input = el("input", { type: "text", class: "chat-input", placeholder: "Votre question ou votre idée…" });
+  const send = el("button", { type: "button", class: "go small", text: "Envoyer" });
+  const say = async (text) => {
+    if (text) {
+      history.push({ role: "student", text });
+      list.append(el("p", { class: "from-student", text }));
+    }
+    send.disabled = true;
+    const waiting = el("p", { class: "from-tutor waiting", text: "…" });
+    list.append(waiting);
+    try {
+      const reply = await post("/api/review?explain=1", {
+        statement: $("statement").value.trim(), attempt: out.lines.join("\n"), line: review.first_wrong_line,
+        explanation: review.explanation, history, key: $("key").value.trim(),
+      });
+      history.push({ role: "tutor", text: reply.reply });
+      waiting.textContent = reply.reply;
+      waiting.classList.remove("waiting");
+      math(waiting);
+    } catch (error) {
+      waiting.textContent = error.message;
+    } finally {
+      send.disabled = false;
+    }
+  };
+  const submitText = () => { const text = input.value.trim(); if (text) { input.value = ""; say(text); } };
+  send.addEventListener("click", submitText);
+  input.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); submitText(); } });
+  say(`Je ne comprends pas pourquoi la ligne ${review.first_wrong_line + 1} est fausse.`);
+  return el("div", { class: "explain" }, list, el("div", { class: "chat-row" }, input, send));
+}
+
+function similar(statement, line, explanation) {
+  const box = el("div", { class: "practice" }, el("p", { class: "aside", text: "Préparation d'un exercice… (quelques secondes)" }));
+  (async () => {
+    try {
+      const ex = await post("/api/review?similar=1", { statement, line, explanation, key: $("key").value.trim() });
+      const answer = el("input", { type: "text", class: "chat-input", placeholder: "Votre réponse" });
+      const check = el("button", { type: "button", class: "go small", text: "Vérifier ma réponse" });
+      const verdict = el("p", { class: "aside", "aria-live": "polite" });
+      const statementNode = el("p", { class: "practice-statement", text: ex.statement });
+      check.addEventListener("click", async () => {
+        if (!answer.value.trim()) return;
+        check.disabled = true;
+        try {
+          const r = await post("/api/review?answer=1", { token: ex.token, answer: answer.value.trim() });
+          verdict.className = r.status === "vérifié" ? "verdict good" : r.status === "réfuté" ? "verdict bad" : "aside";
+          verdict.textContent = r.status === "vérifié" ? "Juste, vérifié par le calcul !"
+            : r.status === "réfuté" ? "Pas encore : reprenez votre calcul." : "Je n'arrive pas à lire cette réponse : écrivez-la autrement.";
+          if (r.status === "vérifié") practised(statement);
+        } catch (error) {
+          verdict.textContent = error.message;
+        } finally {
+          check.disabled = false;
+        }
+      });
+      answer.addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); check.click(); } });
+      box.replaceChildren(el("p", { class: "practice-skill", text: `À travailler : ${ex.skill}` }), statementNode,
+        el("label", { class: "aside", text: `Donnez ${ex.answer_label}, par exemple 2x+1 ou (e^2+1)/4 :` }),
+        el("div", { class: "chat-row" }, answer, check), verdict);
+      math(statementNode);
+    } catch (error) {
+      box.replaceChildren(el("p", { class: "aside", text: error.message }));
+    }
+  })();
+  return box;
+}
+
+/* The mistake notebook, kept on this device only. */
+const CATEGORIES = [
+  ["Signes", /signe|moins|plus\b|négatif|positif/i], ["Exposants et puissances", /exposant|puissance|carré/i],
+  ["Dérivées", /dériv/i], ["Intégrales et primitives", /intégr|primitive/i], ["Limites et développements", /limite|développement|équivalent/i],
+  ["Sommes et suites", /somme|suite|série|géométrique|arithmétique/i], ["Hypothèses des théorèmes", /théorème|hypothèse|condition/i],
+  ["Inégalités", /inégalit|majoration|minoration|≤|≥/i], ["Fractions", /fraction|dénominateur|numérateur|inverse/i],
+];
+const category = (text) => (CATEGORIES.find(([, pattern]) => pattern.test(text)) || ["Calculs"])[0];
+
+function loadCarnet() { try { return JSON.parse(store.get("carnet") || "[]"); } catch { return []; } }
+
+function remember(out, review) {
+  const entries = loadCarnet();
+  const statement = $("statement").value.trim();
+  const line = out.lines[review.first_wrong_line] || "";
+  if (entries.some((e) => e.statement === statement && e.line === line)) return;
+  entries.unshift({ when: new Date().toISOString().slice(0, 10), statement, line, explanation: review.explanation,
+    category: category(review.explanation), practised: false });
+  store.set("carnet", JSON.stringify(entries.slice(0, 60)));
+  showCarnet();
+}
+
+function practised(statement) {
+  const entries = loadCarnet();
+  entries.filter((e) => e.statement === statement).forEach((e) => { e.practised = true; });
+  store.set("carnet", JSON.stringify(entries));
+  showCarnet();
+}
+
+function showCarnet() {
+  const entries = loadCarnet();
+  const box = $("carnet");
+  if (!entries.length) {
+    box.replaceChildren(el("p", { class: "aside", text: "Rien pour l'instant : vos erreurs confirmées apparaîtront ici." }));
+    return;
+  }
+  const counts = {};
+  entries.forEach((e) => { counts[e.category] = (counts[e.category] || 0) + 1; });
+  const summary = el("ul", { class: "carnet-summary" }, ...Object.entries(counts).sort((a, b) => b[1] - a[1])
+    .map(([name, n]) => el("li", {}, el("b", { text: String(n) }), ` ${name}`)));
+  const list = el("ol", { class: "carnet-list" }, ...entries.map((e) => {
+    const area = el("div");
+    const again = el("button", { type: "button", class: "study", text: e.practised ? "Encore un exercice" : "Exercice du même type" });
+    again.addEventListener("click", () => area.replaceChildren(similar(e.statement, e.line, e.explanation)));
+    const item = el("li", {}, el("span", { class: "carnet-meta", text: `${e.when} · ${e.category}${e.practised ? " · retravaillé ✓" : ""}` }),
+      el("p", { class: "carnet-statement", text: e.statement.slice(0, 160) }), el("p", { class: "quoted", text: e.line }), again, area);
+    math(item);
+    return item;
+  }));
+  const clear = el("button", { type: "button", class: "reset", text: "Vider le carnet" });
+  clear.addEventListener("click", () => { store.set("carnet", null); showCarnet(); });
+  box.replaceChildren(summary, list, clear);
 }
 
 async function submit(event) {
@@ -459,6 +643,7 @@ window.addEventListener("DOMContentLoaded", () => {
   updateButton();
   setUpExamples();
   setUpEvaluation();
+  showCarnet();
   setUpChecker();
   const ready = setInterval(() => { if (window.renderMathInElement) { clearInterval(ready); preview(); } }, 100);
 });

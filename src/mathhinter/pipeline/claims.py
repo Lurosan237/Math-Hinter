@@ -21,6 +21,9 @@ from __future__ import annotations
 
 import random
 import signal
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
 from dataclasses import dataclass
 
 import sympy as sp
@@ -223,11 +226,21 @@ CHECKS = {"equality": _equality, "derivative": _derivative, "antiderivative": _a
           "integral": _integral, "limit": _limit, "sum": _sum, "solution": _solution, "ode": _ode}
 
 
+_POOL = ThreadPoolExecutor(max_workers=4)
+
+
 def check_claim(claim: dict) -> Check:
     """The computer's verdict on one claim. Anything it can't read or compute is non vérifiable."""
     kind = claim.get("type")
     if kind not in CHECKS:
         return Check(UNVERIFIABLE, f"{kind}: not computed")
+    if threading.current_thread() is not threading.main_thread():
+        # Signals only work on the main thread, so elsewhere the check runs in a worker and is abandoned if slow.
+        future = _POOL.submit(_check_untimed, claim)
+        try:
+            return future.result(timeout=TIME_LIMIT_SECONDS)
+        except FutureTimeout:
+            return Check(UNVERIFIABLE, f"{kind}: timed out")
     use_timer = hasattr(signal, "setitimer")
     if use_timer:
         previous = signal.signal(signal.SIGALRM, _alarm)
@@ -243,3 +256,12 @@ def check_claim(claim: dict) -> Check:
         if use_timer:
             signal.setitimer(signal.ITIMER_REAL, 0)
             signal.signal(signal.SIGALRM, previous)
+
+
+def _check_untimed(claim: dict) -> Check:
+    kind = claim.get("type")
+    try:
+        return CHECKS[kind](claim)
+    except (Unparseable, KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError, RecursionError,
+            AttributeError, NotImplementedError, sp.SympifyError, sp.PolynomialError) as error:
+        return Check(UNVERIFIABLE, f"{kind}: {type(error).__name__}")

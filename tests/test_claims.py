@@ -37,3 +37,13 @@ def test_a_refuted_claim_says_what_was_computed():
     check = check_claim({"type": "limit", "function": r"\frac{e^x-1-x}{x^2}", "variable": "x", "point": "0",
                          "result": "1"})
     assert check.computed == r"\frac{1}{2}"
+
+
+def test_claims_can_be_checked_outside_the_main_thread():
+    import threading
+    found = []
+    claim = {"type": "derivative", "function": "e^x", "variable": "x", "result": "xe^{x-1}"}
+    worker = threading.Thread(target=lambda: found.append(check_claim(claim).status))
+    worker.start()
+    worker.join()
+    assert found == [REFUTED]

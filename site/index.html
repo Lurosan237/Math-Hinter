@@ -57,10 +57,9 @@
 
     <aside class="panel">
       <fieldset class="versions">
-        <legend>Version</legend>
-        <label><input type="radio" name="config" value="rag" checked> <b>Avec le cours</b> <small>cinq passages du cours joints à la copie</small></label>
-        <label><input type="radio" name="config" value="agent"> <b>Agent</b> <small>cherche lui-même et peut vérifier un calcul, plus lent</small></label>
-        <label><input type="radio" name="config" value="llm_only"> <b>Sans le cours</b> <small>le modèle seul</small></label>
+        <legend>Relecture</legend>
+        <label><input type="radio" name="config" value="pipeline" checked> <b>Vérifiée</b> <small>l'ordinateur refait les calculs, et une seconde lecture confirme toute erreur avant de la signaler</small></label>
+        <label><input type="radio" name="config" value="llm_only"> <b>Rapide</b> <small>le modèle seul, plus vite mais plus de fausses alertes</small></label>
       </fieldset>
       <button type="submit" form="form" class="go" id="go">Faire relire</button>
       <button type="button" class="reset" id="reset" hidden>Nouvelle copie</button>
@@ -79,6 +78,12 @@
     <span>Pas d'exercice sous la main ? Essayez une rédaction avec une erreur :</span>
     <div id="examples"></div>
   </div>
+</section>
+
+<section class="carnet" aria-labelledby="carnet-title">
+  <h2 id="carnet-title">Mon carnet d'erreurs</h2>
+  <p class="carnet-intro">Chaque erreur confirmée s'ajoute ici, sur cet appareil seulement. Refaites un exercice du même type pour vérifier que c'est acquis.</p>
+  <div id="carnet"></div>
 </section>
 
 <section class="honest" aria-labelledby="honest-title">

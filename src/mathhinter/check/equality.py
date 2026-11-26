@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import random
 import signal
+import threading
 from dataclasses import dataclass
 from fractions import Fraction
 
@@ -96,7 +97,8 @@ def _decide(left_latex: str, right_latex: str, seed: int) -> Verdict:
 
 def check_equality(left_latex: str, right_latex: str, seed: int = 0) -> Verdict:
     """The verdict for left = right. A slow simplification is cut off and reported as unverifiable."""
-    if not hasattr(signal, "setitimer"):
+    if not hasattr(signal, "setitimer") or threading.current_thread() is not threading.main_thread():
+        # The timer only works on the main thread; elsewhere (the site streams from a thread) checks run untimed.
         return _decide(left_latex, right_latex, seed)
     previous = signal.signal(signal.SIGALRM, _alarm)
     signal.setitimer(signal.ITIMER_REAL, TIME_LIMIT_SECONDS)
