@@ -13,6 +13,14 @@ from ..llm.client import LLMError, QuotaExhausted
 from .claims import CHECKED_TYPES, check_claim
 from .formalise import FORMALISE_MODEL, formalise
 
+CONFIRM_PROMPT = """A first reviewer read a student's maths attempt and claims that line {line} holds the first error:
+"{explanation}"
+You check that claim, independently. The text may come from PDF extraction: garbled symbols, missing spaces and broken
+lines are not errors. A line that is terse, skips a justification, or uses a different valid method is not an error.
+Answer "confirmed" only if line {line}, read as the student most plausibly meant it, states something mathematically
+false or draws an invalid conclusion. Otherwise answer "rejected".
+Reply with JSON only: {{"decision": "confirmed" or "rejected", "reason": "<one sentence>"}}"""
+
 EVIDENCE = """Before you, a transcriber turned the lines into claims and a computer algebra system checked them:
 - "vérifié": computed exactly; the computation in that line is right as transcribed.
 - "réfuté": computed to be false. This is strong evidence of an error in that line, unless the transcription misread
@@ -49,9 +57,34 @@ def line_marks(checks: list[dict], lines: int) -> list[str]:
 class PipelineTutor(Tutor):
     """A Tutor with one more configuration, "pipeline". Course search is used only to look up theorems."""
 
-    def __init__(self, client, model: str, course, on_step=None, formalise_model: str = FORMALISE_MODEL):
+    def __init__(self, client, model: str, course, on_step=None, formalise_model: str = FORMALISE_MODEL,
+                 confirm_model: str | None = FORMALISE_MODEL):
         super().__init__(client, model, course, on_step)
         self.formalise_model = formalise_model
+        self.confirm_model = confirm_model  # None turns the second opinion off
+
+    def _confirm(self, review: Review, statement: str, attempt: str, evidence: str) -> bool:
+        """A second, independent opinion on the flagged line. Any failure keeps the judge's verdict."""
+        prompt = CONFIRM_PROMPT.format(line=review.first_wrong_line, explanation=review.explanation)
+        task = f"{self._task(statement, attempt)}\n\nComputer checks:\n{evidence or 'none could be computed'}"
+        self._report(step="confirming", line=review.first_wrong_line)
+        try:
+            response = self.client.chat(self.confirm_model, [{"role": "system", "content": prompt},
+                                                              {"role": "user", "content": task}],
+                                        temperature=0.0, max_tokens=3000)
+        except QuotaExhausted:
+            raise
+        except LLMError:
+            return True
+        review.llm_calls += 1
+        review.tokens += response.get("usage", {}).get("total_tokens", 0) or 0
+        message = response["choices"][0]["message"]
+        decision = parse_action(message.get("content")) or parse_action(message.get("reasoning")) or {}
+        confirmed = decision.get("decision") != "rejected"
+        review.tool_calls.append({"tool": "confirm", "line": review.first_wrong_line,
+                                  "decision": "confirmed" if confirmed else "rejected",
+                                  "reason": str(decision.get("reason", ""))[:300]})
+        return confirmed
 
     def pipeline(self, statement: str, attempt: str, exercise: str = "web", solution: str | None = None) -> Review:
         review = Review("pipeline")
@@ -108,6 +141,11 @@ class PipelineTutor(Tutor):
             review.failure = "unparseable reply"
         else:
             _fill(review, action, lines)
+            if (review.verdict == "wrong" and review.first_wrong_line is not None and self.confirm_model
+                    and not self._confirm(review, statement, attempt, evidence)):
+                review.rejected = {"line": review.first_wrong_line, "explanation": review.explanation,
+                                   "hint": review.hint}
+                review.verdict, review.first_wrong_line, review.hint = "correct", None, ""
         review.checks = checks
         review.marks = line_marks(checks, lines)
         return review

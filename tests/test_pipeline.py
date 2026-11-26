@@ -23,7 +23,8 @@ class Fake:
 
 def test_the_judge_sees_the_computations_and_the_page_gets_line_marks():
     fake, steps = Fake(), []
-    tutor = PipelineTutor(fake, "judge-model", None, on_step=steps.append, formalise_model="reader-model")
+    tutor = PipelineTutor(fake, "judge-model", None, on_step=steps.append, formalise_model="reader-model",
+                          confirm_model=None)
     review = tutor.pipeline("Dériver $e^x$.", ATTEMPT)
     assert [m for m, _ in fake.sent] == ["reader-model", "judge-model"]
     task = fake.sent[1][1][1]["content"]
@@ -39,10 +40,23 @@ def test_a_failed_transcription_still_gets_a_review():
             self.sent.append((model, messages))
             content = "not json" if len(self.sent) == 1 else json.dumps(ANSWER)
             return {"choices": [{"message": {"content": content}}], "usage": {"total_tokens": 1}}
-    review = PipelineTutor(Broken(), "j", None).pipeline("E", ATTEMPT)
+    review = PipelineTutor(Broken(), "j", None, confirm_model=None).pipeline("E", ATTEMPT)
     assert review.verdict == "wrong" and review.tool_calls[0]["status"].startswith("failed")
 
 
 def test_line_marks():
     checks = [{"line": 0, "status": "vérifié"}, {"line": 0, "status": "réfuté"}, {"line": 1, "status": "vérifié"}]
     assert line_marks(checks, 3) == ["refuted", "verified", "unchecked"]
+
+
+def test_a_rejected_second_opinion_withdraws_the_flag():
+    class Doubtful(Fake):
+        def chat(self, model, messages, temperature=0.0, max_tokens=0):
+            self.sent.append((model, messages))
+            reply = [CLAIMS, ANSWER, {"decision": "rejected", "reason": "la ligne est juste"}][len(self.sent) - 1]
+            return {"choices": [{"message": {"content": json.dumps(reply)}}], "usage": {"total_tokens": 10}}
+    fake = Doubtful()
+    review = PipelineTutor(fake, "judge", None, formalise_model="reader", confirm_model="second").pipeline("E", ATTEMPT)
+    assert [m for m, _ in fake.sent] == ["reader", "judge", "second"]
+    assert "line 1 holds the first error" in fake.sent[2][1][0]["content"]
+    assert review.verdict == "correct" and review.first_wrong_line is None and review.rejected["line"] == 1
