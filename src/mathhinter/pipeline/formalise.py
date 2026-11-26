@@ -35,6 +35,14 @@ Claim types (expressions in LaTeX, without $):
 - {"type": "other", "line": n, "text": "short description"}  for any other step: a logical deduction, an
   inequality, a definition, a case split, a sentence.
 
+Use "equality" only when the student writes "=" between two expressions meant to be equal. Arrows, "tend vers",
+"~", "≈", "≤" and "<" are never equalities: use "limit" when the variable and point are clear, otherwise "other".
+An equality that only holds for a value fixed earlier (x = 3, n = 2) is still an equality: keep the letters.
+
+Write clean LaTeX even when the text is garbled by PDF extraction: \cos(2\pi/n) for "cos2π/n", \sin^2(x) for
+"sin2x" when that is clearly what is meant, explicit brackets around arguments and fractions. Clean the notation only;
+never change a number, sign, exponent or variable.
+
 Give every line at least one claim (use "other" when nothing else applies). Write function names as \sin, \ln,
 \exp; products explicitly when a letter is followed by a bracket: x\cdot(x+1). Replace substituted bounds such as
 [F(x)]_0^1 by the expression F(1)-F(0) only if the student wrote that difference; otherwise keep it as written.
