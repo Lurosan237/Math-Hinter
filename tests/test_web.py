@@ -160,4 +160,5 @@ def test_the_site_reviews_with_the_pipeline_by_default():
     fake = Fake(claims, ANSWER, {"decision": "confirmed", "reason": "ok"})
     service = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=fake)
     status, out = service.review(read_request(body()), "a")
-    assert status == 200 and out["review"]["config"] == "pipeline" and out["review"]["marks"] == ["unchecked", "refuted"]
+    assert status == 200 and out["review"]["config"] == "pipeline"
+    assert out["review"]["marks"] == ["unchecked", "refuted"]
