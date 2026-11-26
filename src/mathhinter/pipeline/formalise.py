@@ -39,6 +39,9 @@ Use "equality" only when the student writes "=" between two expressions meant to
 "~", "≈", "≤" and "<" are never equalities: use "limit" when the variable and point are clear, otherwise "other".
 An equality that only holds for a value fixed earlier (x = 3, n = 2) is still an equality: keep the letters.
 
+Never put words or \text{...} inside an expression: a claim mixing a formula and words ("= l'aire du triangle")
+is "other".
+
 Write clean LaTeX even when the text is garbled by PDF extraction: \cos(2\pi/n) for "cos2π/n", \sin^2(x) for
 "sin2x" when that is clearly what is meant, explicit brackets around arguments and fractions. Clean the notation only;
 never change a number, sign, exponent or variable.
