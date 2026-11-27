@@ -31,4 +31,5 @@ def test_jurors_differ_only_by_model_effort_and_seed():
     out = ask_juror(fake, JURORS["120b-high"], "E", "a\nb")
     assert out["verdict"] == "wrong" and out["line"] == 1 and out["tokens"] == 7
     ask_juror(fake, JURORS["120b"], "E", "a\nb")
-    assert fake.calls == [("openai/gpt-oss-120b", 0.0, {"reasoning_effort": "high"}), ("openai/gpt-oss-120b", 0.0, None)]
+    assert fake.calls == [("openai/gpt-oss-120b", 0.0, {"reasoning_effort": "high"}),
+                          ("openai/gpt-oss-120b", 0.0, None)]
