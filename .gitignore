@@ -16,3 +16,7 @@ venv/
 
 # Built demo site
 _site/
+
+# ProcessBench sources (downloaded by scripts/get_processbench.py); the sample is kept
+data/external/processbench/*.json
+!data/external/processbench/sample.json

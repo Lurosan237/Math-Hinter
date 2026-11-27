@@ -1,6 +1,7 @@
 """Collect independent jurors' verdicts on held-out attempts, one by one, for comparing voting rules offline.
 
     PYTHONPATH=src python scripts/run_panel.py --split dev --count 20 --name panel-dev --jurors qwen,20b
+    PYTHONPATH=src python scripts/run_panel.py --dataset processbench --name panel-pb --jurors 120b,20b
 
 Results go to data/private/agent_runs/<name>/jurors.jsonl; finished verdicts are skipped, so it is safe to stop.
 A juror whose model runs out of quota is skipped for the rest of the run.
@@ -28,6 +29,7 @@ PRIVATE = ROOT / "data/private"
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--dataset", default="books", choices=["books", "processbench"])
     parser.add_argument("--split", default="dev")
     parser.add_argument("--count", type=int, default=20)
     parser.add_argument("--name", default="panel-dev")
@@ -35,10 +37,18 @@ def main() -> None:
     parser.add_argument("--stop-after", type=float, default=0)
     args = parser.parse_args()
     jurors = [JURORS[name] for name in args.jurors.split(",")]
-    attempts = [json.loads(line) for line in (PRIVATE / "attempts.jsonl").read_text(encoding="utf-8").splitlines()]
-    units = {json.loads(line)["id"]: json.loads(line)
-             for line in (PRIVATE / "units.jsonl").read_text(encoding="utf-8").splitlines()}
-    exercises = sample(attempts, args.split, args.count)
+    if args.dataset == "processbench":
+        items = json.loads((ROOT / "data/external/processbench/sample.json").read_text(encoding="utf-8"))["items"]
+        attempts = [{"exercise": i["id"], "kind": "none" if i["wrong_line"] is None else "error", "text": i["attempt"],
+                     "wrong_line": i["wrong_line"]} for i in items]
+        units = {i["id"]: {"text": i["problem"]} for i in items}
+        exercises = [i["id"] for i in items]
+    else:
+        attempts = [json.loads(line) for line in
+                    (PRIVATE / "attempts.jsonl").read_text(encoding="utf-8").splitlines()]
+        units = {json.loads(line)["id"]: json.loads(line)
+                 for line in (PRIVATE / "units.jsonl").read_text(encoding="utf-8").splitlines()}
+        exercises = sample(attempts, args.split, args.count)
     out = PRIVATE / "agent_runs" / args.name / "jurors.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)
     done = set()
