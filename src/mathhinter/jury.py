@@ -19,7 +19,8 @@ class Juror:
     model: str
     temperature: float = 0.0
     extra: dict = field(default_factory=dict)
-    max_tokens: int = 8000  # reasoning models need room to finish; "120b" keeps the LLM-alone budget
+    # Room to reason and still answer. Groq counts it against 8000 tokens a minute, prompt included, so not more.
+    max_tokens: int = 4500  # "120b" keeps the LLM-alone budget
 
 
 JURORS = {j.name: j for j in [
