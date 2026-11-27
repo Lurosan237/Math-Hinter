@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -48,26 +49,45 @@ def main() -> None:
     client = Client(read_env(ROOT / ".env")["GROQ_API_KEY"], PRIVATE / "llm_cache")
     exhausted: set[str] = set()
     started = time.time()
+    lock = threading.Lock()
+
+    def run(juror, exercise, attempt):
+        if juror.model in exhausted:
+            return
+        try:
+            vote = ask_juror(client, juror, units[exercise]["text"], attempt["text"])
+        except QuotaExhausted as error:
+            print(f"quota: {juror.model} {error}", flush=True)
+            exhausted.add(juror.model)
+            return
+        row = {"exercise": exercise, "kind": attempt["kind"], "wrong_line": attempt["wrong_line"], **vote}
+        with lock, out.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        print(juror.name, exercise, attempt["kind"], vote["verdict"], vote["line"], attempt["wrong_line"],
+              vote["tokens"], vote["failure"] or "", flush=True)
+
+    # One worker per model: each model has its own rate limit, so they can run side by side.
+    queues: dict[str, list] = {}
     for exercise in exercises:
         for attempt in [a for a in attempts if a["exercise"] == exercise]:
             for juror in jurors:
-                key = (juror.name, exercise, attempt["kind"])
-                if key in done or juror.model in exhausted:
-                    continue
-                if args.stop_after and time.time() - started > args.stop_after:
-                    print("PAUSED: time limit, run again to continue", flush=True)
-                    return
-                try:
-                    vote = ask_juror(client, juror, units[exercise]["text"], attempt["text"])
-                except QuotaExhausted as error:
-                    print(f"quota: {juror.model} {error}", flush=True)
-                    exhausted.add(juror.model)
-                    continue
-                row = {"exercise": exercise, "kind": attempt["kind"], "wrong_line": attempt["wrong_line"], **vote}
-                with out.open("a", encoding="utf-8") as f:
-                    f.write(json.dumps(row, ensure_ascii=False) + "\n")
-                print(juror.name, exercise, attempt["kind"], vote["verdict"], vote["line"], attempt["wrong_line"],
-                      vote["tokens"], vote["failure"] or "", flush=True)
+                if (juror.name, exercise, attempt["kind"]) not in done:
+                    queues.setdefault(juror.model, []).append((juror, exercise, attempt))
+
+    def worker(tasks):
+        for task in tasks:
+            if args.stop_after and time.time() - started > args.stop_after:
+                return
+            run(*task)
+
+    threads = [threading.Thread(target=worker, args=(tasks,)) for tasks in queues.values()]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    if any(queues.values()) and args.stop_after and time.time() - started > args.stop_after:
+        print("PAUSED: time limit, run again to continue", flush=True)
+        return
     print("STOPPED: some models out of quota" if exhausted else "FINISHED")
 
 

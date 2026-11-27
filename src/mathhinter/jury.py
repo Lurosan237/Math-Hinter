@@ -19,10 +19,11 @@ class Juror:
     model: str
     temperature: float = 0.0
     extra: dict = field(default_factory=dict)
+    max_tokens: int = 8000  # reasoning models need room to finish; "120b" keeps the LLM-alone budget
 
 
 JURORS = {j.name: j for j in [
-    Juror("120b", "openai/gpt-oss-120b"),
+    Juror("120b", "openai/gpt-oss-120b", max_tokens=MAX_TOKENS),  # exactly the evaluated "LLM alone" request
     Juror("120b-high", "openai/gpt-oss-120b", extra={"reasoning_effort": "high"}),
     Juror("120b-s1", "openai/gpt-oss-120b", 0.7, {"seed": 1}),
     Juror("120b-s2", "openai/gpt-oss-120b", 0.7, {"seed": 2}),
@@ -42,7 +43,7 @@ def ask_juror(client, juror: Juror, statement: str, attempt: str) -> dict:
     messages = [{"role": "system", "content": f"{ROLE}\n\n{ANSWER_FORMAT}"},
                 {"role": "user", "content": Tutor._task(statement, attempt)}]
     try:
-        response = client.chat(juror.model, messages, temperature=juror.temperature, max_tokens=MAX_TOKENS,
+        response = client.chat(juror.model, messages, temperature=juror.temperature, max_tokens=juror.max_tokens,
                                extra=juror.extra or None)
     except QuotaExhausted:
         raise
