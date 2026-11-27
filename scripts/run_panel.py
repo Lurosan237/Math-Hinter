@@ -29,7 +29,7 @@ PRIVATE = ROOT / "data/private"
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="books", choices=["books", "processbench"])
+    parser.add_argument("--dataset", default="books", choices=["books", "processbench", "clean"])
     parser.add_argument("--split", default="dev")
     parser.add_argument("--count", type=int, default=20)
     parser.add_argument("--name", default="panel-dev")
@@ -37,7 +37,13 @@ def main() -> None:
     parser.add_argument("--stop-after", type=float, default=0)
     args = parser.parse_args()
     jurors = [JURORS[name] for name in args.jurors.split(",")]
-    if args.dataset == "processbench":
+    if args.dataset == "clean":
+        rows = [json.loads(line) for line in
+                (PRIVATE / "clean_bench/attempts.jsonl").read_text(encoding="utf-8").splitlines()]
+        attempts = [r for r in rows if r["split"] == args.split]
+        units = {r["exercise"]: {"text": r["statement"]} for r in attempts}
+        exercises = sorted({r["exercise"] for r in attempts})
+    elif args.dataset == "processbench":
         items = json.loads((ROOT / "data/external/processbench/sample.json").read_text(encoding="utf-8"))["items"]
         attempts = [{"exercise": i["id"], "kind": "none" if i["wrong_line"] is None else "error", "text": i["attempt"],
                      "wrong_line": i["wrong_line"]} for i in items]
