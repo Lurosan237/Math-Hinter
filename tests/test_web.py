@@ -24,7 +24,7 @@ class Fake:
         self.keys.append(key)
         return self
 
-    def chat(self, model, messages, temperature=0.0, max_tokens=0):
+    def chat(self, model, messages, temperature=0.0, max_tokens=0, extra=None):
         reply = self.replies.pop(0)
         if isinstance(reply, Exception):
             raise reply
