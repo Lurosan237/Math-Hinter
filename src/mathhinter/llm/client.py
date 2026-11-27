@@ -82,9 +82,12 @@ class Client:
     def models(self) -> list[str]:
         return sorted(item["id"] for item in self._call("/models")["data"])
 
-    def chat(self, model: str, messages: list[dict], temperature: float = 0.0, max_tokens: int = 1024) -> dict:
-        """The API's answer, from the cache if this exact request was made before."""
-        request = {"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens}
+    def chat(self, model: str, messages: list[dict], temperature: float = 0.0, max_tokens: int = 1024,
+             extra: dict | None = None) -> dict:
+        """The API's answer, from the cache if this exact request was made before. `extra` adds request fields
+        such as reasoning_effort or seed; without it, requests (and so cache keys) are as before."""
+        request = {"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens,
+                   **(extra or {})}
         path = self.cache_dir / f"{cache_key(request)}.json" if self.cache_dir else None
         if path and path.exists():
             return json.loads(path.read_text(encoding="utf-8"))["response"]
