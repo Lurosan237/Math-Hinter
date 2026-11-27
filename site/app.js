@@ -76,6 +76,11 @@ function passage(id, data) {
 
 function showResult(out, config) {
   const review = out.review;
+  if (out.split) {
+    // The review numbered the steps it split; show the copy the same way so line numbers match.
+    $("attempt").value = out.lines.join("\n");
+    saveDraft();
+  }
   const box = $("result");
   const parts = [];
   if (review.failure) {
@@ -232,6 +237,10 @@ function stepList() {
     if (step.step === "reading") {
       if (list.lastChild && list.lastChild.dataset.kind === "reading") return;
       text = list.children.length ? "Relit la copie avec ce qu'il a trouvé…" : "Relit la copie…";
+    } else if (step.step === "splitting") {
+      text = "Découpe la rédaction en étapes, une par ligne…";
+    } else if (step.step === "split") {
+      text = `Rédaction découpée en ${step.steps} étapes`;
     } else if (step.step === "transcribing") {
       text = "Traduit chaque ligne en calculs vérifiables…";
     } else if (step.step === "checked") {

@@ -162,3 +162,16 @@ def test_the_site_reviews_with_the_pipeline_by_default():
     status, out = service.review(read_request(body()), "a")
     assert status == 200 and out["review"]["config"] == "pipeline"
     assert out["review"]["marks"] == ["unchecked", "refuted"]
+
+
+def test_a_long_attempt_is_split_into_steps_before_review():
+    prose = ("On a $(e^x)'=xe^{x-1}$ par la règle des puissances. Donc la dérivée vaut $xe^{x-1}$ partout. "
+             "Ainsi $f'(0)=0$ et la tangente en $0$ est horizontale.")
+    steps = ["On a $(e^x)'=xe^{x-1}$ par la règle des puissances.", "Donc la dérivée vaut $xe^{x-1}$ partout.",
+             "Ainsi $f'(0)=0$ et la tangente en $0$ est horizontale."]
+    seen = []
+    fake = Fake({"steps": steps}, {**ANSWER, "first_wrong_line": 0})
+    service = Service(UNITS, site_key="gsk_site", limiter=Limiter(5, 40), client_factory=fake)
+    status, out = service.review(read_request(body(attempt=prose, config="llm_only")), "a", on_step=seen.append)
+    assert status == 200 and out["split"] and out["lines"] == steps
+    assert [s["step"] for s in seen][:2] == ["splitting", "split"]

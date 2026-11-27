@@ -21,6 +21,7 @@ from .hints import MAX_LEVEL, next_hint
 from .llm.client import Client, LLMError, QuotaExhausted
 from .pipeline.orchestrate import PipelineTutor
 from .seal import BadSeal, seal, unseal
+from .steps import needs_splitting, split_faithfully
 from .study import MAX_TURNS, check_answer, explain, similar_exercise
 from .transcribe import BadImage, check_images, transcribe
 
@@ -165,6 +166,20 @@ class Service:
                               self._progress(on_step))
         statement, attempt = request["statement"], request["attempt"]
         started = time.time()
+        split = False
+        if needs_splitting(attempt):
+            if on_step:
+                on_step({"step": "splitting"})
+            try:
+                steps, split = split_faithfully(self.client_factory(own_key or self.site_key), statement, attempt)
+            except QuotaExhausted:
+                steps = None
+            except LLMError:
+                steps = None
+            if steps and split:
+                attempt = "\n".join(steps)
+                if on_step:
+                    on_step({"step": "split", "steps": len(steps)})
         try:
             if request["config"] == "pipeline":
                 review = tutor.pipeline(statement, attempt)
@@ -188,7 +203,7 @@ class Service:
         ids = list(dict.fromkeys(record["citations"] + record["shown"]))
         passages = {i: {"label": self.units[i].get("label", i), "kind": self.units[i]["kind"],
                         "text": self.units[i]["text"][:1500]} for i in ids if i in self.units}
-        body = {"review": record, "passages": passages, "lines": attempt.split("\n"), "model": MODEL,
+        body = {"review": record, "passages": passages, "lines": attempt.split("\n"), "split": split, "model": MODEL,
                 "seconds": round(time.time() - started, 1)}
         if not own_key:
             body["remaining"] = self.limiter.remaining(address)
