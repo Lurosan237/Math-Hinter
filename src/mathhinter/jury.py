@@ -32,6 +32,7 @@ JURORS = {j.name: j for j in [
     Juror("20b-s1", "openai/gpt-oss-20b", 0.7, {"seed": 1}),
     Juror("20b-s2", "openai/gpt-oss-20b", 0.7, {"seed": 2}),
     Juror("qwen", "qwen/qwen3.8-27b", extra={"reasoning_effort": "medium"}),
+    Juror("qwen-low", "qwen/qwen3.8-27b", extra={"reasoning_effort": "low"}),
     Juror("qwen-s1", "qwen/qwen3.8-27b", 0.7, {"reasoning_effort": "medium", "seed": 1}),
     Juror("qwen-s2", "qwen/qwen3.8-27b", 0.7, {"reasoning_effort": "medium", "seed": 2}),
 ]}
