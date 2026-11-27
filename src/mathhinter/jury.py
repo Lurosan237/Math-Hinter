@@ -19,8 +19,7 @@ class Juror:
     model: str
     temperature: float = 0.0
     extra: dict = field(default_factory=dict)
-    # Room to reason and still answer. Groq counts it against 8000 tokens a minute, prompt included, so not more.
-    max_tokens: int = 4500  # "120b" keeps the LLM-alone budget
+    max_tokens: int = 0  # 0: all the room the per-minute limit leaves (see room()); "120b" keeps LLM alone's budget
 
 
 JURORS = {j.name: j for j in [
@@ -38,14 +37,23 @@ JURORS = {j.name: j for j in [
 ]}
 
 
+PER_MINUTE = 8000  # Groq's free tier counts the prompt and max_tokens of a request against this
+
+
+def room(messages: list[dict]) -> int:
+    """The largest answer budget a request can ask for: reasoning models need all they can get."""
+    prompt = sum(len(m["content"]) for m in messages) / 3  # a rough, generous estimate of prompt tokens
+    return max(1500, int(PER_MINUTE - prompt - 300))
+
+
 def ask_juror(client, juror: Juror, statement: str, attempt: str) -> dict:
     """One juror's verdict with the "LLM alone" prompt. Quota errors propagate; other failures are recorded."""
     review = Review(f"juror:{juror.name}")
     messages = [{"role": "system", "content": f"{ROLE}\n\n{ANSWER_FORMAT}"},
                 {"role": "user", "content": Tutor._task(statement, attempt)}]
     try:
-        response = client.chat(juror.model, messages, temperature=juror.temperature, max_tokens=juror.max_tokens,
-                               extra=juror.extra or None)
+        response = client.chat(juror.model, messages, temperature=juror.temperature,
+                               max_tokens=juror.max_tokens or room(messages), extra=juror.extra or None)
     except QuotaExhausted:
         raise
     except LLMError as error:
