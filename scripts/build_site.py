@@ -17,6 +17,7 @@ def main() -> None:
     shutil.copytree(ROOT / "site", OUT)
     shutil.copy(ROOT / "data/demo/exercises.json", OUT / "data/examples.json")
     shutil.copy(ROOT / "reports/agent.json", OUT / "data/agent.json")
+    shutil.copy(ROOT / "reports/pipeline.json", OUT / "data/pipeline.json")
     shutil.copy(ROOT / "reports/transcription.json", OUT / "data/transcription.json")
     for name in CHECKER:
         target = OUT / "py/mathhinter" / name

@@ -210,3 +210,6 @@ section.carnet { margin-top: 4rem; max-width: 46rem; }
 .carnet-list > li { background: var(--paper); border-left: 3px solid var(--margin); padding: .7rem .9rem; margin-bottom: .7rem; }
 .carnet-meta { font: .78rem var(--sans); color: var(--pencil); }
 .carnet-statement { margin: .3rem 0; font-size: 1rem; }
+.doubt-box { border-left: 3px solid var(--pencil); padding-left: .7rem; margin: .4rem 0 .6rem; }
+.verdict.doubt { color: var(--ink); }
+.attempt li.doubtful { background: color-mix(in srgb, var(--pencil) 14%, transparent); }

@@ -1,6 +1,6 @@
 "use strict";
 
-const NAMES = { pipeline: "Vérifiée", llm_only: "Rapide", rag: "Avec le cours", agent: "Agent" };
+const NAMES = { pipeline: "Prudente", llm_only: "Directe", rag: "Avec le cours", agent: "Agent" };
 const KINDS = { theorem: "Théorème", proposition: "Proposition", definition: "Définition", corollary: "Corollaire",
   lemma: "Lemme", example: "Exemple", proof: "Démonstration", heading: "Section" };
 const $ = (id) => document.getElementById(id);
@@ -50,8 +50,9 @@ function preview() {
         text: "✓" }));
     }
     if (flagged && flagged.line === i) {
-      li.classList.add("flagged");
-      li.append(el("span", { class: "mark", "aria-label": "première ligne fausse", text: "✗" }));
+      li.classList.add(flagged.doubt ? "doubtful" : "flagged");
+      li.append(el("span", { class: flagged.doubt ? "doubt" : "mark",
+        "aria-label": flagged.doubt ? "ligne à vérifier" : "première ligne fausse", text: flagged.doubt ? "?" : "✗" }));
     }
     return li;
   }));
@@ -85,8 +86,15 @@ function showResult(out, config) {
     parts.push(el("p", { class: "verdict good", text: "Aucune erreur trouvée" }),
       el("p", { class: "aside", text: "Cela ne prouve pas que tout est juste : relisez aussi vous-même." }));
     if (review.rejected) {
-      parts.push(el("p", { class: "aside", text: `La première lecture avait un doute sur la ligne ${review.rejected.line + 1}, `
-        + "que la seconde lecture n'a pas confirmé. Relisez-la si vous hésitez." }));
+      // On the test set, most withdrawn flags were real errors: show the doubt plainly, as a doubt.
+      flagged = { line: review.rejected.line, doubt: true };
+      const doubt = el("div", { class: "doubt-box" },
+        el("p", { class: "verdict doubt", text: `À vérifier : ligne ${review.rejected.line + 1}` }),
+        el("blockquote", { class: "quoted", text: out.lines[review.rejected.line] || "" }),
+        el("p", { class: "aside", text: "Une première lecture y voit une erreur que la seconde n'a pas confirmée. "
+          + "C'est souvent une vraie erreur : relisez cette ligne." }));
+      if (review.rejected.hint) doubt.append(el("p", { class: "hint", text: review.rejected.hint }));
+      parts.push(doubt);
     }
   } else {
     flagged = { line: review.first_wrong_line };
@@ -539,8 +547,11 @@ const pct = (x) => `${Math.round(x * 100)} %`;
 async function setUpEvaluation() {
   let e;
   try { e = await fetch("data/agent.json").then((r) => r.json()); } catch { return; }
-  const rows = ["llm_only", "rag", "agent"].map((key) => {
-    const c = e.configs[key];
+  let p = null;
+  try { p = await fetch("data/pipeline.json").then((r) => r.json()); } catch { /* optional */ }
+  const configs = { ...e.configs, ...(p ? { pipeline: p.configs.pipeline } : {}) };
+  const rows = ["llm_only", "pipeline"].filter((key) => configs[key]).map((key) => {
+    const c = configs[key];
     return el("tr", {}, el("th", { scope: "row", text: NAMES[key] }),
       el("td", { text: `${pct(c.both_right)}` }), el("td", { text: `${pct(c.both_right_ci95[0])} à ${pct(c.both_right_ci95[1])}` }),
       el("td", { text: pct(c.false_alarm) }));
@@ -554,10 +565,14 @@ async function setUpEvaluation() {
         el("th", { text: "Intervalle à 95 %" }), el("th", { text: "Fausses alertes" }))),
       el("tbody", {}, ...rows))),
     el("p", { text: "Autrement dit, il se trompe souvent : servez-vous de l'indice pour relire, pas comme d'un "
-      + "verdict. Avec si peu d'exercices, les trois versions ne se distinguent pas. Cette évaluation a été faite sur "
-      + "des manuels de Licence ; ce site cherche dans le cours Exo7, ce qui n'a pas été évalué." }),
-    el("p", {}, el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md",
-      text: "Lire le rapport complet" })));
+      + "verdict. La version prudente ne signale presque jamais à tort une copie juste, mais elle laisse passer bien "
+      + "plus d'erreurs, qu'elle affiche alors comme des doutes à vérifier. Avec si peu d'exercices, ces chiffres "
+      + "restent approximatifs. L'évaluation a été faite sur des manuels de Licence ; ce site cherche dans le cours "
+      + "Exo7, ce qui n'a pas été évalué." }),
+    el("p", {}, "Rapports complets : ",
+      el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/agent.md", text: "version directe" }),
+      ", ", el("a", { href: "https://github.com/Lurosan237/Math-Hinter/blob/main/reports/pipeline.md",
+        text: "version prudente" }), "."));
   try {
     const t = (await fetch("data/transcription.json").then((r) => r.json())).summary;
     $("evaluation").append(el("p", { text: `Les photos : sur ${t.photos} copies d'exemple photographiées, `

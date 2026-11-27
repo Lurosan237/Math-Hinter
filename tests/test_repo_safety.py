@@ -120,3 +120,12 @@ def test_readme_hint_numbers_come_from_the_hand_check():
     after = second["second_hint_gives_the_fix"] + second["third_hint_gives_the_fix"]
     assert f"gave the fix in {before} of {judged['hints_per_round']} further hints" in readme
     assert f"the revised one\n  in {after}, with {second['borderline']} borderline" in readme
+
+
+def test_readme_pipeline_numbers_come_from_the_report():
+    report = json.loads((ROOT / "reports" / "pipeline.json").read_text())["configs"]
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"both right {report['pipeline']['both_right']:.2f} of the time against" in readme
+    assert f"against {report['llm_only']['both_right']:.2f} for the\n  model alone" in readme
+    assert f"false alarms fell from {report['llm_only']['false_alarm']:.2f} to " \
+           f"{report['pipeline']['false_alarm']:.2f}" in readme

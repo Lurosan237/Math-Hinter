@@ -143,6 +143,10 @@ checker as in the evaluation, but it searches Exo7's openly licensed courses ins
   browser.
 - The free Groq tier is shared by every visitor, so each visitor gets a few reviews a day on the site's key. After
   that, they can paste their own free key, which is used for their request and never stored.
+- The site's default review is a "check first, judge second" pipeline ([design](docs/pipeline.md)): lines become
+  claims that SymPy checks, then the model judges with that evidence and a second model must confirm any error. On
+  the 25 test exercises ([report](reports/pipeline.md)) it was both right 0.32 of the time against 0.52 for the
+  model alone: false alarms fell from 0.20 to 0.04, but it missed far more errors.
 - Students can photograph their copy instead of typing it. A vision model, `qwen/qwen3.8-27b` on Groq, transcribes
   the pages with orders to keep every error; the transcription fills the form, doubtful lines are marked, and the
   student can fix it and review again. On the 16 example attempts rendered as notebook pages

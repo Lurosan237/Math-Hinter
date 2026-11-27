@@ -1,0 +1,95 @@
+{
+  "exercises": 25,
+  "configs": {
+    "llm_only": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.76,
+      "false_alarm": 0.2,
+      "exact_line": 0.68,
+      "within_one_line": 0.72,
+      "exact_line_when_flagged": 0.895,
+      "invalid": 0.04,
+      "both_right": 0.52,
+      "both_right_ci95": [
+        0.32,
+        0.72
+      ]
+    },
+    "rag": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.84,
+      "false_alarm": 0.16,
+      "exact_line": 0.64,
+      "within_one_line": 0.72,
+      "exact_line_when_flagged": 0.762,
+      "invalid": 0.06,
+      "both_right": 0.52,
+      "both_right_ci95": [
+        0.32,
+        0.72
+      ]
+    },
+    "agent": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.6,
+      "false_alarm": 0.24,
+      "exact_line": 0.52,
+      "within_one_line": 0.56,
+      "exact_line_when_flagged": 0.867,
+      "invalid": 0.1,
+      "both_right": 0.4,
+      "both_right_ci95": [
+        0.2,
+        0.6
+      ]
+    },
+    "pipeline": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.36,
+      "false_alarm": 0.04,
+      "exact_line": 0.32,
+      "within_one_line": 0.36,
+      "exact_line_when_flagged": 0.889,
+      "invalid": 0.0,
+      "both_right": 0.32,
+      "both_right_ci95": [
+        0.16,
+        0.52
+      ]
+    }
+  },
+  "pipeline_minus_llm_only": {
+    "exercises": 25,
+    "difference": -0.2,
+    "ci95": [
+      -0.44,
+      0.0
+    ]
+  },
+  "second_opinion": {
+    "withdrawn": 17,
+    "withdrawn_true_errors": 10,
+    "withdrawn_false_alarms": 6,
+    "judge_alone_post_hoc": {
+      "wrong_attempts": 25,
+      "controls": 25,
+      "error_flagged": 0.8,
+      "false_alarm": 0.28,
+      "exact_line": 0.72,
+      "within_one_line": 0.8,
+      "exact_line_when_flagged": 0.9,
+      "invalid": 0.0,
+      "both_right": 0.52
+    }
+  },
+  "computation": {
+    "claims_checked": 156,
+    "verified": 8,
+    "refuted": 1
+  },
+  "tokens_per_review": 4191
+}

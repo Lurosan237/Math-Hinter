@@ -58,8 +58,8 @@
     <aside class="panel">
       <fieldset class="versions">
         <legend>Relecture</legend>
-        <label><input type="radio" name="config" value="pipeline" checked> <b>Vérifiée</b> <small>l'ordinateur refait les calculs, et une seconde lecture confirme toute erreur avant de la signaler</small></label>
-        <label><input type="radio" name="config" value="llm_only"> <b>Rapide</b> <small>le modèle seul, plus vite mais plus de fausses alertes</small></label>
+        <label><input type="radio" name="config" value="pipeline" checked> <b>Prudente</b> <small>l'ordinateur refait les calculs et une seconde lecture confirme l'erreur : très peu de fausses alertes, mais plus d'erreurs manquées (signalées comme doutes)</small></label>
+        <label><input type="radio" name="config" value="llm_only"> <b>Directe</b> <small>le modèle seul : trouve plus d'erreurs, mais signale à tort une copie juste sur cinq</small></label>
       </fieldset>
       <button type="submit" form="form" class="go" id="go">Faire relire</button>
       <button type="button" class="reset" id="reset" hidden>Nouvelle copie</button>

@@ -34,5 +34,16 @@ claims were unreadable (absolute values, words inside formulas) or depended on e
 the second opinion, which removed every false alarm and two true detections. Clean typed or photographed student
 work should give the computation more to check; the real-photo evaluation will tell.
 
-The pipeline is frozen for a single run on the 25 test exercises (`run_overnight.bat`), to compare with the model
-alone's 0.52.
+## Test result
+
+One run of the frozen pipeline on the 25 test exercises ([report](../reports/pipeline.md)): both right 0.32,
+against 0.52 for the model alone (difference -0.20, 95% CI -0.44 to 0.00). False alarms fell from 0.20 to 0.04, but
+the exact line was found only 0.32 of the time, against 0.68.
+
+The second opinion caused it: it withdrew 10 flags that were the planted error and 6 that were false alarms. Read
+after the fact, the judge alone scores the same as the model alone, so the computations gave it nothing to work with
+on these textbook solutions (8 claims verified, 1 refuted, out of 156). The second opinion, tuned on 20 development
+exercises where it removed every false alarm, did not carry over.
+
+What this means for the site: "Vérifiée" trades missed errors for far fewer false alarms. Doubtful lines that the
+second opinion withdrew are still shown to the student as a doubt to check, not as an error.
